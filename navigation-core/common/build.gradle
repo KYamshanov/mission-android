@@ -1,0 +1,7 @@
+apply from: "$rootDir/gradle-base/android-base.gradle"
+
+dependencies {
+
+    implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation project(":navigation-core:api")
+}

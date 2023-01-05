@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 rootProject.name = "mission-android"
 include ':app'
 include ':ui-core'
+include ':authentication:api', ':authentication:impl'
+include ':navigation-core:api', ':navigation-core:impl', ':navigation-core:common'
+include ':network-core'

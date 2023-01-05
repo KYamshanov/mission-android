@@ -1,0 +1,8 @@
+apply from: "$rootDir/gradle-base/android-base.gradle"
+
+dependencies {
+
+    implementation project(":network-core")
+    implementation project(":navigation-core:api")
+    implementation project(":navigation-core:common")
+}
