@@ -1,0 +1,8 @@
+apply from: "$rootDir/gradle-base/android-base.gradle"
+apply from: "$rootDir/gradle-base/dagger.gradle"
+
+dependencies {
+    api project(":base-core:api")
+
+    implementation project(":di-dagger:impl")
+}

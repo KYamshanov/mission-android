@@ -1,4 +1,4 @@
-apply from: "$rootDir/gradle-base/android-base.gradle"
+apply from: "$rootDir/gradle-base/android-ui-base.gradle"
 
 dependencies {
 

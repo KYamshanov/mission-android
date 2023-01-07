@@ -1,1 +1,34 @@
-apply from: "$rootDir/gradle-base/android-base.gradle"
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+android {
+    compileSdk compile_sdk
+
+    defaultConfig {
+        minSdk min_sdk
+        targetSdk target_sdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion kotlin_compiler_extension_version
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = jvm_target
+    }
+}
+
+dependencies {
+    api "androidx.compose.material:material:$compose_material"
+
+    implementation "androidx.compose.ui:ui:$compose_ui_version"
+}

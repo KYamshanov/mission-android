@@ -1,39 +1,43 @@
 package ru.kyamshanov.mission.authentication.impl.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.BufferOverflow.DROP_OLDEST
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import ru.kyamshanov.mission.authentication.impl.data.api.AuthenticationApi
-import ru.kyamshanov.mission.authentication.impl.ui.model.ScreenState
-import ru.kyamshanov.mission.authentication.impl.ui.model.ScreenState.SomethingWentWrong
-import ru.kyamshanov.mission.authentication.impl.ui.model.ScreenState.WrongPassword
+import ru.kyamshanov.mission.authentication.impl.ui.model.AuthenticationState
+import ru.kyamshanov.mission.main_screen_feature.api.navigation.MainScreenLauncher
+import ru.kyamshanov.mission.session_front.api.di.SessionFrontComponent
+import ru.kyamshanov.mission.session_front.api.session.LoggedSession
 
 internal class AuthenticationViewModel(
-    private val api: AuthenticationApi
+    private val sessionComponent: SessionFrontComponent,
+    private val mainScreenLauncher: MainScreenLauncher
 ) : ViewModel() {
 
-    private val _screenState = MutableSharedFlow<ScreenState>(extraBufferCapacity = 1, onBufferOverflow = DROP_OLDEST)
+    private val _screenState =
+        MutableSharedFlow<AuthenticationState>(replay = 1, onBufferOverflow = DROP_OLDEST)
 
     val screenState = _screenState.asSharedFlow()
 
     init {
         viewModelScope.launch {
-            screenState.collect {
-                println("_------ $it")
-            }
+            if (sessionComponent.sessionInfo is LoggedSession)
+                mainScreenLauncher.launch()
+            else sessionComponent.sessionFactory.refreshSession()
+                .onSuccess {
+                    mainScreenLauncher.launch()
+                }.onFailure {
+                    Log.d(LOG_TAG, "refresh session failed", it)
+                    _screenState.tryEmit(AuthenticationState.LOGIN)
+                }
         }
     }
 
-    fun login(login: String, password: CharSequence) {
-        viewModelScope.launch {
-            api.login(login, password).also {
-                println(it)
-                _screenState.emit(SomethingWentWrong)
-            }
-        }
+    companion object {
+
+        private const val LOG_TAG = "AuthenticationViewModel"
     }
 }

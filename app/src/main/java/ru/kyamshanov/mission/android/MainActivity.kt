@@ -13,8 +13,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ru.kyamshanov.mission.di_dagger.impl.Di
+import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
 import ru.kyamshanov.mission.navigation_core.common.ComposableScreen
 import ru.kyamshanov.mission.navigation_core.common.DestinationScreen
+import ru.kyamshanov.mission.navigation_core.impl.NavigatorImpl
+import ru.kyamshanov.mission.navigation_core.impl.di.NavigationComponentBuilder
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,12 +27,14 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         super.onCreate(savedInstanceState)
-        val screensProvider = ComposableScreensProvider()
         setContent {
             MissionTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val navController = rememberNavController()
+                    val screensProvider = ComposableScreensProvider()
                     MissionNavigationHost(navController = navController, screensProvider = screensProvider)
+
+                    Di.registration(NavigationComponent::class, NavigationComponentBuilder(navController))
                 }
             }
         }

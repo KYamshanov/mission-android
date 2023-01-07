@@ -7,7 +7,7 @@ import ru.kyamshanov.mission.navigation_core.common.DestinationScreen
 
 private const val DESTINATION_KEY = "AuthenticationScreen"
 
-class AuthenticationScreen : DestinationScreen, ComposableScreen {
+class AuthenticationScreen() : DestinationScreen, ComposableScreen {
 
     override val composableSupplier: @Composable () -> Unit = { AuthenticationComposable() }
     override val destination: String
