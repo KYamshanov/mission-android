@@ -6,7 +6,7 @@ import ru.kyamshanov.mission.session_front.impl.domain.model.AccessData
 import ru.kyamshanov.mission.session_front.impl.domain.model.AccessStatus
 
 internal fun TokensRsDto.toDomain() = AccessData(
-    accessToken = accessToken, refreshToken = refreshToken
+    accessToken = accessToken.accessToken, refreshToken = refreshToken
 )
 
 internal fun CheckAccessRsDto.AccessStatus.toDomain(): AccessStatus = when (this) {

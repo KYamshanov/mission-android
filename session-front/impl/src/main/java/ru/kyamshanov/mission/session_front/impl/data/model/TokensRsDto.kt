@@ -6,6 +6,6 @@ package ru.kyamshanov.mission.session_front.impl.data.model
  * @property refreshToken Токен обновления
  */
 internal data class TokensRsDto(
-    val accessToken: String,
+    val accessToken: AccessTokenDto,
     val refreshToken: String
 )

@@ -24,8 +24,6 @@ import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
         super.onCreate(savedInstanceState)
         setContent {
             MissionTheme {

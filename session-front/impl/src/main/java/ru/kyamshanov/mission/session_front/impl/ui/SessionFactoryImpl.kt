@@ -7,15 +7,16 @@ import ru.kyamshanov.mission.session_front.api.session.Session
 import ru.kyamshanov.mission.session_front.impl.SessionInfoImpl
 import ru.kyamshanov.mission.session_front.impl.domain.LoginInteractor
 import ru.kyamshanov.mission.session_front.impl.domain.model.AccessData
-import ru.kyamshanov.mission.session_front.impl.domain.usecase.ObtainLoginFromTokenUseCase
+import ru.kyamshanov.mission.session_front.impl.domain.JwtTokenInteractor
+import ru.kyamshanov.mission.session_front.impl.ui.model.toUserInfo
 import ru.kyamshanov.mission.session_front.impl.ui.session.LoggedSessionImpl
 import javax.inject.Inject
 
 internal class SessionFactoryImpl @Inject constructor(
     private val loginInteractor: LoginInteractor,
     private val missionPreferences: MissionPreferences,
-    private val obtainLoginFromTokenUseCase: ObtainLoginFromTokenUseCase,
-    private val sessionInfoImpl: SessionInfoImpl
+    private val jwtTokenInteractor: JwtTokenInteractor,
+    private val sessionInfoImpl: SessionInfoImpl,
 ) : SessionFactory {
 
     override suspend fun newSession(login: String, password: CharSequence): Result<Session> = kotlin.runCatching {
@@ -38,9 +39,9 @@ internal class SessionFactoryImpl @Inject constructor(
 
     private fun createSession(data: AccessData) =
         LoggedSessionImpl(
-            userInfo = UserInfo(obtainLoginFromTokenUseCase(data.refreshToken)),
+            userInfo = jwtTokenInteractor.parse(data.refreshToken).toUserInfo(),
             loginInteractor = loginInteractor,
             sessionInfoImpl = SessionInfoImpl(),
-            missionPreferences = missionPreferences,
+            missionPreferences = missionPreferences
         )
 }

@@ -6,5 +6,7 @@ interface LoggedSession : Session {
 
     val userInfo: UserInfo
 
+    suspend fun isActive(): Boolean
+
     suspend fun destroySession()
 }

@@ -21,6 +21,9 @@ internal interface ModuleComponent : SessionFrontComponent {
     @Component.Factory
     interface Factory {
 
-        fun create(baseCoreComponent: BaseCoreComponent, networkComponent: NetworkComponent): ModuleComponent
+        fun create(
+            baseCoreComponent: BaseCoreComponent,
+            networkComponent: NetworkComponent
+        ): ModuleComponent
     }
 }

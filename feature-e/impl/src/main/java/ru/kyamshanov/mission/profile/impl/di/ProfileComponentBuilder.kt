@@ -8,7 +8,6 @@ class ProfileComponentBuilder : ComponentBuilder<ProfileComponent> {
 
     override fun build(): ProfileComponent =
         DaggerModuleComponent.factory().create(
-            navigationComponent = requireNotNull(Di.getComponent()),
-            sessionFrontComponent = requireNotNull(Di.getComponent())
+            navigationComponent = requireNotNull(Di.getComponent())
         )
 }

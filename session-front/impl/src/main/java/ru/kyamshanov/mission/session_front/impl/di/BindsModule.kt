@@ -5,9 +5,11 @@ import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.session_front.api.SessionFactory
 import ru.kyamshanov.mission.session_front.api.SessionInfo
 import ru.kyamshanov.mission.session_front.impl.SessionInfoImpl
+import ru.kyamshanov.mission.session_front.impl.data.JwtTokenInteractorImpl
 import ru.kyamshanov.mission.session_front.impl.data.LoginInteractorImpl
 import ru.kyamshanov.mission.session_front.impl.data.api.AuthenticationApi
 import ru.kyamshanov.mission.session_front.impl.data.api.AuthenticationApiImpl
+import ru.kyamshanov.mission.session_front.impl.domain.JwtTokenInteractor
 import ru.kyamshanov.mission.session_front.impl.domain.LoginInteractor
 import ru.kyamshanov.mission.session_front.impl.ui.SessionFactoryImpl
 
@@ -29,4 +31,8 @@ internal interface BindsModule {
     @Binds
     @ComponentItem
     fun bindLoginInteractor(impl: LoginInteractorImpl): LoginInteractor
+
+    @Binds
+    @ComponentItem
+    fun bindJwtTokenInteractor(impl: JwtTokenInteractorImpl): JwtTokenInteractor
 }

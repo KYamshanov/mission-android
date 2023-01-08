@@ -4,13 +4,10 @@ import dagger.Component
 import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
 import ru.kyamshanov.mission.profile.api.di.ProfileComponent
-import ru.kyamshanov.mission.profile.impl.ui.viewmodel.ProfileViewModel
-import ru.kyamshanov.mission.session_front.api.di.SessionFrontComponent
 
 @Component(
     dependencies = [
-        NavigationComponent::class,
-        SessionFrontComponent::class
+        NavigationComponent::class
     ],
     modules = [
         BindsModule::class
@@ -19,14 +16,9 @@ import ru.kyamshanov.mission.session_front.api.di.SessionFrontComponent
 @ComponentItem
 internal interface ModuleComponent : ProfileComponent {
 
-    val profileViewModel: ProfileViewModel
-
     @Component.Factory
     interface Factory {
 
-        fun create(
-            navigationComponent: NavigationComponent,
-            sessionFrontComponent: SessionFrontComponent
-        ): ModuleComponent
+        fun create(navigationComponent: NavigationComponent): ModuleComponent
     }
 }
