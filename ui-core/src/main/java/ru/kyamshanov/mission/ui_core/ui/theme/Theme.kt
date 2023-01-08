@@ -3,26 +3,31 @@ package ru.kyamshanov.mission.ui_core.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+private val DarkColorPalette = MissionColors(
+    background = DarkRedPleasant
 )
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200,
-    background = White,
-    surface = White,
-    onPrimary = White,
-    onSecondary = Black,
-    onBackground = Black,
-    onSurface = Black,
+private val LightColorPalette = MissionColors(
+    background = RedPleasant
 )
+
+private val LocalExtendedColors = staticCompositionLocalOf {
+    MissionColors(
+        background = Color.Unspecified,
+    )
+}
+
+object MissionTheme {
+
+    val colors: MissionColors
+        @Composable
+        get() = LocalExtendedColors.current
+}
 
 @Composable
 fun MissionTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
@@ -32,10 +37,11 @@ fun MissionTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
         LightColorPalette
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    CompositionLocalProvider(LocalExtendedColors provides colors) {
+        MaterialTheme(
+            typography = Typography,
+            shapes = Shapes,
+            content = content
+        )
+    }
 }

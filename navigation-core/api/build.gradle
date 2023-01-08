@@ -1,0 +1,5 @@
+apply from: "$rootDir/gradle-base/api-kotlin-base.gradle"
+
+dependencies {
+    implementation project(":di-dagger:api")
+}

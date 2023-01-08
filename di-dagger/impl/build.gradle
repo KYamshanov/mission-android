@@ -1,0 +1,12 @@
+apply from: "$rootDir/gradle-base/android-base.gradle"
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+}
+
+dependencies {
+    api project(":di-dagger:api")
+}
+

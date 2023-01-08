@@ -1,0 +1,9 @@
+apply from: "$rootDir/gradle-base/android-base.gradle"
+apply from: "$rootDir/gradle-base/dagger.gradle"
+
+dependencies {
+    api project(":navigation-core:api")
+
+    implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation project(":navigation-core:common")
+}
