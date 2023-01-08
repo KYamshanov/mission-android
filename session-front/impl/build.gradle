@@ -1,0 +1,12 @@
+apply from: "$rootDir/gradle-base/android-base.gradle"
+apply from: "$rootDir/gradle-base/dagger.gradle"
+
+dependencies {
+    api project(":session-front:api")
+
+    implementation project(":base-core:api")
+    implementation project(":network-core:api")
+
+    //JWT
+    implementation("com.auth0.android:jwtdecode:$auth0_jwt")
+}

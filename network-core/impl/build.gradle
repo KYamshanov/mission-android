@@ -1,0 +1,13 @@
+apply from: "$rootDir/gradle-base/android-base.gradle"
+apply from: "$rootDir/gradle-base/dagger.gradle"
+
+dependencies {
+    api project(":network-core:api")
+
+    //Клиент для android
+    implementation("io.ktor:ktor-client-android:$ktor_version")
+
+    //Для сериализации (JSON)
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-gson:$ktor_version")
+}
