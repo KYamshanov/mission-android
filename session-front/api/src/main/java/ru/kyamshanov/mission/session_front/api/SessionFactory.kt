@@ -7,6 +7,4 @@ interface SessionFactory {
     suspend fun newSession(login: String, password: CharSequence): Result<Session>
 
     suspend fun refreshSession(): Result<Session>
-
-    suspend fun destroySession()
 }

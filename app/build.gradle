@@ -60,4 +60,5 @@ dependencies {
     implementation project(":di-dagger:impl")
     implementation project(":session-front:impl")
     implementation project(":network-core:impl")
+    implementation project(":profile:impl")
 }
