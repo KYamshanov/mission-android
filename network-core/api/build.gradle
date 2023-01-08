@@ -1,0 +1,8 @@
+apply from: "$rootDir/gradle-base/api-kotlin-base.gradle"
+
+dependencies {
+    //ktor core
+    api("io.ktor:ktor-client-core:$ktor_version")
+
+    implementation project(":di-dagger:api")
+}
