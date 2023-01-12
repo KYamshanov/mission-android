@@ -1,5 +1,7 @@
 package ru.kyamshanov.mission.session_front.impl.data.model
 
+import ru.kyamshanov.mission.session_front.api.model.UserRole
+
 /**
  * Dto-model Тело запроса на проверку активности токена
  * @property accessToken Токен доступности
@@ -15,7 +17,8 @@ internal data class CheckAccessRqDto(
  * @property status Статус доступности токена
  */
 internal data class CheckAccessRsDto(
-    val status: AccessStatus
+    val status: AccessStatus,
+    val roles: List<UserRole>?
 ) {
 
     /**

@@ -15,6 +15,7 @@ dependencyResolutionManagement {
 rootProject.name = "mission-android"
 include ':app'
 include ':ui-core'
+//[EXAMPLE]: include ':feature-e:api', ':feature-e:impl'
 include ':authentication:api', ':authentication:impl'
 include ':navigation-core:api', ':navigation-core:impl', ':navigation-core:common'
 include ':network-core:api', ':network-core:impl'
@@ -22,3 +23,4 @@ include ':main-screen-feature:api', ':main-screen-feature:impl'
 include ':base-core:api', ':base-core:impl'
 include ':di-dagger:api', ':di-dagger:impl'
 include ':session-front:api', ':session-front:impl'
+include ':profile:api', ':profile:impl'

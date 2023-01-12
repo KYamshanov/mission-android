@@ -5,6 +5,7 @@ import ru.kyamshanov.mission.base_core.impl.di.BaseCoreComponentBuilder
 import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.main_screen_feature.impl.di.MainScreenComponentBuilder
 import ru.kyamshanov.mission.network_core.impl.di.NetworkComponentBuilder
+import ru.kyamshanov.mission.profile.impl.di.ProfileComponentBuilder
 import ru.kyamshanov.mission.session_front.impl.di.SessionFrontComponentBuilder
 
 internal class Application : android.app.Application() {
@@ -20,5 +21,6 @@ internal class Application : android.app.Application() {
         Di.registration(AuthenticationComponentBuilder())
         Di.registration(SessionFrontComponentBuilder())
         Di.registration(NetworkComponentBuilder())
+        Di.registration(ProfileComponentBuilder())
     }
 }

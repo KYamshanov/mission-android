@@ -6,6 +6,7 @@ dependencies {
 
     implementation project(":base-core:api")
     implementation project(":network-core:api")
+    implementation project(":authentication:api")
 
     //JWT
     implementation("com.auth0.android:jwtdecode:$auth0_jwt")

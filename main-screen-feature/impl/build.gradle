@@ -7,4 +7,5 @@ dependencies {
     implementation project(":network-core:api")
     implementation project(":navigation-core:api")
     implementation project(":navigation-core:common")
+    implementation project(":profile:api")
 }
