@@ -9,6 +9,8 @@ class AuthenticationComponentBuilder : ComponentBuilder<AuthenticationComponent>
     override fun build(): AuthenticationComponent =
         DaggerModuleComponent.factory()
             .create(
-                navigationComponent = requireNotNull(Di.getComponent())
+                navigationComponent = requireNotNull(Di.getComponent()),
+                sessionFrontComponent = requireNotNull(Di.getComponent()),
+                mainScreenComponent = requireNotNull(Di.getComponent()),
             )
 }

@@ -9,6 +9,7 @@ class MainScreenComponentBuilder() : ComponentBuilder<MainScreenComponent> {
 
     override fun build(): MainScreenComponent =
         DaggerModuleComponent.factory().create(
-            navigationComponent = requireNotNull(Di.getComponent())
+            navigationComponent = requireNotNull(Di.getComponent()),
+            profileComponent = requireNotNull(Di.getComponent()),
         )
 }

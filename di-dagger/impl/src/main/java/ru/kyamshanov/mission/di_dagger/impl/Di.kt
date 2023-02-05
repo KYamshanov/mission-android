@@ -12,7 +12,7 @@ object Di {
     private val componentsHolder = mutableMapOf<KClass<*>, MutableMap<Any, Any>>()
 
     @Suppress("UNCHECKED_CAST")
-    inline fun <reified ComponentType : Any, ReturnType> getInternalComponent(holderId: Any? = null): ReturnType =
+    inline fun <reified ComponentType : Any, ReturnType : ComponentType> getInternalComponent(holderId: Any? = null): ReturnType =
         getComponent(ComponentType::class, holderId) as ReturnType
 
     inline fun <reified T : Any> getComponent(holderId: Any? = null) =

@@ -2,29 +2,26 @@ package ru.kyamshanov.mission.authentication.impl.ui.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.kyamshanov.mission.authentication.di.AuthenticationComponent
+import ru.kyamshanov.mission.authentication.impl.di.ModuleComponent
 import ru.kyamshanov.mission.authentication.impl.ui.model.AuthenticationState.LOADER
 import ru.kyamshanov.mission.authentication.impl.ui.model.AuthenticationState.LOGIN
 import ru.kyamshanov.mission.authentication.impl.ui.viewmodel.AuthenticationViewModel
+import ru.kyamshanov.mission.authentication.impl.ui.viewmodel.LoginViewModel
 import ru.kyamshanov.mission.di_dagger.impl.Di
-import ru.kyamshanov.mission.main_screen_feature.api.di.MainScreenComponent
-import ru.kyamshanov.mission.session_front.api.di.SessionFrontComponent
 
 @Composable
 internal fun AuthenticationComposable(
-    sessionComponent: SessionFrontComponent = requireNotNull(Di.getComponent()),
-    mainScreenLauncher: MainScreenComponent = requireNotNull(Di.getComponent()),
+    moduleComponent: ModuleComponent = requireNotNull(Di.getInternalComponent<AuthenticationComponent, ModuleComponent>()),
 
-    viewModel: AuthenticationViewModel = androidx.lifecycle.viewmodel.compose.viewModel {
-        AuthenticationViewModel(
-            sessionComponent = sessionComponent,
-            mainScreenLauncher = mainScreenLauncher.launcher
-        )
-    }
+    authViewModel: AuthenticationViewModel = viewModel { moduleComponent.authenticationViewModel },
+    loginViewModel: LoginViewModel = viewModel { moduleComponent.loginViewModel }
 ) {
-    val screenState = viewModel.screenState.collectAsState(initial = LOADER)
+    val screenState = authViewModel.screenState.collectAsState(initial = LOADER)
 
     when (screenState.value) {
         LOADER -> LoaderComposable()
-        LOGIN -> LoginComposable()
+        LOGIN -> LoginComposable(loginViewModel)
     }
 }

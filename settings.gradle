@@ -21,6 +21,6 @@ include ':navigation-core:api', ':navigation-core:impl', ':navigation-core:commo
 include ':network-core:api', ':network-core:impl'
 include ':main-screen-feature:api', ':main-screen-feature:impl'
 include ':base-core:api', ':base-core:impl'
-include ':di-dagger:api', ':di-dagger:impl'
+include ':di-dagger:api', ':di-dagger:impl', ':di-dagger:extensions'
 include ':session-front:api', ':session-front:impl'
 include ':profile:api', ':profile:impl'
