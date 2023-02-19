@@ -8,16 +8,12 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
-import ru.kyamshanov.mission.navigation_core.common.ComposableScreen
 import ru.kyamshanov.mission.navigation_core.common.DestinationScreen
-import ru.kyamshanov.mission.navigation_core.impl.NavigatorImpl
 import ru.kyamshanov.mission.navigation_core.impl.di.NavigationComponentBuilder
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
@@ -43,15 +39,16 @@ class MainActivity : ComponentActivity() {
 internal fun MissionNavigationHost(
     navController: NavHostController, screensProvider: ScreensProvider
 ) {
-    val routeComposablePairs = screensProvider.supply().filterIsInstance<ComposableScreen>().map { screen ->
-        val route = (screen as? DestinationScreen)?.destination ?: screen::class.qualifiedName.orEmpty()
-        route to screen.composableSupplier
-    }
+    val navigationRouteFactory = NavigationRouteFactory()
+    val screens = screensProvider.supply().toList()
     NavHost(
-        navController = navController, startDestination = routeComposablePairs[0].first
+        navController = navController,
+        startDestination = requireNotNull((screens.first { it is DestinationScreen } as? DestinationScreen)?.destination) { "Start destination has not founded" }
     ) {
-        routeComposablePairs.forEach { (route, composable) ->
-            composable(route) { composable.invoke() }
+        with(navigationRouteFactory) {
+            screens.forEach { screen ->
+                createComposable(screen)
+            }
         }
     }
 }

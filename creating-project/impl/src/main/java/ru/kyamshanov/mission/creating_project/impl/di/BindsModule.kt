@@ -2,8 +2,12 @@ package ru.kyamshanov.mission.creating_project.impl.di
 
 import dagger.Binds
 import ru.kyamshanov.mission.creating_project.api.navigation.CreatingProjectLauncher
-import ru.kyamshanov.mission.creating_project.impl.domain.OpenFindingUserScreenUseCase
-import ru.kyamshanov.mission.creating_project.impl.domain.OpenFindingUserScreenUseCaseImpl
+import ru.kyamshanov.mission.creating_project.impl.data.api.ProjectApi
+import ru.kyamshanov.mission.creating_project.impl.data.api.ProjectApiImpl
+import ru.kyamshanov.mission.creating_project.impl.data.gateway.ProjectGatewayImpl
+import ru.kyamshanov.mission.creating_project.impl.domain.gateway.ProjectGateway
+import ru.kyamshanov.mission.creating_project.impl.domain.usecase.OpenFindingUserScreenUseCase
+import ru.kyamshanov.mission.creating_project.impl.domain.usecase.OpenFindingUserScreenUseCaseImpl
 import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.creating_project.impl.ui.navigation.CreatingProjectLauncherImpl
 
@@ -17,4 +21,12 @@ internal interface BindsModule {
     @Binds
     @ComponentItem
     fun OpenFindingUserScreenUseCaseImpl.bindOpenFindingUserScreenUseCase(): OpenFindingUserScreenUseCase
+
+    @Binds
+    @ComponentItem
+    fun ProjectApiImpl.bindProjectApi(): ProjectApi
+
+    @Binds
+    @ComponentItem
+    fun ProjectGatewayImpl.bindProjectGateway(): ProjectGateway
 }

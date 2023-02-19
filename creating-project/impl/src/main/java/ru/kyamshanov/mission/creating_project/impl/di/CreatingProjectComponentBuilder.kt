@@ -10,5 +10,6 @@ class CreatingProjectComponentBuilder : ComponentBuilder<CreatingProjectComponen
         DaggerModuleComponent.factory().create(
             navigationComponent = requireNotNull(Di.getComponent()),
             findingUserComponent = requireNotNull(Di.getComponent()),
+            networkComponent = requireNotNull(Di.getComponent()),
         )
 }
