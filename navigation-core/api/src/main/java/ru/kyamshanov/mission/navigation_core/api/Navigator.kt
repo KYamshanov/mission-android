@@ -5,4 +5,6 @@ interface Navigator {
     fun navigateTo(screen: Screen)
 
     fun replaceTo(screen: Screen)
+
+    fun <ReturnDataType : NavigationBoundaryData?> backWithResult(key: String, data: ReturnDataType)
 }

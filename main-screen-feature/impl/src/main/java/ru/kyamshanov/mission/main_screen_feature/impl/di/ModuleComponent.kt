@@ -1,6 +1,7 @@
 package ru.kyamshanov.mission.main_screen_feature.impl.di
 
 import dagger.Component
+import ru.kyamshanov.mission.creating_project.api.di.CreatingProjectComponent
 import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.main_screen_feature.api.di.MainScreenComponent
 import ru.kyamshanov.mission.main_screen_feature.impl.ui.viewmodel.NavigationBarViewModel
@@ -10,7 +11,8 @@ import ru.kyamshanov.mission.profile.api.di.ProfileComponent
 @Component(
     dependencies = [
         NavigationComponent::class,
-        ProfileComponent::class
+        ProfileComponent::class,
+        CreatingProjectComponent::class
     ],
     modules = [
         BindsModule::class
@@ -26,7 +28,8 @@ internal interface ModuleComponent : MainScreenComponent {
 
         fun create(
             navigationComponent: NavigationComponent,
-            profileComponent: ProfileComponent
+            profileComponent: ProfileComponent,
+            creatingProjectComponent: CreatingProjectComponent,
         ): ModuleComponent
     }
 }

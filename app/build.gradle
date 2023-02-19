@@ -61,4 +61,6 @@ dependencies {
     implementation project(":session-front:impl")
     implementation project(":network-core:impl")
     implementation project(":profile:impl")
+    implementation project(path: ':creating-project:impl')
+    implementation project(path: ':finding-user:impl')
 }
