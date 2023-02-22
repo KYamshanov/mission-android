@@ -9,4 +9,5 @@ dependencies {
     implementation project(":ui-core")
     implementation project(path: ':finding-user:api')
     implementation project(":network-core:api")
+    implementation project(":project:api")
 }

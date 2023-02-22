@@ -11,5 +11,6 @@ class CreatingProjectComponentBuilder : ComponentBuilder<CreatingProjectComponen
             navigationComponent = requireNotNull(Di.getComponent()),
             findingUserComponent = requireNotNull(Di.getComponent()),
             networkComponent = requireNotNull(Di.getComponent()),
+            projectComponent = requireNotNull(Di.getComponent()),
         )
 }

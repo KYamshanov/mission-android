@@ -11,10 +11,10 @@ class ProjectScreen(
     private val projectId: String? = null
 ) : DestinationScreen, ParameterizedComposableScreen {
 
-    override val parameters: Array<String>
-        get() = arrayOf("profileId")
+    override val parameters
+        get() = mapOf("profileId" to projectId)
 
-    override val composableSupplier: @Composable (Map<String, String>) -> Unit =
+    override val composableSupplier: @Composable (parameters: Map<String, String?>) -> Unit =
         { parameters -> ProjectComposable(requireNotNull(parameters["projectId"]) { "ProjectId for ProjectComposable cannot be null" }) }
 
     override val destination: String

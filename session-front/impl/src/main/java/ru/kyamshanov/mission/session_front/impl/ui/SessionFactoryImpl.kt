@@ -2,14 +2,13 @@ package ru.kyamshanov.mission.session_front.impl.ui
 
 import ru.kyamshanov.mission.base_core.api.MissionPreferences
 import ru.kyamshanov.mission.session_front.api.SessionFactory
-import ru.kyamshanov.mission.session_front.api.UserInfo
 import ru.kyamshanov.mission.session_front.api.session.Session
 import ru.kyamshanov.mission.session_front.impl.SessionInfoImpl
 import ru.kyamshanov.mission.session_front.impl.domain.LoginInteractor
 import ru.kyamshanov.mission.session_front.impl.domain.model.AccessData
 import ru.kyamshanov.mission.session_front.impl.domain.JwtTokenInteractor
 import ru.kyamshanov.mission.session_front.impl.ui.model.toUserInfo
-import ru.kyamshanov.mission.session_front.impl.ui.session.LoggedSessionImpl
+import ru.kyamshanov.mission.session_front.impl.ui.session.JwtLoggedSessionImpl
 import javax.inject.Inject
 
 internal class SessionFactoryImpl @Inject constructor(
@@ -38,7 +37,7 @@ internal class SessionFactoryImpl @Inject constructor(
     }
 
     private fun createSession(data: AccessData) =
-        LoggedSessionImpl(
+        JwtLoggedSessionImpl(
             userInfo = jwtTokenInteractor.parse(data.refreshToken).toUserInfo(),
             loginInteractor = loginInteractor,
             sessionInfoImpl = SessionInfoImpl(),

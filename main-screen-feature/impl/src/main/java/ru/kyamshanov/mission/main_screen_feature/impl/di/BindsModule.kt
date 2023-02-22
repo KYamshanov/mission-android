@@ -22,5 +22,5 @@ internal interface BindsModule {
 
     @Binds
     @ComponentItem
-    fun OpenCreatingProjectScreenUseCaseImpl.bind(): OpenCreatingProjectScreenUseCase
+    fun OpenCreatingProjectScreenUseCaseImpl.bindOpenCreatingProjectScreenUseCase(): OpenCreatingProjectScreenUseCase
 }
