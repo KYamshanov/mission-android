@@ -6,8 +6,11 @@ dependencies {
 
     //Клиент для android
     implementation("io.ktor:ktor-client-android:$ktor_version")
+    implementation("io.ktor:ktor-client-logging:$ktor_version")
 
     //Для сериализации (JSON)
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-gson:$ktor_version")
+
+    implementation project(":session-front:api")
 }

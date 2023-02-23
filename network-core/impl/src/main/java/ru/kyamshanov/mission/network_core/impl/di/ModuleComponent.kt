@@ -6,8 +6,9 @@ import ru.kyamshanov.mission.network_core.api.di.NetworkComponent
 
 @Component(
     modules = [
-        BindsModule::class
-    ]
+        BindsModule::class,
+        BaseProviderModule::class
+    ],
 )
 @ComponentItem
 internal interface ModuleComponent : NetworkComponent {

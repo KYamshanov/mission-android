@@ -21,7 +21,7 @@ internal class LoginUseCaseImpl @Inject constructor(
 ) : LoginUseCase {
 
     override suspend fun login(login: String, password: CharSequence) {
-        sessionFront.newSession(login, password)
+        sessionFront.openSession(login, password)
             .onSuccess { mainScreenLauncher.launch() }
             .onFailure {
                 Log.d(LOG_TAG, "Login went wrong", it)
