@@ -1,18 +1,18 @@
 package ru.kyamshanov.mission.creating_project.impl.domain.usecase
 
-import ru.kyamshanov.mission.finding_user.api.navigation.FindingUserLauncher
 import javax.inject.Inject
+import ru.kyamshanov.mission.project.api.navigation.ProjectLauncher
 
 interface OpenProjectScreenUseCase {
 
-    fun open()
+    fun open(projectId: String)
 }
 
 internal class OpenProjectScreenUseCaseImpl @Inject constructor(
-    private val findingUserLauncher: FindingUserLauncher
+    private val projectLauncher: ProjectLauncher,
 ) : OpenProjectScreenUseCase {
 
-    override fun open() {
-        findingUserLauncher.launch()
+    override fun open(projectId: String) {
+        projectLauncher.launch(projectId)
     }
 }
