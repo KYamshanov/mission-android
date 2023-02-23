@@ -21,7 +21,7 @@ internal class AuthenticationUseCaseImpl @Inject constructor(
     override suspend fun obtainSession() {
         if (sessionComponent.sessionInfo is LoggedSession)
             mainScreenLauncher.launch()
-        else sessionComponent.sessionFactory.refreshSession()
+        else sessionComponent.sessionFront.refreshSession()
             .onSuccess {
                 mainScreenLauncher.launch()
             }.onFailure {
