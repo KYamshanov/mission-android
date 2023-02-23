@@ -12,6 +12,7 @@ buildscript {
         junit_version = "4.13.2"
         dagger_version = "2.43.2"
         auth0_jwt = "2.0.1"
+        kotlinx_coroutines = "1.6.4"
 
         compile_sdk = 33
         min_sdk = 24

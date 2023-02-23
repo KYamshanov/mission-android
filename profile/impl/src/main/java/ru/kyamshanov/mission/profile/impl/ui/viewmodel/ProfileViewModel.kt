@@ -2,17 +2,19 @@ package ru.kyamshanov.mission.profile.impl.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import javax.inject.Inject
 import kotlinx.coroutines.channels.BufferOverflow.DROP_OLDEST
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.profile.impl.ui.model.ProfileScreenState
+import ru.kyamshanov.mission.session_front.api.SessionFront
 import ru.kyamshanov.mission.session_front.api.SessionInfo
 import ru.kyamshanov.mission.session_front.api.session.LoggedSession
-import javax.inject.Inject
 
 internal class ProfileViewModel @Inject constructor(
-    private val sessionInfo: SessionInfo
+    private val sessionInfo: SessionInfo,
+    private val sessionFront: SessionFront,
 ) : ViewModel() {
 
     private val _screenState = MutableSharedFlow<ProfileScreenState>(replay = 1, onBufferOverflow = DROP_OLDEST)
@@ -31,10 +33,7 @@ internal class ProfileViewModel @Inject constructor(
 
     fun exit() {
         viewModelScope.launch {
-            val session = sessionInfo.session
-            if (session is LoggedSession) {
-                session.destroySession()
-            }
+            sessionFront.destroySession()
         }
     }
 }

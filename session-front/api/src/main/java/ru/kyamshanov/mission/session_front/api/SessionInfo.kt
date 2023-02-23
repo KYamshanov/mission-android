@@ -1,10 +1,12 @@
 package ru.kyamshanov.mission.session_front.api
 
+import kotlinx.coroutines.flow.StateFlow
 import ru.kyamshanov.mission.session_front.api.session.Session
-import ru.kyamshanov.mission.session_front.api.session.UnidentifiedSession
 
 interface SessionInfo {
 
-    val session : Session
-        get() = UnidentifiedSession
+    val sessionState: StateFlow<Session>
+
+    val session: Session
+        get() = sessionState.value
 }
