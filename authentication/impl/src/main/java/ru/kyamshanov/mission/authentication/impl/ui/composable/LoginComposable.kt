@@ -13,6 +13,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.kyamshanov.mission.authentication.di.AuthenticationComponent
+import ru.kyamshanov.mission.authentication.impl.di.ModuleComponent
 import ru.kyamshanov.mission.authentication.impl.ui.model.LoginScreenState.SomethingWentWrong
 import ru.kyamshanov.mission.authentication.impl.ui.model.LoginScreenState.WrongPassword
 import ru.kyamshanov.mission.authentication.impl.ui.viewmodel.LoginViewModel
@@ -23,15 +26,7 @@ import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
 @Composable
 internal fun LoginComposable(
-    sessionFrontComponent: SessionFrontComponent = requireNotNull(Di.getComponent()),
-    mainScreenComponent: MainScreenComponent = requireNotNull(Di.getComponent()),
-
-    viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel {
-        LoginViewModel(
-            sessionFrontComponent.sessionFactory,
-            mainScreenLauncher = mainScreenComponent.launcher
-        )
-    }
+    viewModel: LoginViewModel
 ) {
     val wrongCodeDialogVisibleState = rememberSaveable { mutableStateOf(false) }
     val somethingWentWrongDialogVisibleState = rememberSaveable { mutableStateOf(false) }
@@ -51,7 +46,7 @@ internal fun LoginComposable(
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        AuthenticationComponent() { login, password ->
+        AuthenticationComponent { login, password ->
             viewModel.login(login, password)
         }
     }

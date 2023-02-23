@@ -8,4 +8,6 @@ dependencies {
     implementation project(":navigation-core:api")
     implementation project(":navigation-core:common")
     implementation project(":profile:api")
+    implementation project(":session-front:api")
+    implementation project(":creating-project:api")
 }

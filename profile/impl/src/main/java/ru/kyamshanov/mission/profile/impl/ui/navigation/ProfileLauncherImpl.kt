@@ -10,6 +10,6 @@ class ProfileLauncherImpl @Inject constructor(
 ) : ProfileLauncher {
 
     override fun launch() {
-        navigator.replaceTo(ProfileScreen())
+        navigator.navigateTo(ProfileScreen())
     }
 }

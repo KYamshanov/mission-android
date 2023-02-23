@@ -9,16 +9,20 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = MissionColors(
-    background = DarkRedPleasant
-)
+    background = DarkRedPleasant,
+    backgroundItem = Purple500,
+
+    )
 
 private val LightColorPalette = MissionColors(
-    background = RedPleasant
+    background = RedPleasant,
+    backgroundItem = Purple200,
 )
 
 private val LocalExtendedColors = staticCompositionLocalOf {
     MissionColors(
         background = Color.Unspecified,
+        backgroundItem = Color.Unspecified,
     )
 }
 

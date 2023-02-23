@@ -1,4 +1,4 @@
-package ru.kyamshanov.mission.authentication
+package ru.kyamshanov.mission.authentication.domain
 
 interface AuthenticationLauncher {
 

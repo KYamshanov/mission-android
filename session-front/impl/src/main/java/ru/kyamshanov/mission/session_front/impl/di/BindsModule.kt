@@ -2,7 +2,7 @@ package ru.kyamshanov.mission.session_front.impl.di
 
 import dagger.Binds
 import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
-import ru.kyamshanov.mission.session_front.api.SessionFactory
+import ru.kyamshanov.mission.session_front.api.SessionFront
 import ru.kyamshanov.mission.session_front.api.SessionInfo
 import ru.kyamshanov.mission.session_front.impl.SessionInfoImpl
 import ru.kyamshanov.mission.session_front.impl.data.JwtTokenInteractorImpl
@@ -11,7 +11,7 @@ import ru.kyamshanov.mission.session_front.impl.data.api.AuthenticationApi
 import ru.kyamshanov.mission.session_front.impl.data.api.AuthenticationApiImpl
 import ru.kyamshanov.mission.session_front.impl.domain.JwtTokenInteractor
 import ru.kyamshanov.mission.session_front.impl.domain.LoginInteractor
-import ru.kyamshanov.mission.session_front.impl.ui.SessionFactoryImpl
+import ru.kyamshanov.mission.session_front.impl.ui.SessionFrontImpl
 
 @dagger.Module
 internal interface BindsModule {
@@ -26,7 +26,7 @@ internal interface BindsModule {
 
     @Binds
     @ComponentItem
-    fun bindSessionFactory(impl: SessionFactoryImpl): SessionFactory
+    fun bindSessionFactory(impl: SessionFrontImpl): SessionFront
 
     @Binds
     @ComponentItem

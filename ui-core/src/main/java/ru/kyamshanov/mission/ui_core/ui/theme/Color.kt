@@ -5,7 +5,8 @@ import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class MissionColors(
-    val background: Color
+    val background: Color,
+    val backgroundItem: Color
 )
 
 internal val White = Color.White
