@@ -13,8 +13,7 @@ import ru.kyamshanov.mission.session_front.api.session.UnauthorizedSession
 
 internal interface AuthenticationUseCase {
 
-    @Throws(Exception::class)
-    suspend fun obtainSession()
+    suspend fun obtainSession(): Result<Unit>
 }
 
 internal class AuthenticationUseCaseImpl @Inject constructor(
@@ -22,7 +21,7 @@ internal class AuthenticationUseCaseImpl @Inject constructor(
     private val mainScreenLauncher: MainScreenLauncher,
 ) : AuthenticationUseCase {
 
-    override suspend fun obtainSession() {
+    override suspend fun obtainSession() = runCatching {
         if (sessionComponent.sessionInfo is LoggedSession)
             mainScreenLauncher.launch()
         else awaitRefreshSession()

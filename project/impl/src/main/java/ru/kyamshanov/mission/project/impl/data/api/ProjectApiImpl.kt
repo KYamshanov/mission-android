@@ -14,7 +14,7 @@ internal class ProjectApiImpl @Inject constructor(
 ) : ProjectApi {
 
     override suspend fun getProject(projectId: String): ProjectInfoRsDto = withContext(Dispatchers.IO) {
-        requestFactory.post("project/${projectId}") {
+        requestFactory.get("project/${projectId}") {
             contentType(ContentType.Application.Json)
         }.retrieveBody()
     }

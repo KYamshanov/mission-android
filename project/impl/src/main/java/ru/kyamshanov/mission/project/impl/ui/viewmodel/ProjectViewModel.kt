@@ -20,6 +20,7 @@ internal class ProjectViewModel @Inject constructor(
     val screenStateFlow = _screenStateFlow.asStateFlow()
 
     fun loadProject(projectId: String) {
+        println("Load project")
         viewModelScope.launch {
             _screenStateFlow.value = _screenStateFlow.value.copy(loading = true)
             getProjectUseCase.getProjectById(projectId)

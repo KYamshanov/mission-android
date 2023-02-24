@@ -26,9 +26,8 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val navController = rememberNavController()
                     val screensProvider = ComposableScreensProvider()
-                    MissionNavigationHost(navController = navController, screensProvider = screensProvider)
-
                     Di.registration(NavigationComponent::class, NavigationComponentBuilder(navController))
+                    MissionNavigationHost(navController = navController, screensProvider = screensProvider)
                 }
             }
         }
@@ -37,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 internal fun MissionNavigationHost(
-    navController: NavHostController, screensProvider: ScreensProvider
+    navController: NavHostController, screensProvider: ScreensProvider,
 ) {
     val navigationRouteFactory = NavigationRouteFactory()
     val screens = screensProvider.supply().toList()

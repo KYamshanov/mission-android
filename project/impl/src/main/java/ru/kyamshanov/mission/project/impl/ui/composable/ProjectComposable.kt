@@ -3,9 +3,9 @@ package ru.kyamshanov.mission.project.impl.ui.composable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.project.api.di.ProjectComponent
@@ -19,12 +19,15 @@ internal fun ProjectComposable(
     projectViewModel: ProjectViewModel = viewModel { projectComponent.projectViewModel },
 ) {
 
-    val screenState by projectViewModel.screenStateFlow.collectAsState()
+    val screenState = projectViewModel.screenStateFlow.collectAsState()
+
+    LaunchedEffect(projectId) {
+        projectViewModel.loadProject(projectId = projectId)
+    }
 
     Column {
-
-        Text(text = if (screenState.loading) "Загрузка" else "Ложено")
-        Text(text = screenState.title.orEmpty())
-        Text(text = screenState.description.orEmpty())
+        Text(text = screenState.value.loading.toString())
+        Text(text = screenState.value.title.orEmpty())
+        Text(text = screenState.value.description.orEmpty())
     }
 }
