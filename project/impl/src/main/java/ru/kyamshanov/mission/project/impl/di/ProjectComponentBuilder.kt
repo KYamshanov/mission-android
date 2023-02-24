@@ -8,6 +8,7 @@ class ProjectComponentBuilder : ComponentBuilder<ProjectComponent> {
 
     override fun build(): ProjectComponent =
         DaggerModuleComponent.factory().create(
-            navigationComponent = requireNotNull(Di.getComponent())
+            navigationComponent = requireNotNull(Di.getComponent()),
+            networkComponent = requireNotNull(Di.getComponent()),
         )
 }

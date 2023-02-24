@@ -16,7 +16,7 @@ internal fun AuthenticationComposable(
     moduleComponent: ModuleComponent = requireNotNull(Di.getInternalComponent<AuthenticationComponent, ModuleComponent>()),
 
     authViewModel: AuthenticationViewModel = viewModel { moduleComponent.authenticationViewModel },
-    loginViewModel: LoginViewModel = viewModel { moduleComponent.loginViewModel }
+    loginViewModel: LoginViewModel = viewModel { moduleComponent.loginViewModel },
 ) {
     val screenState = authViewModel.screenState.collectAsState(initial = LOADER)
 

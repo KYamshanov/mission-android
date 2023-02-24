@@ -1,8 +1,8 @@
 package ru.kyamshanov.mission.di_dagger.impl
 
+import kotlin.reflect.KClass
 import ru.kyamshanov.mission.dagger.ComponentBuilder
 import ru.kyamshanov.mission.dagger.CoreComponent
-import kotlin.reflect.KClass
 
 private const val CORE_COMPONENT_KEY = "core"
 
@@ -26,6 +26,7 @@ object Di {
 
     fun <T : Any> registration(clazz: KClass<T>, builder: ComponentBuilder<T>) {
         this.builders[clazz] = builder
+        componentsHolder.remove(clazz)
     }
 
     @Suppress("UNCHECKED_CAST")

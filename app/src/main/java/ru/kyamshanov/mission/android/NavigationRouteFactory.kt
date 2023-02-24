@@ -28,6 +28,7 @@ class NavigationRouteFactory {
             val tail = (this as? ParameterizedComposableScreen)?.getTail().orEmpty()
             destination + tail
         }
+
         else -> throw IllegalArgumentException()
     }
 

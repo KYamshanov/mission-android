@@ -1,15 +1,15 @@
 package ru.kyamshanov.mission.navigation_core.impl
 
 import androidx.navigation.NavController
+import javax.inject.Inject
 import ru.kyamshanov.mission.navigation_core.api.NavigationBoundaryData
 import ru.kyamshanov.mission.navigation_core.api.Navigator
 import ru.kyamshanov.mission.navigation_core.api.Screen
 import ru.kyamshanov.mission.navigation_core.common.DestinationScreen
 import ru.kyamshanov.mission.navigation_core.common.ParameterizedComposableScreen
-import javax.inject.Inject
 
 class NavigatorImpl @Inject constructor(
-    private val controller: NavController
+    private val controller: NavController,
 ) : Navigator {
 
     override fun navigateTo(screen: Screen) {
@@ -28,6 +28,7 @@ class NavigatorImpl @Inject constructor(
                     }
                 }
             }
+
             else -> throw IllegalStateException("Screen implementation isn`t be able to navigate")
         }
     }
@@ -47,7 +48,7 @@ class NavigatorImpl @Inject constructor(
 
     private fun ParameterizedComposableScreen.getTail() = buildString {
         parameters.forEach { (key, value) ->
-            append("?$key={$value}")
+            append("?$key=$value")
         }
     }
 }

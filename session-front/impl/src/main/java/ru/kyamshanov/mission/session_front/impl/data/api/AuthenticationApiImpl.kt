@@ -4,7 +4,7 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import ru.kyamshanov.mission.network_core.api.RequestFactory
-import ru.kyamshanov.mission.network_core.api.utils.exposeException
+import ru.kyamshanov.mission.network_core.api.utils.retrieveBody
 import ru.kyamshanov.mission.session_front.impl.data.model.BlockRefreshRqDto
 import ru.kyamshanov.mission.session_front.impl.data.model.CheckAccessRqDto
 import ru.kyamshanov.mission.session_front.impl.data.model.CheckAccessRsDto
@@ -22,7 +22,7 @@ internal class AuthenticationApiImpl @Inject constructor(
             contentType(ContentType.Application.Json)
             setBody(rq)
         }
-        response.exposeException()
+        response.retrieveBody()
     }
 
     override suspend fun check(rq: CheckAccessRqDto): Result<CheckAccessRsDto> = runCatching {
@@ -30,7 +30,7 @@ internal class AuthenticationApiImpl @Inject constructor(
             contentType(ContentType.Application.Json)
             setBody(rq)
         }
-        response.exposeException()
+        response.retrieveBody()
     }
 
     override suspend fun refresh(rq: RefreshRqDto): Result<TokensRsDto> = runCatching {
@@ -38,7 +38,7 @@ internal class AuthenticationApiImpl @Inject constructor(
             contentType(ContentType.Application.Json)
             setBody(rq)
         }
-        response.exposeException()
+        response.retrieveBody()
     }
 
     override suspend fun blockRefresh(rq: BlockRefreshRqDto): Result<Unit> = runCatching {
@@ -46,6 +46,6 @@ internal class AuthenticationApiImpl @Inject constructor(
             contentType(ContentType.Application.Json)
             setBody(rq)
         }
-        response.exposeException()
+        response.retrieveBody()
     }
 }
