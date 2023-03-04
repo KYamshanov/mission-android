@@ -64,4 +64,5 @@ dependencies {
     implementation project(path: ':creating-project:impl')
     implementation project(path: ':finding-user:impl')
     implementation project(path: ':project:impl')
+    implementation project(path: ':profile-facade:impl')
 }

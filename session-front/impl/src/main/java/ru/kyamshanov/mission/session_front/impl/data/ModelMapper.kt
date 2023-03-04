@@ -4,6 +4,7 @@ import ru.kyamshanov.mission.session_front.impl.data.model.CheckAccessRsDto
 import ru.kyamshanov.mission.session_front.impl.data.model.TokensRsDto
 import ru.kyamshanov.mission.session_front.impl.domain.model.AccessData
 import ru.kyamshanov.mission.session_front.impl.domain.model.AccessStatus
+import ru.kyamshanov.mission.profile_facade.api.domain.model.ProfileInfo
 
 internal fun TokensRsDto.toDomain() = AccessData(
     accessToken = accessToken.accessToken, refreshToken = refreshToken

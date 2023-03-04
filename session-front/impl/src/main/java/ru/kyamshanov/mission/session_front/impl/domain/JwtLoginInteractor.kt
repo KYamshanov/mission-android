@@ -4,7 +4,7 @@ import ru.kyamshanov.mission.session_front.impl.domain.model.AccessData
 import ru.kyamshanov.mission.session_front.impl.domain.model.AccessStatus
 import ru.kyamshanov.mission.session_front.impl.domain.model.Token
 
-internal interface LoginInteractor {
+internal interface JwtLoginInteractor {
 
     suspend fun login(login: String, password: CharSequence): Result<AccessData>
 

@@ -10,6 +10,7 @@ class SessionFrontComponentBuilder : ComponentBuilder<SessionFrontComponent> {
         DaggerModuleComponent.factory()
             .create(
                 baseCoreComponent = requireNotNull(Di.getComponent()),
-                networkComponent = requireNotNull(Di.getComponent())
+                networkComponent = requireNotNull(Di.getComponent()),
+                profileFacadeComponent = requireNotNull(Di.getComponent()),
             )
 }

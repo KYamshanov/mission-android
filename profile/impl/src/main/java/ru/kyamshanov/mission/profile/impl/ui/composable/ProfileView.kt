@@ -15,7 +15,7 @@ import ru.kyamshanov.mission.profile.impl.ui.viewmodel.ProfileViewModel
 @Composable
 internal fun ProfileView(
     screenState: ProfileScreenState,
-    viewModel: ProfileViewModel
+    viewModel: ProfileViewModel,
 ) {
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -23,6 +23,8 @@ internal fun ProfileView(
             for (role in screenState.roles) {
                 item { Text(text = role.name) }
             }
+            item { Text(text = screenState.age) }
+            item { Text(text = screenState.name) }
         }
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
             Button(onClick = {
