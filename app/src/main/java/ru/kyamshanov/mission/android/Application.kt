@@ -1,6 +1,7 @@
 package ru.kyamshanov.mission.android
 
 import ru.kyamshanov.mission.authentication.impl.di.AuthenticationComponentBuilder
+import ru.kyamshanov.mission.background_registration.impl.di.BackgroundRegistrationComponentBuilder
 import ru.kyamshanov.mission.base_core.impl.di.BaseCoreComponentBuilder
 import ru.kyamshanov.mission.creating_project.impl.di.CreatingProjectComponentBuilder
 import ru.kyamshanov.mission.di_dagger.impl.Di
@@ -30,5 +31,6 @@ internal class Application : android.app.Application() {
         Di.registration(FindingUserComponentBuilder())
         Di.registration(ProjectComponentBuilder())
         Di.registration(ProfileFacadeComponentBuilder())
+        Di.registration(BackgroundRegistrationComponentBuilder())
     }
 }
