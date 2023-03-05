@@ -1,6 +1,7 @@
 package ru.kyamshanov.mission.android
 
 import ru.kyamshanov.mission.authentication.impl.ui.screen.AuthenticationScreen
+import ru.kyamshanov.mission.background_registration.impl.ui.screen.BackgroundRegistrationScreen
 import ru.kyamshanov.mission.creating_project.impl.ui.screen.CreatingProjectScreen
 import ru.kyamshanov.mission.finding_user.impl.ui.screen.FindingUserScreen
 import ru.kyamshanov.mission.main_screen_feature.impl.ui.screen.MainScreen
@@ -17,5 +18,6 @@ internal class ComposableScreensProvider : ScreensProvider {
         CreatingProjectScreen(),
         FindingUserScreen(),
         ProjectScreen(),
+        BackgroundRegistrationScreen()
     )
 }

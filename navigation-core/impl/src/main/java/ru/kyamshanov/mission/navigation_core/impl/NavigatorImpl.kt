@@ -5,6 +5,8 @@ import javax.inject.Inject
 import ru.kyamshanov.mission.navigation_core.api.NavigationBoundaryData
 import ru.kyamshanov.mission.navigation_core.api.Navigator
 import ru.kyamshanov.mission.navigation_core.api.Screen
+import ru.kyamshanov.mission.navigation_core.common.BOUNDARY_DATA_HOLDER_KEY
+import ru.kyamshanov.mission.navigation_core.common.BoundaryDataComposableScreen
 import ru.kyamshanov.mission.navigation_core.common.DestinationScreen
 import ru.kyamshanov.mission.navigation_core.common.ParameterizedComposableScreen
 
@@ -16,6 +18,9 @@ class NavigatorImpl @Inject constructor(
         when (screen) {
             is DestinationScreen -> controller.navigate(screen.getDestination())
             else -> throw IllegalStateException("Screen implementation isn`t be able to navigate")
+        }
+        if (screen is BoundaryDataComposableScreen) {
+            controller.currentBackStackEntry?.savedStateHandle?.set(BOUNDARY_DATA_HOLDER_KEY, screen.boundaryData)
         }
     }
 
@@ -30,6 +35,9 @@ class NavigatorImpl @Inject constructor(
             }
 
             else -> throw IllegalStateException("Screen implementation isn`t be able to navigate")
+        }
+        if (screen is BoundaryDataComposableScreen) {
+            controller.currentBackStackEntry?.savedStateHandle?.set(BOUNDARY_DATA_HOLDER_KEY, screen.boundaryData)
         }
     }
 

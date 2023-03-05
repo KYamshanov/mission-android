@@ -25,7 +25,9 @@ internal class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             (sessionInfo.session as? LoggedSession)?.userInfo?.run {
                 ProfileScreenState(
-                    roles = roles
+                    roles = roles,
+                    age = this.profileInfo.age.toString(),
+                    name = this.profileInfo.name.orEmpty()
                 )
             }?.also { _screenState.emit(it) }
         }

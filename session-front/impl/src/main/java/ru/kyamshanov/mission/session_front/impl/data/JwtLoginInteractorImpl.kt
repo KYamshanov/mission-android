@@ -6,16 +6,16 @@ import ru.kyamshanov.mission.session_front.impl.data.model.BlockRefreshRqDto
 import ru.kyamshanov.mission.session_front.impl.data.model.CheckAccessRqDto
 import ru.kyamshanov.mission.session_front.impl.data.model.RefreshRqDto
 import ru.kyamshanov.mission.session_front.impl.data.model.UserDto
-import ru.kyamshanov.mission.session_front.impl.domain.LoginInteractor
+import ru.kyamshanov.mission.session_front.impl.domain.JwtLoginInteractor
 import ru.kyamshanov.mission.session_front.impl.domain.model.AccessData
 import ru.kyamshanov.mission.session_front.impl.domain.model.AccessStatus
 import ru.kyamshanov.mission.session_front.impl.domain.model.Token
 import javax.inject.Inject
 
-internal class LoginInteractorImpl @Inject constructor(
+internal class JwtLoginInteractorImpl @Inject constructor(
     private val authenticationApi: AuthenticationApi,
     private val device: Device
-) : LoginInteractor {
+) : JwtLoginInteractor {
 
     override suspend fun login(login: String, password: CharSequence): Result<AccessData> =
         authenticationApi.login(UserDto(login, password, info = device.info))

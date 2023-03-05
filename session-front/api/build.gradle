@@ -1,6 +1,8 @@
 apply from: "$rootDir/gradle-base/api-kotlin-base.gradle"
 
 dependencies {
+    api project(":profile-facade:api")
     implementation project(":di-dagger:api")
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines")
 }

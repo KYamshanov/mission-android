@@ -10,6 +10,6 @@ class ProjectLauncherImpl @Inject constructor(
 ) : ProjectLauncher {
 
     override fun launch(projectId : String) {
-        navigator.replaceTo(ProjectScreen(projectId = projectId))
+        navigator.navigateTo(ProjectScreen(projectId = projectId))
     }
 }
