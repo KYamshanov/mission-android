@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.kyamshanov.mission.di_dagger.impl.Di
@@ -20,6 +21,11 @@ internal fun MainScreenComposable(
 
     navigationBarViewModel: NavigationBarViewModel = viewModel { moduleComponent.navigationBarViewModel }
 ) {
+
+    SideEffect {
+        println("Redraw MainScreen")
+    }
+
     Scaffold(
         backgroundColor = MissionTheme.colors.background,
         bottomBar = {

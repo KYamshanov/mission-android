@@ -1,0 +1,28 @@
+package ru.kyamshanov.mission.profile_facade.impl.domain.interactor
+
+import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import ru.kyamshanov.mission.background_registration.api.ui.navigation.BackgroundRegistrationLauncher
+import ru.kyamshanov.mission.profile_facade.api.domain.interactor.VerifyingProfileInteractor
+import ru.kyamshanov.mission.profile_facade.impl.domain.model.toRegistrationField
+import ru.kyamshanov.mission.profile_facade.impl.domain.repository.ProfileStorableRepository
+import ru.kyamshanov.mission.profile_facade.impl.domain.usecase.VerifyProfileCompletedUseCase
+
+internal class VerifyingProfileInteractorImpl @Inject constructor(
+    private val profileStorableRepository: ProfileStorableRepository,
+    private val verifyProfileCompletedUseCase: VerifyProfileCompletedUseCase,
+    private val backgroundRegistrationLauncher: dagger.Lazy<BackgroundRegistrationLauncher>,
+) : VerifyingProfileInteractor {
+
+    override suspend fun completeProfile() {
+        runCatching {
+            val profile = profileStorableRepository.getProfile()
+            val requiredFields = verifyProfileCompletedUseCase.verify(profile)
+            if (requiredFields.isNotEmpty()) withContext(Dispatchers.Main) {
+                backgroundRegistrationLauncher.get()
+                    .launch(requiredFields.mapNotNull { it.toRegistrationField() })
+            }
+        }
+    }
+}

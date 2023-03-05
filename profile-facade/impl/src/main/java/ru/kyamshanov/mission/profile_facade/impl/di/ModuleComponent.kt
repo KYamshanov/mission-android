@@ -7,7 +7,9 @@ import ru.kyamshanov.mission.profile_facade.api.di.ProfileFacadeComponent
 
 @Component(
     modules = [
-        BindsModule::class
+        BindsModule::class,
+        ConfigurationModule::class,
+        ProvidesModule::class,
     ],
     dependencies = [
         NetworkComponent::class

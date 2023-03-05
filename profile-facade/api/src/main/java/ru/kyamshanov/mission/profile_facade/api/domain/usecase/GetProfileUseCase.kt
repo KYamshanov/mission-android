@@ -4,5 +4,7 @@ import ru.kyamshanov.mission.profile_facade.api.domain.model.ProfileInfo
 
 interface GetProfileUseCase {
 
-    suspend fun getProfile(authUserId: String): Result<ProfileInfo>
+    suspend fun fetchProfile(authUserId: String, refresh: Boolean): Result<ProfileInfo>
+
+    suspend fun getProfile(): Result<ProfileInfo>
 }

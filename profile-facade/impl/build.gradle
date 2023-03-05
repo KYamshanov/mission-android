@@ -4,6 +4,7 @@ apply from: "$rootDir/gradle-base/dagger.gradle"
 dependencies {
     api project(":profile-facade:api")
     implementation project(":network-core:api")
+    implementation project(":background-registration:api")
 
     testImplementation("junit:junit:$junit_version")
 }

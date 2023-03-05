@@ -9,12 +9,17 @@ internal class ProfileStorableRepositoryImpl @Inject constructor(
     private val profileApi: ru.kyamshanov.mission.profile_facade.impl.data.api.ProfileApi,
 ) : ProfileStorableRepository {
 
-    private var savedProfile: ProfileInfoMap? = null
+    private var savedProfile: Pair<String, ProfileInfoMap>? = null
 
     override suspend fun fetchProfile(authUserId: String, refresh: Boolean): ProfileInfoMap =
-        savedProfile?.takeIf { refresh.not() }
-            ?: profileApi.fetch(authUserId)
-                .getOrThrow()
-                .toDomain()
-                .also { savedProfile = it }
+        savedProfile?.takeIf { refresh.not() && it.first == authUserId }?.second
+            ?: run {
+                profileApi.fetch(authUserId)
+                    .getOrThrow()
+                    .toDomain()
+            }
+                .also { savedProfile = Pair(authUserId, it) }
+
+    override fun getProfile(): ProfileInfoMap = savedProfile?.second
+        ?: throw IllegalStateException("The profile has not been initialized yet. Please, use fetchProfile")
 }

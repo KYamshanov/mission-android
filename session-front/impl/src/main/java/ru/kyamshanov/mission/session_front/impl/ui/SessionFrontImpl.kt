@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.authentication.di.AuthenticationComponent
 import ru.kyamshanov.mission.base_core.api.MissionPreferences
 import ru.kyamshanov.mission.di_dagger.impl.Di
+import ru.kyamshanov.mission.profile_facade.api.domain.interactor.VerifyingProfileInteractor
 import ru.kyamshanov.mission.profile_facade.api.domain.usecase.GetProfileUseCase
 import ru.kyamshanov.mission.session_front.api.SessionFront
 import ru.kyamshanov.mission.session_front.api.UserInfo
@@ -31,6 +32,7 @@ internal class SessionFrontImpl @Inject constructor(
     private val jwtTokenInteractor: JwtTokenInteractor,
     private val sessionInfoImpl: SessionInfoImpl,
     private val getProfileUseCase: GetProfileUseCase,
+    private val verifyingProfileInteractor: VerifyingProfileInteractor,
 ) : SessionFront {
 
     private var sessionLifecycleScope: CoroutineScope? = null
@@ -42,7 +44,10 @@ internal class SessionFrontImpl @Inject constructor(
     init {
         CoroutineScope(Job()).launch {
             refreshSession()
-                .onSuccess { startAutoRefreshing() }
+                .onSuccess {
+                    verifyingProfileInteractor.completeProfile()
+                    startAutoRefreshing()
+                }
                 .onFailure { makeUnauthorizedSession(it) }
             cancel()
         }
@@ -56,6 +61,7 @@ internal class SessionFrontImpl @Inject constructor(
         }.let { createJwtSession(it) }
             .also { sessionInfoImpl.session = it }
             .let { finishSetupSession(login, it) }
+            .also { verifyingProfileInteractor.completeProfile() }
             .also { startAutoRefreshing() }
     }
 
@@ -119,7 +125,7 @@ internal class SessionFrontImpl @Inject constructor(
 
     private suspend fun finishSetupSession(login: String, jwtLoggedSession: JwtLoggedSession): LoggedSession =
         jwtTokenInteractor.parse(jwtLoggedSession.refreshToken).let { jwtModel ->
-            val profile = getProfileUseCase.getProfile(jwtModel.subject).getOrThrow()
+            val profile = getProfileUseCase.fetchProfile(jwtModel.subject, refresh = false).getOrThrow()
             UserInfo(
                 userId = profile.userId,
                 login = login,

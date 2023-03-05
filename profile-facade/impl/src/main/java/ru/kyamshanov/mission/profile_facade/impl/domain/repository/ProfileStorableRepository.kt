@@ -8,4 +8,7 @@ internal interface ProfileStorableRepository {
         authUserId: String,
         refresh: Boolean,
     ): ProfileInfoMap
+
+    @Throws(IllegalStateException::class)
+    fun getProfile(): ProfileInfoMap
 }

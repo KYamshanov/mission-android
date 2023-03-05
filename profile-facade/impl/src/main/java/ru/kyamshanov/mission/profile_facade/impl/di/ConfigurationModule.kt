@@ -8,7 +8,7 @@ import ru.kyamshanov.mission.profile_facade.impl.domain.model.PROFILE_NAME_KEY
 import ru.kyamshanov.mission.profile_facade.impl.domain.model.ProfileFieldStyle
 
 @Module
-internal interface ConfigurationModule {
+internal class ConfigurationModule {
 
     @Provides
     @ComponentItem
