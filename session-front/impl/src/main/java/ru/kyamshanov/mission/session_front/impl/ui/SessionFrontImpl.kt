@@ -11,7 +11,6 @@ import ru.kyamshanov.mission.authentication.di.AuthenticationComponent
 import ru.kyamshanov.mission.base_core.api.MissionPreferences
 import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.profile_facade.api.domain.interactor.VerifyingProfileInteractor
-import ru.kyamshanov.mission.profile_facade.api.domain.usecase.GetProfileUseCase
 import ru.kyamshanov.mission.session_front.api.SessionFront
 import ru.kyamshanov.mission.session_front.api.UserInfo
 import ru.kyamshanov.mission.session_front.api.model.UserRole
@@ -23,6 +22,7 @@ import ru.kyamshanov.mission.session_front.impl.SessionInfoImpl
 import ru.kyamshanov.mission.session_front.impl.domain.JwtLoginInteractor
 import ru.kyamshanov.mission.session_front.impl.domain.JwtTokenInteractor
 import ru.kyamshanov.mission.session_front.impl.domain.model.AccessData
+import ru.kyamshanov.mission.session_front.impl.domain.usecase.IdentifyUserUseCase
 import ru.kyamshanov.mission.session_front.impl.ui.session.JwtLoggedSessionImpl
 import ru.kyamshanov.mission.session_front.impl.ui.session.LoggedSessionImpl
 
@@ -31,7 +31,7 @@ internal class SessionFrontImpl @Inject constructor(
     private val missionPreferences: MissionPreferences,
     private val jwtTokenInteractor: JwtTokenInteractor,
     private val sessionInfoImpl: SessionInfoImpl,
-    private val getProfileUseCase: GetProfileUseCase,
+    private val identifyUserUseCase: IdentifyUserUseCase,
     private val verifyingProfileInteractor: VerifyingProfileInteractor,
 ) : SessionFront {
 
@@ -125,16 +125,15 @@ internal class SessionFrontImpl @Inject constructor(
 
     private suspend fun finishSetupSession(login: String, jwtLoggedSession: JwtLoggedSession): LoggedSession =
         jwtTokenInteractor.parse(jwtLoggedSession.refreshToken).let { jwtModel ->
-            val profile = getProfileUseCase.fetchProfile(jwtModel.subject, refresh = false).getOrThrow()
             UserInfo(
-                userId = profile.userId,
                 login = login,
-                roles = jwtModel.roles.map { UserRole.valueOf(it) },
-                profileInfo = profile
+                roles = jwtModel.roles.map { UserRole.valueOf(it) }
             )
         }.let { userInfo ->
+            val idToken = identifyUserUseCase.identify().getOrThrow()
             LoggedSessionImpl(
                 userInfo = userInfo,
+                idToken = idToken,
                 jwtLoggedSession = jwtLoggedSession,
                 jwtLoginInteractor = jwtLoginInteractor
             )

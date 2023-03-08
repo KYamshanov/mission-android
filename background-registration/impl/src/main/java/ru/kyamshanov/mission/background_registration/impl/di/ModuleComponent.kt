@@ -1,7 +1,6 @@
 package ru.kyamshanov.mission.background_registration.impl.di
 
 import dagger.Component
-import ru.kyamshanov.mission.background_registration.api.di.BackgroundRegistrationComponent
 import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
 
@@ -14,7 +13,7 @@ import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
     ]
 )
 @ComponentItem
-internal interface ModuleComponent : BackgroundRegistrationComponent {
+internal interface ModuleComponent : InternalComponentInterface {
 
     @Component.Factory
     interface Factory {

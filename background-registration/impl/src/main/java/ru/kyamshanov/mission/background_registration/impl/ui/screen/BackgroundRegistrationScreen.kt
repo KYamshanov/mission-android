@@ -17,7 +17,7 @@ class BackgroundRegistrationScreen(
         get() = requireNotNull(nullableBoundaryData) { "Boundary data cannot be nul for open screen. Please pass data through constructor" }
 
     override val composableSupplier: @Composable (SerializableNavigationBoundaryData) -> Unit =
-        { rawData -> BackgroundRegistrationComposable(rawData as BackgroundRegistrationBoundaryData) }
+        { rawData -> BackgroundRegistrationComposable(backgroundRegistrationBoundaryData = rawData as BackgroundRegistrationBoundaryData) }
 
     override val destination: String
         get() = DESTINATION_KEY
