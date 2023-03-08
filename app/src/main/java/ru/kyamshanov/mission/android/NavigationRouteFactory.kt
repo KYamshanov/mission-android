@@ -1,6 +1,6 @@
 package ru.kyamshanov.mission.android
 
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import ru.kyamshanov.mission.navigation_core.api.Screen
@@ -27,10 +27,12 @@ class NavigationRouteFactory {
                 screen.composableSupplier.invoke(parameters)
             }
             is BoundaryDataComposableScreen -> composable(routeDestination) { backStackEntry ->
-                val parameters: SerializableNavigationBoundaryData? = remember {
-                    backStackEntry.savedStateHandle.remove<SerializableNavigationBoundaryData>(BOUNDARY_DATA_HOLDER_KEY)
+                val parameters: SerializableNavigationBoundaryData = rememberSaveable {
+                    val removedBoundaryData: SerializableNavigationBoundaryData? =
+                        backStackEntry.savedStateHandle.remove(BOUNDARY_DATA_HOLDER_KEY)
+                    requireNotNull(removedBoundaryData) { "Screen ${screen::class.simpleName} cannot be open without data" }
                 }
-                screen.composableSupplier.invoke(requireNotNull(parameters) { "Screen ${screen::class.simpleName} cannot be open without data" } )
+                screen.composableSupplier.invoke(parameters)
             }
         }
     }

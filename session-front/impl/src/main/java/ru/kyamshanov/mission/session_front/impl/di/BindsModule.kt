@@ -9,8 +9,12 @@ import ru.kyamshanov.mission.session_front.impl.data.JwtLoginInteractorImpl
 import ru.kyamshanov.mission.session_front.impl.data.JwtTokenInteractorImpl
 import ru.kyamshanov.mission.session_front.impl.data.api.AuthenticationApi
 import ru.kyamshanov.mission.session_front.impl.data.api.AuthenticationApiImpl
+import ru.kyamshanov.mission.session_front.impl.data.api.IdentifyApi
+import ru.kyamshanov.mission.session_front.impl.data.api.IdentifyApiImpl
+import ru.kyamshanov.mission.session_front.impl.data.usecase.IdentifyUserUseCaseImpl
 import ru.kyamshanov.mission.session_front.impl.domain.JwtLoginInteractor
 import ru.kyamshanov.mission.session_front.impl.domain.JwtTokenInteractor
+import ru.kyamshanov.mission.session_front.impl.domain.usecase.IdentifyUserUseCase
 import ru.kyamshanov.mission.session_front.impl.ui.SessionFrontImpl
 
 @dagger.Module
@@ -35,4 +39,12 @@ internal interface BindsModule {
     @Binds
     @ComponentItem
     fun bindJwtTokenInteractor(impl: JwtTokenInteractorImpl): JwtTokenInteractor
+
+    @Binds
+    @ComponentItem
+    fun IdentifyApiImpl.bindIdentifyApi(): IdentifyApi
+
+    @Binds
+    @ComponentItem
+    fun IdentifyUserUseCaseImpl.bindIdentifyUserUseCaseImpl(): IdentifyUserUseCase
 }

@@ -3,4 +3,5 @@
     <string name="create">Создать</string>
     <string name="first_name">Имя</string>
     <string name="age">Возраст</string>
+    <string name="save">Сохранить</string>
 </resources>
