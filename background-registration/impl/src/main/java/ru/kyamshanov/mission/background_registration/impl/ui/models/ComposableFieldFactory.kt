@@ -21,6 +21,7 @@ internal interface ComposableFieldFactory {
     ): (@Composable () -> Unit)
 }
 
+
 internal class ComposableFieldFactoryImpl @Inject constructor(
 
 ) : ComposableFieldFactory {
@@ -28,7 +29,7 @@ internal class ComposableFieldFactoryImpl @Inject constructor(
     override fun createFieldState(registrationField: RegistrationField): MutableState<out Any?> =
         when (registrationField) {
             AGE -> mutableStateOf<String?>(null)
-            NAME -> mutableStateOf<String?>(null)
+            NAME -> mutableStateOf<Int?>(null)
         }
 
     @Suppress("UNCHECKED_CAST")
@@ -38,7 +39,7 @@ internal class ComposableFieldFactoryImpl @Inject constructor(
     ): (@Composable () -> Unit) {
         when (registrationField) {
             AGE -> return {
-                TextRegistrationField(stringResource(id = UiR.string.age), fieldValueState as MutableState<String?>)
+                IntRegistrationField(stringResource(id = UiR.string.age), fieldValueState as MutableState<Int?>)
             }
             NAME -> return {
                 TextRegistrationField(
@@ -55,6 +56,15 @@ internal class ComposableFieldFactoryImpl @Inject constructor(
         TextField(
             value = fieldValueState.value.orEmpty(),
             onValueChange = { value -> fieldValueState.value = value },
+            label = { Text(text = label) },
+        )
+    }
+
+    @Composable
+    private fun IntRegistrationField(label: String, fieldValueState: MutableState<Int?>) {
+        TextField(
+            value = fieldValueState.value?.toString().orEmpty(),
+            onValueChange = { value -> value.toIntOrNull()?.let { fieldValueState.value = it } },
             label = { Text(text = label) },
         )
     }

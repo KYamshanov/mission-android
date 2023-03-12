@@ -10,13 +10,8 @@ internal class GetProfileUseCaseImpl @Inject constructor(
     private val profileStorableRepository: ProfileStorableRepository,
 ) : GetProfileUseCase {
 
-    override suspend fun fetchProfile(authUserId: String, refresh: Boolean): Result<ProfileInfo> = runCatching {
-        profileStorableRepository.fetchProfile(authUserId, refresh = refresh)
-            .toProfileInfo()
-    }
-
-    override suspend fun getProfile(): Result<ProfileInfo> = runCatching {
-        profileStorableRepository.getProfile()
+    override suspend fun fetchProfile(refresh: Boolean): Result<ProfileInfo> = runCatching {
+        profileStorableRepository.fetchProfile(refresh = refresh)
             .toProfileInfo()
     }
 }

@@ -17,7 +17,7 @@ internal class VerifyingProfileInteractorImpl @Inject constructor(
 
     override suspend fun completeProfile() {
         runCatching {
-            val profile = profileStorableRepository.getProfile()
+            val profile = profileStorableRepository.fetchProfile(refresh = false)
             val requiredFields = verifyProfileCompletedUseCase.verify(profile)
             if (requiredFields.isNotEmpty()) withContext(Dispatchers.Main) {
                 backgroundRegistrationLauncher.get()

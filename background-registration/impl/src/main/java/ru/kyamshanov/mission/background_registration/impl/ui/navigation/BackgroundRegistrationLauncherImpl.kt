@@ -12,6 +12,6 @@ class BackgroundRegistrationLauncherImpl @Inject constructor(
 ) : BackgroundRegistrationLauncher {
 
     override fun launch(requiredFields: List<RegistrationField>) {
-        navigator.replaceTo(BackgroundRegistrationScreen(BackgroundRegistrationBoundaryData(requiredFields)))
+        navigator.navigateTo(BackgroundRegistrationScreen(BackgroundRegistrationBoundaryData(requiredFields)))
     }
 }

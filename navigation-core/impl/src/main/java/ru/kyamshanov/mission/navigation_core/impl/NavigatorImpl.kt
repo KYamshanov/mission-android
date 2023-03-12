@@ -41,6 +41,10 @@ class NavigatorImpl @Inject constructor(
         }
     }
 
+    override fun exit() {
+        controller.navigateUp()
+    }
+
     override fun <ReturnDataType : NavigationBoundaryData?> backWithResult(key: String, data: ReturnDataType) {
         controller.popBackStack()
         controller.currentBackStackEntry?.savedStateHandle?.set(key, data)
