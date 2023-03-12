@@ -7,13 +7,15 @@ import ru.kyamshanov.mission.authentication.impl.ui.viewmodel.LoginViewModel
 import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.main_screen_feature.api.di.MainScreenComponent
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
+import ru.kyamshanov.mission.profile_facade.api.di.ProfileFacadeComponent
 import ru.kyamshanov.mission.session_front.api.di.SessionFrontComponent
 
 @Component(
     dependencies = [
         NavigationComponent::class,
         SessionFrontComponent::class,
-        MainScreenComponent::class
+        MainScreenComponent::class,
+        ProfileFacadeComponent::class
     ],
     modules = [
         BindsModule::class
@@ -32,7 +34,8 @@ internal interface ModuleComponent : AuthenticationComponent {
         fun create(
             navigationComponent: NavigationComponent,
             sessionFrontComponent: SessionFrontComponent,
-            mainScreenComponent: MainScreenComponent
+            mainScreenComponent: MainScreenComponent,
+            profileFacadeComponent: ProfileFacadeComponent,
         ): ModuleComponent
     }
 }

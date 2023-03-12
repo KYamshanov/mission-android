@@ -12,5 +12,6 @@ class AuthenticationComponentBuilder : ComponentBuilder<AuthenticationComponent>
                 navigationComponent = requireNotNull(Di.getComponent()),
                 sessionFrontComponent = requireNotNull(Di.getComponent()),
                 mainScreenComponent = requireNotNull(Di.getComponent()),
+                profileFacadeComponent = requireNotNull(Di.getComponent()),
             )
 }

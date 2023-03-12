@@ -14,7 +14,7 @@ import ru.kyamshanov.mission.profile.impl.ui.viewmodel.ProfileViewModel
 
 @Composable
 internal fun ProfileView(
-    screenState: ProfileScreenState,
+    screenState: ProfileScreenState.Info,
     viewModel: ProfileViewModel,
 ) {
 

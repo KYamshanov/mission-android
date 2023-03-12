@@ -13,4 +13,5 @@ dependencies {
     implementation project(":navigation-core:common")
     implementation project(":ui-core")
     implementation project(":network-core:api")
+    implementation project(":profile-facade:api")
 }

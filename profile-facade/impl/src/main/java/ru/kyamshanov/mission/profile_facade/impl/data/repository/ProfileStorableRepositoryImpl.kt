@@ -10,7 +10,8 @@ internal class ProfileStorableRepositoryImpl @Inject constructor(
     private val profileApi: ProfileApi,
 ) : ProfileStorableRepository {
 
-    private var savedProfile: ProfileInfoMap? = null
+    override var savedProfile: ProfileInfoMap? = null
+        private set
 
     override suspend fun fetchProfile(refresh: Boolean): ProfileInfoMap =
         savedProfile?.takeIf { refresh.not() }

@@ -6,6 +6,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.main_screen_feature.api.navigation.MainScreenLauncher
+import ru.kyamshanov.mission.profile_facade.api.domain.interactor.VerifyingProfileInteractor
 import ru.kyamshanov.mission.session_front.api.di.SessionFrontComponent
 import ru.kyamshanov.mission.session_front.api.session.LoggedSession
 import ru.kyamshanov.mission.session_front.api.session.Session
@@ -19,12 +20,14 @@ internal interface AuthenticationUseCase {
 internal class AuthenticationUseCaseImpl @Inject constructor(
     private val sessionComponent: SessionFrontComponent,
     private val mainScreenLauncher: MainScreenLauncher,
+    private val verifyingProfileInteractor: VerifyingProfileInteractor
 ) : AuthenticationUseCase {
 
     override suspend fun obtainSession() = runCatching {
         if (sessionComponent.sessionInfo is LoggedSession)
             mainScreenLauncher.launch()
         else awaitRefreshSession()
+        verifyingProfileInteractor.completeProfile(fetchProfile = true)
     }
 
     private suspend fun awaitRefreshSession() = coroutineScope {

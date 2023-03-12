@@ -10,5 +10,6 @@ class BackgroundRegistrationComponentBuilder : ComponentBuilder<BackgroundRegist
         DaggerModuleComponent.factory().create(
             navigationComponent = requireNotNull(Di.getComponent()),
             networkComponent = requireNotNull(Di.getComponent()),
+            profileFacadeComponent = requireNotNull(Di.getComponent()),
         )
 }
