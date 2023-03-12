@@ -15,9 +15,9 @@ internal class VerifyingProfileInteractorImpl @Inject constructor(
     private val backgroundRegistrationLauncher: dagger.Lazy<BackgroundRegistrationLauncher>,
 ) : VerifyingProfileInteractor {
 
-    override suspend fun completeProfile() {
+    override suspend fun completeProfile(fetchProfile: Boolean) {
         runCatching {
-            val profile = profileStorableRepository.fetchProfile(refresh = false)
+            val profile = profileStorableRepository.fetchProfile(refresh = fetchProfile)
             val requiredFields = verifyProfileCompletedUseCase.verify(profile)
             if (requiredFields.isNotEmpty()) withContext(Dispatchers.Main) {
                 backgroundRegistrationLauncher.get()

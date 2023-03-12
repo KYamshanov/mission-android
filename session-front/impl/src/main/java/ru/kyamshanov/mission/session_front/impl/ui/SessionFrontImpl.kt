@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.authentication.di.AuthenticationComponent
 import ru.kyamshanov.mission.base_core.api.MissionPreferences
 import ru.kyamshanov.mission.di_dagger.impl.Di
-import ru.kyamshanov.mission.profile_facade.api.domain.interactor.VerifyingProfileInteractor
 import ru.kyamshanov.mission.session_front.api.SessionFront
 import ru.kyamshanov.mission.session_front.api.UserInfo
 import ru.kyamshanov.mission.session_front.api.model.UserRole
@@ -32,7 +31,6 @@ internal class SessionFrontImpl @Inject constructor(
     private val jwtTokenInteractor: JwtTokenInteractor,
     private val sessionInfoImpl: SessionInfoImpl,
     private val identifyUserUseCase: IdentifyUserUseCase,
-    private val verifyingProfileInteractor: VerifyingProfileInteractor,
 ) : SessionFront {
 
     private var sessionLifecycleScope: CoroutineScope? = null
@@ -45,7 +43,6 @@ internal class SessionFrontImpl @Inject constructor(
         CoroutineScope(Job()).launch {
             refreshSession()
                 .onSuccess {
-                    verifyingProfileInteractor.completeProfile()
                     startAutoRefreshing()
                 }
                 .onFailure { makeUnauthorizedSession(it) }
@@ -53,7 +50,7 @@ internal class SessionFrontImpl @Inject constructor(
         }
     }
 
-    override suspend fun openSession(login: String, password: CharSequence): Result<Session> = kotlin.runCatching {
+    override suspend fun openSession(login: String, password: CharSequence): Result<Session> = runCatching {
         jwtLoginInteractor.login(login, password).getOrThrow().also {
             missionPreferences.saveValue(PREFERENCES_ACCESS_KEY, it.accessToken)
             missionPreferences.saveValue(PREFERENCES_REFRESH_KEY, it.refreshToken)
@@ -61,7 +58,6 @@ internal class SessionFrontImpl @Inject constructor(
         }.let { createJwtSession(it) }
             .also { sessionInfoImpl.session = it }
             .let { finishSetupSession(login, it) }
-            .also { verifyingProfileInteractor.completeProfile() }
             .also { startAutoRefreshing() }
     }
 

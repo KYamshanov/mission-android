@@ -10,6 +10,10 @@ internal class GetProfileUseCaseImpl @Inject constructor(
     private val profileStorableRepository: ProfileStorableRepository,
 ) : GetProfileUseCase {
 
+    override fun getProfile(): Result<ProfileInfo> = runCatching {
+        profileStorableRepository.savedProfile?.toProfileInfo() ?: throw IllegalStateException("Profile has not gotten yet")
+    }
+
     override suspend fun fetchProfile(refresh: Boolean): Result<ProfileInfo> = runCatching {
         profileStorableRepository.fetchProfile(refresh = refresh)
             .toProfileInfo()
