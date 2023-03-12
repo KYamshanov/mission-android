@@ -18,6 +18,7 @@ import javax.inject.Inject
 import ru.kyamshanov.mission.network_core.api.RequestFactory
 import ru.kyamshanov.mission.session_front.api.SessionInfo
 import ru.kyamshanov.mission.session_front.api.session.JwtLoggedSession
+import ru.kyamshanov.mission.session_front.api.session.LoggedSession
 
 class RequestFactoryImpl @Inject constructor(
     private val sessionInfo: SessionInfo,
@@ -32,6 +33,7 @@ class RequestFactoryImpl @Inject constructor(
         defaultRequest {
             url("http://192.168.43.29:80/")
             getAuthorizationHeader()?.let { header(HttpHeaders.Authorization, it) }
+            getIdTokenHeader()?.let { header(IDENTIFICATION_HEADER, it) }
         }
     }
 
@@ -44,6 +46,9 @@ class RequestFactoryImpl @Inject constructor(
     private fun getAuthorizationHeader(): String? =
         (sessionInfo.session as? JwtLoggedSession)?.accessToken
 
+    private fun getIdTokenHeader(): String? =
+        (sessionInfo.session as? LoggedSession)?.idToken?.value
+
     private inner class NetworkLogger : Logger {
 
         override fun log(message: String) {
@@ -54,5 +59,7 @@ class RequestFactoryImpl @Inject constructor(
     private companion object {
 
         const val LOG_TEG = "Network"
+
+        const val IDENTIFICATION_HEADER = "Mission-id"
     }
 }

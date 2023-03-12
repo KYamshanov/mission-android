@@ -6,6 +6,8 @@ interface Navigator {
 
     fun replaceTo(screen: Screen)
 
+    fun exit()
+
     /**
      * @see [ru.kyamshanov.mission.navigation_core.common.SerializableNavigationBoundaryData]
      */

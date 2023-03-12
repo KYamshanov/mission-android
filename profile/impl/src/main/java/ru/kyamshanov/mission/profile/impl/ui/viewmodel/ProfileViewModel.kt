@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.profile.impl.ui.model.ProfileScreenState
+import ru.kyamshanov.mission.profile_facade.api.domain.usecase.GetProfileUseCase
 import ru.kyamshanov.mission.session_front.api.SessionFront
 import ru.kyamshanov.mission.session_front.api.SessionInfo
 import ru.kyamshanov.mission.session_front.api.session.LoggedSession
@@ -15,6 +16,7 @@ import ru.kyamshanov.mission.session_front.api.session.LoggedSession
 internal class ProfileViewModel @Inject constructor(
     private val sessionInfo: SessionInfo,
     private val sessionFront: SessionFront,
+    private val getProfileUseCase: GetProfileUseCase,
 ) : ViewModel() {
 
     private val _screenState = MutableSharedFlow<ProfileScreenState>(replay = 1, onBufferOverflow = DROP_OLDEST)
@@ -24,10 +26,12 @@ internal class ProfileViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             (sessionInfo.session as? LoggedSession)?.userInfo?.run {
+                //TODO Переписать потом, уже нет сил
+                val profile = getProfileUseCase.fetchProfile().getOrThrow()
                 ProfileScreenState(
                     roles = roles,
-                    age = this.profileInfo.age.toString(),
-                    name = this.profileInfo.name.orEmpty()
+                    age = profile.age.toString(),
+                    name = profile.age.toString()
                 )
             }?.also { _screenState.emit(it) }
         }

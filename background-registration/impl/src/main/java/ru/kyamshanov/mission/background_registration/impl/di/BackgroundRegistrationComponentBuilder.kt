@@ -8,6 +8,7 @@ class BackgroundRegistrationComponentBuilder : ComponentBuilder<BackgroundRegist
 
     override fun build(): BackgroundRegistrationComponent =
         DaggerModuleComponent.factory().create(
-            navigationComponent = requireNotNull(Di.getComponent())
+            navigationComponent = requireNotNull(Di.getComponent()),
+            networkComponent = requireNotNull(Di.getComponent()),
         )
 }

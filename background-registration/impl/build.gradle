@@ -1,6 +1,11 @@
 apply from: "$rootDir/gradle-base/android-ui-base.gradle"
 apply from: "$rootDir/gradle-base/dagger.gradle"
 
+android {
+
+    resourcePrefix 'br_'
+}
+
 dependencies {
     api project(":background-registration:api")
 
