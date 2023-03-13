@@ -15,7 +15,7 @@ internal class ProjectViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _screenStateFlow =
-        MutableStateFlow(ProjectScreenState(loading = true, title = null, description = null))
+        MutableStateFlow(ProjectScreenState())
 
     val screenStateFlow = _screenStateFlow.asStateFlow()
 
@@ -27,7 +27,8 @@ internal class ProjectViewModel @Inject constructor(
                     _screenStateFlow.value = _screenStateFlow.value.copy(
                         title = projectInfo.title,
                         description = projectInfo.description,
-                        loading = false
+                        loading = false,
+                        participants = projectInfo.participants
                     )
                 }
                 .onFailure {

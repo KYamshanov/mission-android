@@ -8,12 +8,3 @@ internal interface GetProjectUseCase {
 
     suspend fun getProjectById(projectId: String): Result<ProjectInfo>
 }
-
-internal class GetProjectUseCaseImpl @Inject constructor(
-    private val projectGateway: ProjectGateway,
-) : GetProjectUseCase {
-
-    override suspend fun getProjectById(projectId: String): Result<ProjectInfo> = runCatching {
-        projectGateway.getProject(projectId = projectId)
-    }
-}

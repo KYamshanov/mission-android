@@ -6,6 +6,7 @@ import io.ktor.http.contentType
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import ru.kyamshanov.mission.creating_project.impl.data.model.AttachTeamRqDto
 import ru.kyamshanov.mission.creating_project.impl.data.model.CreateProjectRqDto
 import ru.kyamshanov.mission.creating_project.impl.data.model.CreateProjectRsDto
 import ru.kyamshanov.mission.network_core.api.RequestFactory
@@ -16,7 +17,15 @@ internal class ProjectApiImpl @Inject constructor(
 ) : ProjectApi {
 
     override suspend fun create(body: CreateProjectRqDto): CreateProjectRsDto = withContext(Dispatchers.IO) {
-        val response = requestFactory.post("project/private/admin/create") {
+        val response = requestFactory.post("project/manager/create") {
+            contentType(ContentType.Application.Json)
+            setBody(body)
+        }
+        response.retrieveBody()
+    }
+
+    override suspend fun attachTeam(body: AttachTeamRqDto): Unit = withContext(Dispatchers.IO) {
+        val response = requestFactory.post("project/manager/attach") {
             contentType(ContentType.Application.Json)
             setBody(body)
         }

@@ -6,10 +6,12 @@ import ru.kyamshanov.mission.finding_user.api.di.FindingUserComponent
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.ObtainUserUseCase
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.SelectUserUseCase
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
+import ru.kyamshanov.mission.network_core.api.di.NetworkComponent
 
 @Component(
     dependencies = [
-        NavigationComponent::class
+        NavigationComponent::class,
+        NetworkComponent::class
     ],
     modules = [
         BindsModule::class
@@ -25,6 +27,9 @@ internal interface ModuleComponent : FindingUserComponent {
     @Component.Factory
     interface Factory {
 
-        fun create(navigationComponent: NavigationComponent): ModuleComponent
+        fun create(
+            navigationComponent: NavigationComponent,
+            networkComponent: NetworkComponent,
+        ): ModuleComponent
     }
 }

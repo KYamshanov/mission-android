@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
@@ -57,6 +58,12 @@ internal fun ProjectComposable(
                     enabled = false,
                     label = { Text(text = "Описание") }
                 )
+
+                LazyColumn {
+                    screenState.participants?.forEach {
+                        item { Text(text = "${it.name} ${it.age}") }
+                    }
+                }
             }
         }
 

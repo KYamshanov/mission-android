@@ -6,7 +6,7 @@ import java.util.Date
 import javax.inject.Inject
 
 /**
- * UseCase для получения текущй отметки времени
+ * UseCase для получения текущей отметки времени
  */
 @ComponentItem
 internal class GetCurrentDateUseCase @Inject constructor() {
