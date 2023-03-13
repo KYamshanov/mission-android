@@ -22,7 +22,7 @@ import ru.kyamshanov.mission.finding_user.impl.domain.usecase.SelectUserUseCase
 internal fun FindingUserComposable(
     moduleComponent: ModuleComponent = requireNotNull(Di.getInternalComponent<FindingUserComponent, ModuleComponent>()),
     obtainUserUseCase: ObtainUserUseCase = moduleComponent.obtainUserUseCase,
-    selectUserUseCase: SelectUserUseCase = moduleComponent.selectUserUseCase
+    selectUserUseCase: SelectUserUseCase = moduleComponent.selectUserUseCase,
 ) {
 
     val firstNameState = rememberSaveable { mutableStateOf("") }
@@ -34,8 +34,7 @@ internal fun FindingUserComposable(
         delay(1000)
         userListState.value = obtainUserUseCase.get(
             searchInfo = SearchInfo(
-                firstName = firstNameState.value,
-                lastName = secondNameState.value
+                name = firstNameState.value,
             )
         )
     }
@@ -55,7 +54,7 @@ internal fun FindingUserComposable(
             userListState.value.forEach { userInfo ->
                 item {
                     Button(onClick = { selectUserUseCase.select(userInfo) }) {
-                        Text(text = "${userInfo.firstName} ${userInfo.lastName} ${userInfo.patronymic}")
+                        Text(text = "${userInfo.name} ${userInfo.age} ${userInfo.id}")
                     }
                 }
             }

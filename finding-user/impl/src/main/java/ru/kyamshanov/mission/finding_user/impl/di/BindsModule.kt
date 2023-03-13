@@ -3,6 +3,8 @@ package ru.kyamshanov.mission.finding_user.impl.di
 import dagger.Binds
 import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.finding_user.api.navigation.FindingUserLauncher
+import ru.kyamshanov.mission.finding_user.impl.data.api.ProfileApi
+import ru.kyamshanov.mission.finding_user.impl.data.api.ProfileApiImpl
 import ru.kyamshanov.mission.finding_user.impl.data.repository.UserRepositoryImpl
 import ru.kyamshanov.mission.finding_user.impl.domain.repository.UserRepository
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.ObtainUserUseCase
@@ -29,4 +31,8 @@ internal interface BindsModule {
     @Binds
     @ComponentItem
     fun SelectUserUseCaseImpl.bindSelectUserUseCase(): SelectUserUseCase
+
+    @Binds
+    @ComponentItem
+    fun ProfileApiImpl.bindProfileApi(): ProfileApi
 }

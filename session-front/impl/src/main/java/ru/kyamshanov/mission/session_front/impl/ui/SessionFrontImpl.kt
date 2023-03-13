@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.authentication.di.AuthenticationComponent
 import ru.kyamshanov.mission.base_core.api.MissionPreferences
 import ru.kyamshanov.mission.di_dagger.impl.Di
+import ru.kyamshanov.mission.profile_facade.api.domain.usecase.GetProfileUseCase
 import ru.kyamshanov.mission.session_front.api.SessionFront
 import ru.kyamshanov.mission.session_front.api.UserInfo
 import ru.kyamshanov.mission.session_front.api.model.UserRole
@@ -31,6 +32,7 @@ internal class SessionFrontImpl @Inject constructor(
     private val jwtTokenInteractor: JwtTokenInteractor,
     private val sessionInfoImpl: SessionInfoImpl,
     private val identifyUserUseCase: IdentifyUserUseCase,
+    private val getProfileUseCase: GetProfileUseCase,
 ) : SessionFront {
 
     private var sessionLifecycleScope: CoroutineScope? = null
@@ -120,18 +122,23 @@ internal class SessionFrontImpl @Inject constructor(
     )
 
     private suspend fun finishSetupSession(login: String, jwtLoggedSession: JwtLoggedSession): LoggedSession =
-        jwtTokenInteractor.parse(jwtLoggedSession.refreshToken).let { jwtModel ->
-            UserInfo(
-                login = login,
-                roles = jwtModel.roles.map { UserRole.valueOf(it) }
-            )
-        }.let { userInfo ->
-            val idToken = identifyUserUseCase.identify().getOrThrow()
-            LoggedSessionImpl(
-                userInfo = userInfo,
-                idToken = idToken,
-                jwtLoggedSession = jwtLoggedSession,
-                jwtLoginInteractor = jwtLoginInteractor
-            )
-        }.also { sessionInfoImpl.session = it }
+        UserInfo(
+            login = login,
+            roles = jwtTokenInteractor.parse(jwtLoggedSession.refreshToken).roles.map { UserRole.valueOf(it) }
+        )
+            .let { userInfo ->
+                val idToken = identifyUserUseCase.identify().getOrThrow()
+                LoggedSessionImpl(
+                    userInfo = userInfo,
+                    idToken = idToken,
+                    jwtLoggedSession = jwtLoggedSession,
+                    jwtLoginInteractor = jwtLoginInteractor
+                )
+            }
+            .also { sessionInfoImpl.session = it }
+            .also { fetchProfile() }
+
+    private suspend fun fetchProfile() {
+        getProfileUseCase.fetchProfile(refresh = true).getOrThrow()
+    }
 }

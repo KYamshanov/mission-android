@@ -31,7 +31,8 @@ class RequestFactoryImpl @Inject constructor(
             level = LogLevel.ALL
         }
         defaultRequest {
-            url("http://192.168.43.29:80/")
+            //192.168.43.29
+            url("http://10.2.15.49:80/")
             getAuthorizationHeader()?.let { header(HttpHeaders.Authorization, it) }
             getIdTokenHeader()?.let { header(IDENTIFICATION_HEADER, it) }
         }

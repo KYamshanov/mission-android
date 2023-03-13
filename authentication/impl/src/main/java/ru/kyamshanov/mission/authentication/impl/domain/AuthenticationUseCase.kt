@@ -20,14 +20,14 @@ internal interface AuthenticationUseCase {
 internal class AuthenticationUseCaseImpl @Inject constructor(
     private val sessionComponent: SessionFrontComponent,
     private val mainScreenLauncher: MainScreenLauncher,
-    private val verifyingProfileInteractor: VerifyingProfileInteractor
+    private val verifyingProfileInteractor: VerifyingProfileInteractor,
 ) : AuthenticationUseCase {
 
     override suspend fun obtainSession() = runCatching {
-        if (sessionComponent.sessionInfo is LoggedSession)
+        if (sessionComponent.sessionInfo is LoggedSession) {
             mainScreenLauncher.launch()
-        else awaitRefreshSession()
-        verifyingProfileInteractor.completeProfile(fetchProfile = true)
+            verifyingProfileInteractor.completeProfile(fetchProfile = false)
+        } else awaitRefreshSession()
     }
 
     private suspend fun awaitRefreshSession() = coroutineScope {
@@ -40,7 +40,7 @@ internal class AuthenticationUseCaseImpl @Inject constructor(
         }.join()
     }
 
-    private fun Session.handleReceivedSession(): Result<Unit> = when (this) {
+    private suspend fun Session.handleReceivedSession(): Result<Unit> = when (this) {
         is UnauthorizedSession -> {
             Log.d(LOG_TAG, "refresh session failed", reason)
             throw reason
@@ -48,6 +48,7 @@ internal class AuthenticationUseCaseImpl @Inject constructor(
 
         is LoggedSession -> {
             mainScreenLauncher.launch()
+            verifyingProfileInteractor.completeProfile(fetchProfile = false)
             Result.success(Unit)
         }
 

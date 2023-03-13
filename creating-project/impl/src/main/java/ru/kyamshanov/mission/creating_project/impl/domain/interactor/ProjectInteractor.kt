@@ -16,8 +16,10 @@ internal class ProjectInteractorImpl @Inject constructor(
 ) : ProjectInteractor {
 
     override suspend fun createAndOpenProject(projectInfo: CreatingProjectInfo): Result<Unit> = runCatching {
-        projectGateway.createProject(projectInfo).run {
-            openProjectScreenUseCase.open(id)
-        }
+        val createdProject = projectGateway.createProject(projectInfo)
+        projectInfo.participants
+            .takeIf { it.isNotEmpty() }
+            ?.let { participants -> projectGateway.attachTeam(createdProject.id, participants = participants) }
+        openProjectScreenUseCase.open(createdProject.id)
     }
 }
