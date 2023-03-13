@@ -31,4 +31,5 @@ dependencies {
     api "androidx.compose.material:material:$compose_material"
 
     implementation "androidx.compose.ui:ui:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
 }

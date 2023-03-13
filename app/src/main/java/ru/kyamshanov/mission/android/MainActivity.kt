@@ -3,6 +3,7 @@ package ru.kyamshanov.mission.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MissionTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
+                Surface(modifier = Modifier.fillMaxSize().background(MissionTheme.colors.background)) {
                     val navController = rememberNavController()
                     val screensProvider = ComposableScreensProvider()
                     Di.registration(NavigationComponent::class, NavigationComponentBuilder(navController))
