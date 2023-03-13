@@ -42,7 +42,6 @@ internal fun LoginComposable(
 
     Box(
         modifier = Modifier
-            .background(color = MissionTheme.colors.background)
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
