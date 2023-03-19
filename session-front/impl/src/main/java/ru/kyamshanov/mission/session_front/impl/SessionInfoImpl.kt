@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.session_front.api.SessionInfo
+import ru.kyamshanov.mission.session_front.api.model.UserRole
+import ru.kyamshanov.mission.session_front.api.session.LoggedSession
 import ru.kyamshanov.mission.session_front.api.session.Session
 import ru.kyamshanov.mission.session_front.api.session.UnidentifiedSession
 
@@ -21,4 +23,7 @@ internal class SessionInfoImpl @Inject constructor() : SessionInfo {
         set(value) {
             _sessionState.value = value
         }
+
+    override fun hasRole(role: UserRole): Boolean =
+        (session as? LoggedSession)?.userInfo?.roles?.contains(role) == true
 }

@@ -6,10 +6,10 @@ import ru.kyamshanov.mission.creating_project.impl.ui.screen.CreatingProjectScre
 import ru.kyamshanov.mission.navigation_core.api.Navigator
 
 class CreatingProjectLauncherImpl @Inject constructor(
-    private val navigator: Navigator
+    private val navigator: Navigator,
 ) : CreatingProjectLauncher {
 
     override fun launch() {
-        navigator.replaceTo(CreatingProjectScreen())
+        navigator.navigateTo(CreatingProjectScreen())
     }
 }

@@ -1,54 +1,75 @@
 package ru.kyamshanov.mission.ui_core.ui.theme
 
+import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-/*// Set of Material typography styles to start with
-val Typography = Typography(
-    body1 = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
-    )
-    *//* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
-    ),
-    caption = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
-    )
-    *//*
-)*/
-
 @Immutable
 data class MissionTypography(
+    val mainAppearance: TextStyle,
+    val huge: TextStyle,
     val large: TextStyle,
+    val medium: TextStyle,
+    val smallMedium: TextStyle,
     val small: TextStyle,
-    val mainButton: TextStyle,
+    val white: TextStyle,
+    val black: TextStyle,
+    val blackContainer: TextStyle,
+    val gray: TextStyle,
+) {
+
+    val mainButtonStyle = mainAppearance + huge + white
+
+    val secondaryButtonStyle = mainAppearance + large + black
+
+    val title = mainAppearance + large + black
+
+    val field = mainAppearance + huge + blackContainer
+
+    val titleSecondary = mainAppearance + large + blackContainer
+
+    val inputHint = mainAppearance + smallMedium + black
+    val inputText = mainAppearance + medium + black
+}
+
+@Composable
+internal fun typographyComposable() = MissionTypography(
+    mainAppearance = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+    ),
+    huge = TextStyle(fontSize = 24.sp),
+    large = TextStyle(fontSize = 18.sp),
+    medium = TextStyle(fontSize = 16.sp),
+    smallMedium = TextStyle(fontSize = 14.sp),
+    small = TextStyle(fontSize = 12.sp),
+    white = TextStyle(color = MissionTheme.colors.primary),
+    black = TextStyle(color = MissionTheme.colors.darkSecondary),
+    gray = TextStyle(color = MissionTheme.colors.gray),
+    blackContainer = TextStyle(color = MissionTheme.colors.darkPrimary),
 )
 
-internal val Typography = MissionTypography(
-    large = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 24.sp
-    ),
-    small = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
-    ),
-    mainButton = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 24.sp,
-        color = White
+internal val LocalExtendedTypography = staticCompositionLocalOf {
+    MissionTypography(
+        large = TextStyle.Default,
+        huge = TextStyle.Default,
+        medium = TextStyle.Default,
+        smallMedium = TextStyle.Default,
+        small = TextStyle.Default,
+        mainAppearance = TextStyle.Default,
+        white = TextStyle.Default,
+        black = TextStyle.Default,
+        gray = TextStyle.Default,
+        blackContainer = TextStyle.Default,
     )
+}
+
+internal val MissionTextSelectionColors = TextSelectionColors(
+    handleColor = BluePleasant,
+    backgroundColor = BluePleasant.copy(alpha = 0.4f)
 )

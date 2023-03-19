@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.kyamshanov.mission.ui_core.ui.components.Input
+import ru.kyamshanov.mission.ui_core.ui.components.CellInput
 import ru.kyamshanov.mission.ui_core.ui.components.MainButton
 
 @Composable
@@ -25,14 +25,14 @@ internal fun AuthenticationComponent(
         modifier = modifier
             .padding(30.dp)
     ) {
-        Input(
+        CellInput(
             Modifier.fillMaxWidth(),
             value = loginState.value,
             onValueChange = { text -> loginState.value = text },
             label = "Логин"
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Input(
+        CellInput(
             Modifier.fillMaxWidth(),
             value = passwordState.value,
             onValueChange = { text -> passwordState.value = text },

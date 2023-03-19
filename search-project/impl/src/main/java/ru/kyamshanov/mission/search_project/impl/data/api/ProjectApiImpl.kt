@@ -1,4 +1,4 @@
-package ru.kyamshanov.mission.project.impl.data.api
+package ru.kyamshanov.mission.search_project.impl.data.api
 
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -8,15 +8,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.kyamshanov.mission.network_core.api.RequestFactory
 import ru.kyamshanov.mission.network_core.api.utils.retrieveBody
-import ru.kyamshanov.mission.project.impl.data.model.MappingRqDto
-import ru.kyamshanov.mission.project.impl.data.model.MappingRsDto
+import ru.kyamshanov.mission.search_project.impl.data.model.GetAllProjectsRqDto
+import ru.kyamshanov.mission.search_project.impl.data.model.GetAllProjectsRsDto
 
-internal class ProfileApiImpl @Inject constructor(
+internal class ProjectApiImpl @Inject constructor(
     private val requestFactory: RequestFactory,
-) : ProfileApi {
+) : ProjectApi {
 
-    override suspend fun mappingUsers(body: MappingRqDto): MappingRsDto = withContext(Dispatchers.IO) {
-            val response = requestFactory.post("/profile/private/search/map") {
+    override suspend fun loadProjects(body: GetAllProjectsRqDto): GetAllProjectsRsDto = withContext(Dispatchers.IO) {
+        val response = requestFactory.post("/project/private/get/all") {
             contentType(ContentType.Application.Json)
             setBody(body)
         }

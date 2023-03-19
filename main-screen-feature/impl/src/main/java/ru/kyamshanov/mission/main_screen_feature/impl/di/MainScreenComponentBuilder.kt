@@ -11,5 +11,7 @@ class MainScreenComponentBuilder() : ComponentBuilder<MainScreenComponent> {
             navigationComponent = requireNotNull(Di.getComponent()),
             profileComponent = requireNotNull(Di.getComponent()),
             creatingProjectComponent = requireNotNull(Di.getComponent()),
+            searchProjectFacadeComponent = requireNotNull(Di.getComponent()),
+            projectComponent = requireNotNull(Di.getComponent()),
         )
 }

@@ -7,4 +7,7 @@
     <string name="something_went_wrong">Что-то пошло не так</string>
     <string name="clearly">Понятно</string>
     <string name="ok">Ок</string>
+    <string name="search">Поиск</string>
+    <string name="edit">Редактировать</string>
+    <string name="clear">Очистить</string>
 </resources>

@@ -2,11 +2,7 @@ package ru.kyamshanov.mission.project.impl.ui.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,6 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.project.api.di.ProjectComponent
 import ru.kyamshanov.mission.project.impl.di.ModuleComponent
+import ru.kyamshanov.mission.project.impl.ui.model.ProjectScreenState
 import ru.kyamshanov.mission.project.impl.ui.viewmodel.ProjectViewModel
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
@@ -38,34 +35,9 @@ internal fun ProjectComposable(
             .fillMaxSize()
     ) {
 
-        if (screenState.loading) {
-            Column {
-                Text(text = "Загрузка...")
-            }
-        } else {
-            Column {
-
-                TextField(
-                    value = screenState.title.orEmpty(),
-                    onValueChange = {},
-                    enabled = false,
-                    label = { Text(text = "Заголовок") },
-                )
-
-                TextField(
-                    value = screenState.description.orEmpty(),
-                    onValueChange = {},
-                    enabled = false,
-                    label = { Text(text = "Описание") }
-                )
-
-                LazyColumn {
-                    screenState.participants?.forEach {
-                        item { Text(text = "${it.name} ${it.age}") }
-                    }
-                }
-            }
+        when (screenState) {
+            ProjectScreenState.Loading -> ProjectLoadingComposable()
+            is ProjectScreenState.ProjectInfo -> ProjectInfoComposable(projectInfo = screenState as ProjectScreenState.ProjectInfo)
         }
-
     }
 }

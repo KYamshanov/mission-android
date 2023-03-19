@@ -88,7 +88,7 @@ internal fun NavigationItem(
         Image(
             painter = imagePainter,
             contentDescription = description,
-            colorFilter = ColorFilter.tint(MissionTheme.colors.baseText),
+            colorFilter = ColorFilter.tint(MissionTheme.colors.darkSecondary),
             modifier = Modifier.size(40.dp),
         )
         Text(text = description)
