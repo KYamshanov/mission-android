@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MissionTheme {
-                Surface(modifier = Modifier.fillMaxSize().background(MissionTheme.colors.background)) {
+                Surface(modifier = Modifier.fillMaxSize(), color = MissionTheme.colors.background) {
                     val navController = rememberNavController()
                     val screensProvider = ComposableScreensProvider()
                     Di.registration(NavigationComponent::class, NavigationComponentBuilder(navController))

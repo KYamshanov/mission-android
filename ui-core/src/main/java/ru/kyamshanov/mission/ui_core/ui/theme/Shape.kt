@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 data class MissionShapes(
     val small: CornerBasedShape,
     val medium: CornerBasedShape,
+    val mediumLarge: CornerBasedShape,
     val mediumHuge: CornerBasedShape,
     val large: CornerBasedShape,
 )
@@ -17,15 +18,17 @@ data class MissionShapes(
 internal val Shapes = MissionShapes(
     small = RoundedCornerShape(5.dp),
     medium = RoundedCornerShape(10.dp),
-    mediumHuge = RoundedCornerShape(15.dp),
+    mediumLarge = RoundedCornerShape(15.dp),
+    mediumHuge = RoundedCornerShape(20.dp),
     large = RoundedCornerShape(40.dp)
 )
 
 internal val LocalExtendedShape = staticCompositionLocalOf {
     MissionShapes(
-        mediumHuge = RoundedCornerShape(0),
+        mediumLarge = RoundedCornerShape(0),
         small = RoundedCornerShape(0),
         medium = RoundedCornerShape(0),
+        mediumHuge = RoundedCornerShape(0),
         large = RoundedCornerShape(0),
     )
 }

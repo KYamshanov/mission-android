@@ -10,5 +10,6 @@ class ProjectComponentBuilder : ComponentBuilder<ProjectComponent> {
         DaggerModuleComponent.factory().create(
             navigationComponent = requireNotNull(Di.getComponent()),
             networkComponent = requireNotNull(Di.getComponent()),
+            sessionFrontComponent = requireNotNull(Di.getComponent()),
         )
 }

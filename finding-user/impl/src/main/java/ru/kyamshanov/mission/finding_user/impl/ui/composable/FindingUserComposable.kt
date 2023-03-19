@@ -32,11 +32,11 @@ internal fun FindingUserComposable(
 
     LaunchedEffect(key1 = firstNameState.value, key2 = secondNameState.value) {
         delay(1000)
-        userListState.value = obtainUserUseCase.get(
+        obtainUserUseCase.get(
             searchInfo = SearchInfo(
                 name = firstNameState.value,
             )
-        )
+        ).onSuccess { userListState.value = it }
     }
 
     Column {

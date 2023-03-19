@@ -1,22 +1,26 @@
 package ru.kyamshanov.mission.ui_core.ui.theme
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class MissionColors(
     val background: Color,
-    val mainButton: Color,
     val baseButtonText: Color,
     val input: Color,
-    val baseText: Color,
-    val secondText: Color,
     val secondButton: Color,
     val secondButtonText: Color,
     val success: Color,
     val wrong: Color,
     val focusedBorder: Color,
+    val darkSecondary: Color,
+    val darkPrimary: Color,
     val border: Color,
+    val gray: Color,
+    val primary: Color,
+    val primaryContainer: Color,
+    val secondary: Color,
 )
 
 internal val White = Color(0xFFFFFFFF)
@@ -34,31 +38,57 @@ internal val GreenPleasant = Color(0xFF17830E)
 
 internal val DarkColorPalette = MissionColors(
     background = WhitePleasant,
-    mainButton = Color.Blue,
+    secondary = Color.Blue,
     baseButtonText = White,
     input = White,
-    baseText = Black,
-    secondText = BlackPleasant,
+    darkSecondary = Black,
+    darkPrimary = BlackPleasant,
     secondButton = GrayPleasant,
     secondButtonText = Black,
     success = GreenPleasant,
     wrong = RedPleasant,
     focusedBorder = Black,
     border = BlackPleasant,
+    gray = GrayPleasant,
+    primary = White,
+    primaryContainer = WhitePleasant,
 )
 
 internal val LightColorPalette = MissionColors(
     background = WhitePleasant,
-    mainButton = Color.Blue,
+    secondary = Color.Blue,
     baseButtonText = White,
     input = White,
-    baseText = Black,
-    secondText = BlackPleasant,
+    darkSecondary = Black,
+    darkPrimary = BlackPleasant,
     secondButton = GrayPleasant,
     secondButtonText = Black,
     success = GreenPleasant,
     wrong = RedPleasant,
     focusedBorder = Black,
     border = BlackPleasant,
+    gray = GrayPleasant,
+    primary = White,
+    primaryContainer = WhitePleasant,
 )
+
+internal val LocalExtendedColors = staticCompositionLocalOf {
+    MissionColors(
+        background = Color.Unspecified,
+        secondary = Color.Unspecified,
+        baseButtonText = Color.Unspecified,
+        input = Color.Unspecified,
+        darkSecondary = Color.Unspecified,
+        darkPrimary = Color.Unspecified,
+        secondButton = Color.Unspecified,
+        secondButtonText = Color.Unspecified,
+        success = Color.Unspecified,
+        wrong = Color.Unspecified,
+        focusedBorder = Color.Unspecified,
+        border = Color.Unspecified,
+        gray = Color.Unspecified,
+        primary = Color.Unspecified,
+        primaryContainer = Color.Unspecified,
+    )
+}
 

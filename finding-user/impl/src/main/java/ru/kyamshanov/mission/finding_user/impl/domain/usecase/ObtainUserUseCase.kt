@@ -8,7 +8,7 @@ import ru.kyamshanov.mission.finding_user.impl.domain.usecase.ObtainUserUseCase.
 
 internal interface ObtainUserUseCase {
 
-    suspend fun get(searchInfo: SearchInfo): List<UserInfo>
+    suspend fun get(searchInfo: SearchInfo): Result<List<UserInfo>>
 
     data class SearchInfo(
         val name: String,
@@ -19,6 +19,7 @@ internal class ObtainUserUseCaseImpl @Inject constructor(
     private val userRepository: UserRepository,
 ) : ObtainUserUseCase {
 
-    override suspend fun get(searchInfo: SearchInfo): List<UserInfo> =
+    override suspend fun get(searchInfo: SearchInfo): Result<List<UserInfo>> = runCatching {
         userRepository.findByName(searchInfo.name).toCollection(mutableListOf())
+    }
 }

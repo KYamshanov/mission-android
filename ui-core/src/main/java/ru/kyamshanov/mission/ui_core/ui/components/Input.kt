@@ -1,7 +1,7 @@
 package ru.kyamshanov.mission.ui_core.ui.components
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -20,32 +20,30 @@ fun Input(
     onValueChange: (String) -> Unit,
     label: String,
     maxLines: Int = 1,
+    rightIcon: (@Composable () -> Unit)? = null,
 ) {
     TextField(
-        modifier = modifier.border(
-            color = MissionTheme.colors.border,
-            width = 2.dp,
-            shape = MissionTheme.shapes.medium
-        ),
+        modifier = modifier
+            .fillMaxWidth(),
         value = value,
         onValueChange = onValueChange,
-        textStyle = MissionTheme.typography.large,
-        label = { Text(text = label, style = MissionTheme.typography.small) },
-        shape = MissionTheme.shapes.medium,
+        textStyle = MissionTheme.typography.inputText,
+        label = { Text(text = label, style = MissionTheme.typography.inputHint) },
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MissionTheme.colors.input,
-            cursorColor = MissionTheme.colors.baseText,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
+            backgroundColor = Color.Transparent,
+            cursorColor = MissionTheme.colors.darkSecondary,
+            focusedIndicatorColor = MissionTheme.colors.darkSecondary,
+            unfocusedIndicatorColor = MissionTheme.colors.darkSecondary,
+            disabledIndicatorColor = MissionTheme.colors.darkSecondary,
         ),
-        maxLines = maxLines
+        maxLines = maxLines,
+        trailingIcon = rightIcon
     )
 }
 
 @Preview
 @Composable
-fun InputPreview() {
+fun SimpleInputPreview() {
     MissionTheme {
         Box(modifier = Modifier.padding(15.dp)) {
             Input(
