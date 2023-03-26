@@ -1,0 +1,8 @@
+<resources>
+    <string name="task_add_stage">Добавить этап</string>
+    <string name="task_stage_name_title">Название этапа</string>
+    <string name="task_stage_description_title">Описание этапа</string>
+    <string name="task_stage_start_at_title">Начало этапа</string>
+    <string name="task_stage_end_at_title">Завершение этапа</string>
+    <string name="task_stage_max_points_title">Максимальное количество баллов</string>
+</resources>

@@ -10,7 +10,8 @@ import ru.kyamshanov.mission.main_screen_feature.impl.di.MainScreenComponentBuil
 import ru.kyamshanov.mission.network_core.impl.di.NetworkComponentBuilder
 import ru.kyamshanov.mission.profile.impl.di.ProfileComponentBuilder
 import ru.kyamshanov.mission.profile_facade.impl.di.ProfileFacadeComponentBuilder
-import ru.kyamshanov.mission.project.impl.di.ProjectComponentBuilder
+import ru.kyamshanov.mission.project.task.creation.impl.di.ProjectTaskCreationComponentBuilder
+import ru.kyamshanov.mission.project_view.impl.di.ProjectComponentBuilder
 import ru.kyamshanov.mission.search_project.impl.di.SearchProjectFacadeComponentBuilder
 import ru.kyamshanov.mission.session_front.impl.di.SessionFrontComponentBuilder
 
@@ -34,5 +35,6 @@ internal class Application : android.app.Application() {
         Di.registration(ProfileFacadeComponentBuilder())
         Di.registration(BackgroundRegistrationComponentBuilder())
         Di.registration(SearchProjectFacadeComponentBuilder())
+        Di.registration(ProjectTaskCreationComponentBuilder())
     }
 }

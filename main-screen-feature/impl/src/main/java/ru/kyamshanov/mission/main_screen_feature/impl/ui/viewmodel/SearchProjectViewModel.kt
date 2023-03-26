@@ -8,9 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.kyamshanov.mission.di_dagger.impl.Di
-import ru.kyamshanov.mission.project.api.di.ProjectComponent
-import ru.kyamshanov.mission.project.api.navigation.ProjectLauncher
+import ru.kyamshanov.mission.project_view.api.navigation.ProjectLauncher
 import ru.kyamshanov.mission.search_project.api.domain.SearchProjectUseCase
 import ru.kyamshanov.mission.search_project.api.domain.model.PageIndex
 import ru.kyamshanov.mission.search_project.api.domain.model.ProjectInfo

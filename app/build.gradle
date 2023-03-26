@@ -61,10 +61,11 @@ dependencies {
     implementation project(":session-front:impl")
     implementation project(":network-core:impl")
     implementation project(":profile:impl")
-    implementation project(path: ':creating-project:impl')
+    implementation project(path: ':project:creating-project:impl')
     implementation project(path: ':finding-user:impl')
-    implementation project(path: ':project:impl')
+    implementation project(path: ':project:project-view:impl')
     implementation project(path: ':profile-facade:impl')
     implementation project(path: ':background-registration:impl')
     implementation project(path: ':search-project:impl')
+    implementation project(path: ':project:task:creation:impl')
 }

@@ -59,7 +59,7 @@ class NavigatorImpl @Inject constructor(
     }
 
     private fun ParameterizedComposableScreen.getTail() = buildString {
-        parameters.forEach { (key, value) ->
+        parametersSupplier().forEach { (key, value) ->
             append("?$key=$value")
         }
     }

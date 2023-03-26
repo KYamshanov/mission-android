@@ -20,3 +20,4 @@ local.properties
 /ui-core/build/
 /ui-core/build/intermediates/javac/debug/classes/
 /*/*/build/*
+/**/build/*
