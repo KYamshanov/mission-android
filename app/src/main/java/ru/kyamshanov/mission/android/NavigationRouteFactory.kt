@@ -21,7 +21,7 @@ class NavigationRouteFactory {
                 screen.composableSupplier.invoke()
             }
             is ParameterizedComposableScreen -> composable(routeDestination) { backStackEntry ->
-                val parameters = screen.parameters.keys.associateWith { parameterKey ->
+                val parameters = screen.parameterKeys.associateWith { parameterKey ->
                     requireNotNull(backStackEntry.arguments?.getString(parameterKey))
                 }
                 screen.composableSupplier.invoke(parameters)
@@ -47,7 +47,7 @@ class NavigationRouteFactory {
     }
 
     private fun ParameterizedComposableScreen.getTail() = buildString {
-        parameters.keys.forEach { parameter ->
+        parameterKeys.forEach { parameter ->
             append("?$parameter={$parameter}")
         }
     }

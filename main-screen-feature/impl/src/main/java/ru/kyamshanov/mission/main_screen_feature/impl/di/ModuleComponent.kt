@@ -8,7 +8,7 @@ import ru.kyamshanov.mission.main_screen_feature.impl.ui.viewmodel.NavigationBar
 import ru.kyamshanov.mission.main_screen_feature.impl.ui.viewmodel.SearchProjectViewModel
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
 import ru.kyamshanov.mission.profile.api.di.ProfileComponent
-import ru.kyamshanov.mission.project.api.di.ProjectComponent
+import ru.kyamshanov.mission.project_view.api.di.ProjectComponent
 import ru.kyamshanov.mission.search_project.api.di.SearchProjectFacadeComponent
 
 @Component(

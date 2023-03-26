@@ -1,0 +1,13 @@
+apply from: "$rootDir/gradle-base/android-ui-base.gradle"
+apply from: "$rootDir/gradle-base/dagger.gradle"
+
+dependencies {
+    api project(":project:creating-project:api")
+
+    implementation project(":navigation-core:api")
+    implementation project(":navigation-core:common")
+    implementation project(":ui-core")
+    implementation project(path: ':finding-user:api')
+    implementation project(":network-core:api")
+    implementation project(":project:project-view:api")
+}

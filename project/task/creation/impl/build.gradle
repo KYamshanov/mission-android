@@ -1,0 +1,17 @@
+apply from: "$rootDir/gradle-base/android-ui-base.gradle"
+apply from: "$rootDir/gradle-base/dagger.gradle"
+
+android{
+
+    resourcePrefix 'task_'
+
+}
+
+dependencies {
+    api project(":project:task:creation:api")
+
+    implementation project(":project:common")
+    implementation project(":navigation-core:api")
+    implementation project(":navigation-core:common")
+    implementation project(":ui-core")
+}

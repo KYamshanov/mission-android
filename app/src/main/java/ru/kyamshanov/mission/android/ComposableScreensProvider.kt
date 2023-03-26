@@ -7,7 +7,8 @@ import ru.kyamshanov.mission.finding_user.impl.ui.screen.FindingUserScreen
 import ru.kyamshanov.mission.main_screen_feature.impl.ui.screen.MainScreen
 import ru.kyamshanov.mission.navigation_core.api.Screen
 import ru.kyamshanov.mission.profile.impl.ui.screen.ProfileScreen
-import ru.kyamshanov.mission.project.impl.ui.screen.ProjectScreen
+import ru.kyamshanov.mission.project.task.creation.impl.ui.screen.ProjectTaskCreationScreen
+import ru.kyamshanov.mission.project_view.impl.ui.screen.ProjectScreen
 
 internal class ComposableScreensProvider : ScreensProvider {
 
@@ -18,6 +19,7 @@ internal class ComposableScreensProvider : ScreensProvider {
         CreatingProjectScreen(),
         FindingUserScreen(),
         ProjectScreen(),
-        BackgroundRegistrationScreen()
+        BackgroundRegistrationScreen(),
+        ProjectTaskCreationScreen()
     )
 }

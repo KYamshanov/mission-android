@@ -9,7 +9,7 @@ dependencies {
     implementation project(":navigation-core:common")
     implementation project(":profile:api")
     implementation project(":session-front:api")
-    implementation project(":creating-project:api")
+    implementation project(":project:creating-project:api")
     implementation project(":search-project:api")
-    implementation project(":project:api")
+    implementation project(":project:project-view:api")
 }

@@ -24,9 +24,10 @@ include ':base-core:api', ':base-core:impl'
 include ':di-dagger:api', ':di-dagger:impl', ':di-dagger:extensions'
 include ':session-front:api', ':session-front:impl'
 include ':profile:api', ':profile:impl'
-include ':creating-project:api', ':creating-project:impl'
 include ':finding-user:api', ':finding-user:impl'
-include ':project:api', ':project:impl'
+include ':project:common', ':project:creating-project:api', ':project:creating-project:impl',
+        ':project:project-view:api', ':project:project-view:impl',
+        ':project:task:creation:api', ':project:task:creation:impl'
 include ':profile-facade:api', ':profile-facade:impl'
 include ':background-registration:api', ':background-registration:impl'
 include ':search-project:api', ':search-project:impl'
