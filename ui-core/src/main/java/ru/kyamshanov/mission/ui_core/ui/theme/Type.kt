@@ -21,6 +21,9 @@ data class MissionTypography(
     val black: TextStyle,
     val blackContainer: TextStyle,
     val gray: TextStyle,
+    val red: TextStyle,
+    val green: TextStyle,
+    val yellow: TextStyle,
 ) {
 
     val mainButtonStyle = mainAppearance + huge + white
@@ -52,6 +55,9 @@ internal fun typographyComposable() = MissionTypography(
     black = TextStyle(color = MissionTheme.colors.darkSecondary),
     gray = TextStyle(color = MissionTheme.colors.gray),
     blackContainer = TextStyle(color = MissionTheme.colors.darkPrimary),
+    red = TextStyle(color = MissionTheme.colors.wrong),
+    green = TextStyle(color = MissionTheme.colors.success),
+    yellow = TextStyle(color = YellowPleasant),
 )
 
 internal val LocalExtendedTypography = staticCompositionLocalOf {
@@ -66,6 +72,9 @@ internal val LocalExtendedTypography = staticCompositionLocalOf {
         black = TextStyle.Default,
         gray = TextStyle.Default,
         blackContainer = TextStyle.Default,
+        red = TextStyle.Default,
+        green = TextStyle.Default,
+        yellow = TextStyle.Default,
     )
 }
 

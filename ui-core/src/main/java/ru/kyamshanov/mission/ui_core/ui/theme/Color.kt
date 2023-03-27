@@ -35,6 +35,7 @@ internal val BluePleasant = Color(0xFF164ACF)
 internal val BlackPleasant = Color(0xFF3C3C3C)
 internal val GrayPleasant = Color(0xFFD9D9D9)
 internal val GreenPleasant = Color(0xFF17830E)
+internal val YellowPleasant = Color(0xFFF1EA3E)
 
 internal val DarkColorPalette = MissionColors(
     background = WhitePleasant,

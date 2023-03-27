@@ -5,8 +5,9 @@ import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
 import ru.kyamshanov.mission.network_core.api.di.NetworkComponent
 import ru.kyamshanov.mission.project.task.creation.api.di.ProjectTaskCreationComponent
-import ru.kyamshanov.mission.project.task.creation.impl.domain.DateFormatterProvider
 import ru.kyamshanov.mission.project.task.creation.impl.ui.viewmodel.ViewModelProvider
+import ru.kyamshanov.mission.time.api.DateFormatterProvider
+import ru.kyamshanov.mission.time.di.TimeFormatterModule
 
 @Component(
     dependencies = [
@@ -15,7 +16,7 @@ import ru.kyamshanov.mission.project.task.creation.impl.ui.viewmodel.ViewModelPr
     ],
     modules = [
         BindsModule::class,
-        DateFormatterProviderModule::class
+        TimeFormatterModule::class
     ]
 )
 @ComponentItem

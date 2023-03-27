@@ -27,12 +27,12 @@ class RequestFactoryImpl @Inject constructor(
 ) : RequestFactory {
 
     private val client = HttpClient(Android) {
-        install(ContentNegotiation) {
-            gson { setDateFormat("YYYY-MM-DD'T'hh:mm:ss").create() }
-        }
         install(Logging) {
             logger = NetworkLogger()
             level = LogLevel.ALL
+        }
+        install(ContentNegotiation) {
+            gson { setDateFormat("YYYY-MM-dd'T'hh:mm:ss").create() }
         }
         defaultRequest {
             //10.2.15.49

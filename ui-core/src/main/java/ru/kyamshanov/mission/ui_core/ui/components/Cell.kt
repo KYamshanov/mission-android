@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
 @Composable
-fun Area(
+fun Cell(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -40,7 +40,7 @@ fun Area(
 fun ColumnAreaPreview() {
     MissionTheme {
         Box(modifier = Modifier.background(MissionTheme.colors.background).padding(30.dp)) {
-            Area {
+            Cell {
                 Text(text = "Этап", style = MissionTheme.typography.inputHint)
                 Text(text = "Этап", style = MissionTheme.typography.inputHint)
             }

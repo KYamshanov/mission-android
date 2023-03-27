@@ -1,6 +1,10 @@
 apply from: "$rootDir/gradle-base/android-ui-base.gradle"
 apply from: "$rootDir/gradle-base/dagger.gradle"
 
+android{
+    resourcePrefix 'pv_'
+}
+
 dependencies {
     api project(":project:project-view:api")
 
@@ -12,4 +16,5 @@ dependencies {
     implementation project(path: ':project:creating-project:api')
     implementation project(path: ':project:task:creation:api')
     implementation project(path: ':project:common')
+    implementation project(path: ':time')
 }

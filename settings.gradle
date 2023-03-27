@@ -31,3 +31,4 @@ include ':project:common', ':project:creating-project:api', ':project:creating-p
 include ':profile-facade:api', ':profile-facade:impl'
 include ':background-registration:api', ':background-registration:impl'
 include ':search-project:api', ':search-project:impl'
+include ':time'

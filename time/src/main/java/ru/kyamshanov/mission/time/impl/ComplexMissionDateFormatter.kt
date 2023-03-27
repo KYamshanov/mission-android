@@ -1,13 +1,8 @@
-package ru.kyamshanov.mission.ui_core.ui.utils
+package ru.kyamshanov.mission.time.impl
 
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
-fun interface MissionDateFormatter {
-
-    operator fun invoke(date: Date): String
-}
 
 class ComplexMissionDateFormatter {
 

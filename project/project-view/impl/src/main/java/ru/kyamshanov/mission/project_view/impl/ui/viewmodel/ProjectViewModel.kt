@@ -43,7 +43,8 @@ internal class ProjectViewModel @AssistedInject constructor(
                             editable = isManager
                         ),
                         participantsCount = projectInfo.participants.size,
-                        tasks = projectInfo.tasks
+                        tasks = projectInfo.tasks,
+                        projectStage = projectInfo.projectStage
                     )
                 }
                 .onFailure {

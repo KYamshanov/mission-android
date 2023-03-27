@@ -11,13 +11,13 @@ import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.navigation_core.api.Navigator
 import ru.kyamshanov.mission.project.common.domain.model.ProjectId
 import ru.kyamshanov.mission.project.task.creation.impl.domain.CreationTaskInfoInteractor
-import ru.kyamshanov.mission.project.task.creation.impl.domain.DateFormatterProvider
+import ru.kyamshanov.mission.time.api.DateFormatterProvider
 import ru.kyamshanov.mission.project.task.creation.impl.ui.model.TaskCreationScreenState
 
 internal class TaskCreationViewModel @AssistedInject constructor(
     @Assisted private val projectId: String,
     private val taskInfoInteractor: CreationTaskInfoInteractor,
-    private val dateFormatterProvider: DateFormatterProvider,
+    private val dateFormatterProvider: ru.kyamshanov.mission.time.api.DateFormatterProvider,
     private val navigator: Navigator,
 ) : ViewModel() {
 

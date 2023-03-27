@@ -11,6 +11,7 @@ class ProjectComponentBuilder : ComponentBuilder<ProjectComponent> {
             navigationComponent = requireNotNull(Di.getComponent()),
             networkComponent = requireNotNull(Di.getComponent()),
             sessionFrontComponent = requireNotNull(Di.getComponent()),
-            projectTaskCreationComponent = requireNotNull(Di.getComponent())
+            projectTaskCreationComponent = requireNotNull(Di.getComponent()),
+            baseCoreComponent = requireNotNull(Di.getComponent()),
         )
 }
