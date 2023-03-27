@@ -1,5 +1,6 @@
 package ru.kyamshanov.mission.network_core.impl
 
+import android.icu.text.SimpleDateFormat
 import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -14,6 +15,7 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.gson.gson
+import java.text.DateFormat
 import javax.inject.Inject
 import ru.kyamshanov.mission.network_core.api.RequestFactory
 import ru.kyamshanov.mission.session_front.api.SessionInfo
@@ -25,7 +27,9 @@ class RequestFactoryImpl @Inject constructor(
 ) : RequestFactory {
 
     private val client = HttpClient(Android) {
-        install(ContentNegotiation) { gson() }
+        install(ContentNegotiation) {
+            gson { setDateFormat("YYYY-MM-DD'T'hh:mm:ss").create() }
+        }
         install(Logging) {
             logger = NetworkLogger()
             level = LogLevel.ALL

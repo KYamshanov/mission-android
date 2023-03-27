@@ -27,6 +27,10 @@ internal fun ProjectViewComposable(
             enabled = projectInfo.description.editable,
         )
 
+        for (task in projectInfo.tasks) {
+            Text(text = task.title)
+        }
+
         Button(onClick = { viewModel.createTask() }) {
             Text(text = "Add stage")
         }

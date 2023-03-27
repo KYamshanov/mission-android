@@ -1,9 +1,8 @@
 package ru.kyamshanov.mission.project_view.impl.data.model
 
-internal data class ProjectInfoDto(
+internal data class SlimProjectInfoDto(
     val id: String,
     val title: String,
     val description: String,
-    val tasks: List<SlimTaskDto>,
 )
 

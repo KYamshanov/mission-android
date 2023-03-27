@@ -8,6 +8,7 @@ class ProjectTaskCreationComponentBuilder : ComponentBuilder<ProjectTaskCreation
 
     override fun build(): ProjectTaskCreationComponent =
         DaggerModuleComponent.factory().create(
-            navigationComponent = requireNotNull(Di.getComponent())
+            navigationComponent = requireNotNull(Di.getComponent()),
+            networkComponent = requireNotNull(Di.getComponent()),
         )
 }
