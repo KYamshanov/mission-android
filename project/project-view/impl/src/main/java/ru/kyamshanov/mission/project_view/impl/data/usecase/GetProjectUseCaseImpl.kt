@@ -24,7 +24,8 @@ internal class GetProjectUseCaseImpl @Inject constructor(
             id = projectInfo.id,
             title = projectInfo.title,
             description = projectInfo.description,
-            participants = participants.map { it.toDomain() }
+            participants = participants.map { it.toDomain() },
+            tasks = projectInfo.tasks.map { it.toDomain() }
         )
     }
 }

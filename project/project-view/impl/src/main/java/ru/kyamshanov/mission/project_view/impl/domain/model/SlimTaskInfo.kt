@@ -1,9 +1,8 @@
 package ru.kyamshanov.mission.project_view.impl.domain.model
 
-internal data class ProjectInfo(
+internal data class SlimTaskInfo(
     val id: String,
     val title: String,
     val description: String,
-    val participants: List<ParticipantSlimInfo>,
-    val tasks: List<SlimTaskInfo>,
+    val taskStage: TaskStage,
 )

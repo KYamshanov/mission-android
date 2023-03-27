@@ -12,6 +12,7 @@ import ru.kyamshanov.mission.project.task.creation.api.di.ProjectTaskCreationCom
 import ru.kyamshanov.mission.project.task.creation.impl.R
 import ru.kyamshanov.mission.project.task.creation.impl.di.ModuleComponent
 import ru.kyamshanov.mission.project.task.creation.impl.ui.viewmodel.TaskCreationViewModel
+import ru.kyamshanov.mission.project.task.creation.impl.ui.viewmodel.ViewModelProvider
 import ru.kyamshanov.mission.ui_core.ui.components.CellDate
 import ru.kyamshanov.mission.ui_core.ui.components.CellInput
 import ru.kyamshanov.mission.ui_core.ui.components.MainButton
@@ -21,15 +22,15 @@ import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 internal fun ProjectTaskCreationComposable(
     projectId: ProjectId,
     moduleComponent: ModuleComponent = requireNotNull(Di.getInternalComponent<ProjectTaskCreationComponent, ModuleComponent>()),
-    taskCreationViewModel: TaskCreationViewModel = viewModel { moduleComponent.taskCreationViewModel },
+    viewModelProvider: ViewModelProvider = moduleComponent.viewModelProvider,
+    taskCreationViewModel: TaskCreationViewModel = viewModel { viewModelProvider.createTaskCreationViewModel(projectId.value) },
 ) = Scaffold(
     backgroundColor = MissionTheme.colors.background,
     bottomBar = {
         MainButton(
             label = stringResource(id = R.string.task_add_stage),
-            onClick = {
-
-            })
+            onClick = { taskCreationViewModel.save() }
+        )
     }, content = {
 
         val screenState = taskCreationViewModel.screenState.collectAsState()

@@ -1,22 +1,33 @@
 package ru.kyamshanov.mission.project.task.creation.impl.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import java.util.Date
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import ru.kyamshanov.mission.navigation_core.api.Navigator
+import ru.kyamshanov.mission.project.common.domain.model.ProjectId
 import ru.kyamshanov.mission.project.task.creation.impl.domain.CreationTaskInfoInteractor
 import ru.kyamshanov.mission.project.task.creation.impl.domain.DateFormatterProvider
 import ru.kyamshanov.mission.project.task.creation.impl.ui.model.TaskCreationScreenState
 
-internal class TaskCreationViewModel @Inject constructor(
+internal class TaskCreationViewModel @AssistedInject constructor(
+    @Assisted private val projectId: String,
     private val taskInfoInteractor: CreationTaskInfoInteractor,
     private val dateFormatterProvider: DateFormatterProvider,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow(
-        TaskCreationScreenState(taskInfoInteractor.currentTaskCreationInfo, dateFormatterProvider.cellDateFormatter())
-    )
+    private val _screenState: MutableStateFlow<TaskCreationScreenState>
+
+    init {
+        val taskCreationInfo = taskInfoInteractor.initialize(ProjectId(projectId))
+        _screenState =
+            MutableStateFlow(TaskCreationScreenState(taskCreationInfo, dateFormatterProvider.cellDateFormatter()))
+    }
 
     val screenState = _screenState.asStateFlow()
 
@@ -48,5 +59,12 @@ internal class TaskCreationViewModel @Inject constructor(
         _screenState.value = _screenState.value.copy(
             taskCreationInfo = taskInfoInteractor.setMaxPoints(maxPoints)
         )
+    }
+
+    fun save() {
+        viewModelScope.launch {
+            taskInfoInteractor.save()
+                .onSuccess { navigator.exit() }
+        }
     }
 }
