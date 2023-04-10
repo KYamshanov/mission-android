@@ -7,7 +7,9 @@ import ru.kyamshanov.mission.project_view.impl.data.api.ProjectApi
 import ru.kyamshanov.mission.project_view.impl.data.api.ProjectApiImpl
 import ru.kyamshanov.mission.project_view.impl.data.usecase.GetProjectUseCaseImpl
 import ru.kyamshanov.mission.project_view.impl.domain.usecase.GetProjectUseCase
+import ru.kyamshanov.mission.project_view.impl.domain.usecase.TaskStagePresentUseCase
 import ru.kyamshanov.mission.project_view.impl.ui.navigation.ProjectLauncherImpl
+import ru.kyamshanov.mission.project_view.impl.ui.usecase.TaskStagePresentUseCaseImpl
 
 @dagger.Module
 internal interface BindsModule {
@@ -23,4 +25,8 @@ internal interface BindsModule {
     @Binds
     @ComponentItem
     fun GetProjectUseCaseImpl.bindGetProjectUseCase(): GetProjectUseCase
+
+    @Binds
+    @ComponentItem
+    fun TaskStagePresentUseCaseImpl.bindTaskStagePresentUseCase(): TaskStagePresentUseCase
 }

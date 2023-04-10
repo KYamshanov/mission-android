@@ -16,31 +16,29 @@ import androidx.compose.ui.unit.dp
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
 @Composable
-fun Area(
+fun Cell(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(MissionTheme.shapes.medium)
-            .background(MissionTheme.colors.primary)
-            .border(
-                color = MissionTheme.colors.darkSecondary,
-                width = 2.dp,
-                shape = MissionTheme.shapes.medium
-            )
-            .padding(5.dp),
-        content = content,
-    )
-}
+) = Column(
+    modifier = modifier
+        .fillMaxWidth()
+        .clip(MissionTheme.shapes.medium)
+        .background(MissionTheme.colors.primary)
+        .border(
+            color = MissionTheme.colors.darkSecondary,
+            width = 2.dp,
+            shape = MissionTheme.shapes.medium
+        )
+        .padding(5.dp),
+    content = content,
+)
 
 @Preview
 @Composable
 fun ColumnAreaPreview() {
     MissionTheme {
         Box(modifier = Modifier.background(MissionTheme.colors.background).padding(30.dp)) {
-            Area {
+            Cell {
                 Text(text = "Этап", style = MissionTheme.typography.inputHint)
                 Text(text = "Этап", style = MissionTheme.typography.inputHint)
             }

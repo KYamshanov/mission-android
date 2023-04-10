@@ -27,16 +27,16 @@ class RequestFactoryImpl @Inject constructor(
 ) : RequestFactory {
 
     private val client = HttpClient(Android) {
-        install(ContentNegotiation) {
-            gson { setDateFormat("YYYY-MM-DD'T'hh:mm:ss").create() }
-        }
         install(Logging) {
             logger = NetworkLogger()
             level = LogLevel.ALL
         }
+        install(ContentNegotiation) {
+            gson { setDateFormat("yyyy-MM-dd'T'hh:mm:ss").create() }
+        }
         defaultRequest {
-            //10.2.15.49
-            url("http://192.168.43.29:80/")
+          //  url("http://192.168.43.29:80/") //mobile internet
+            url("http://10.2.15.8:80/") //wifi
             getAuthorizationHeader()?.let { header(HttpHeaders.Authorization, it) }
             getIdTokenHeader()?.let { header(IDENTIFICATION_HEADER, it) }
         }

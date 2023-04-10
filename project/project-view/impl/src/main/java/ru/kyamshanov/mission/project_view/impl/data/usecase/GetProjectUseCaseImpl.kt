@@ -2,6 +2,7 @@ package ru.kyamshanov.mission.project_view.impl.data.usecase
 
 import javax.inject.Inject
 import ru.kyamshanov.mission.project_view.impl.data.api.ProjectApi
+import ru.kyamshanov.mission.project_view.impl.data.model.getStage
 import ru.kyamshanov.mission.project_view.impl.data.model.toDomain
 import ru.kyamshanov.mission.project_view.impl.domain.model.ProjectInfo
 import ru.kyamshanov.mission.project_view.impl.domain.usecase.GetProjectUseCase
@@ -25,7 +26,8 @@ internal class GetProjectUseCaseImpl @Inject constructor(
             title = projectInfo.title,
             description = projectInfo.description,
             participants = participants.map { it.toDomain() },
-            tasks = projectInfo.tasks.map { it.toDomain() }
+            tasks = projectInfo.tasks.map { it.toDomain() },
+            projectStage = projectInfo.getStage(),
         )
     }
 }

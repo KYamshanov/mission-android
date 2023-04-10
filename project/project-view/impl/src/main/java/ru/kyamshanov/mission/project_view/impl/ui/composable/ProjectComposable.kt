@@ -39,7 +39,8 @@ internal fun ProjectComposable(
             ProjectScreenState.Loading -> ProjectLoadingComposable()
             is ProjectScreenState.ProjectInfo -> ProjectViewComposable(
                 projectInfo = screenState as ProjectScreenState.ProjectInfo,
-                viewModel = projectViewModel
+                viewModel = projectViewModel,
+                taskStagePresentUseCase = projectComponent.taskStagePresentUseCase
             )
         }
     }

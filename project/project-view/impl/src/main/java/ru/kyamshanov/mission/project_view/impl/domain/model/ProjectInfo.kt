@@ -6,4 +6,5 @@ internal data class ProjectInfo(
     val description: String,
     val participants: List<ParticipantSlimInfo>,
     val tasks: List<SlimTaskInfo>,
+    val projectStage: ProjectStage,
 )

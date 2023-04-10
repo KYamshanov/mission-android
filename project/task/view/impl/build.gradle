@@ -1,0 +1,18 @@
+apply from: "$rootDir/gradle-base/android-ui-base.gradle"
+apply from: "$rootDir/gradle-base/dagger.gradle"
+
+android{
+    resourcePrefix 'tv_'
+}
+
+dependencies {
+    api project(":project:task:view:api")
+
+    implementation project(":project:common")
+    implementation project(":navigation-core:api")
+    implementation project(":navigation-core:common")
+    implementation project(":ui-core")
+    implementation project(":network-core:api")
+    implementation project(":time")
+    implementation project(":project:task:set_points:api")
+}
