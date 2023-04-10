@@ -23,6 +23,7 @@ import ru.kyamshanov.mission.time.di.TimeFormatterModule
     modules = [
         BindsModule::class,
         TimeFormatterModule::class,
+        ProvidesModule::class,
     ]
 )
 @ComponentItem

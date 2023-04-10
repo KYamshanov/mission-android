@@ -68,4 +68,6 @@ dependencies {
     implementation project(path: ':background-registration:impl')
     implementation project(path: ':search-project:impl')
     implementation project(path: ':project:task:creation:impl')
+    implementation project(path: ':project:task:view:impl')
+    implementation project(path: ':project:task:set_points:impl')
 }

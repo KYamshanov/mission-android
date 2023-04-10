@@ -17,4 +17,5 @@ dependencies {
     implementation project(path: ':project:task:creation:api')
     implementation project(path: ':project:common')
     implementation project(path: ':time')
+    implementation project(path: ':project:task:view:api')
 }

@@ -27,7 +27,9 @@ include ':profile:api', ':profile:impl'
 include ':finding-user:api', ':finding-user:impl'
 include ':project:common', ':project:creating-project:api', ':project:creating-project:impl',
         ':project:project-view:api', ':project:project-view:impl',
-        ':project:task:creation:api', ':project:task:creation:impl'
+        ':project:task:creation:api', ':project:task:creation:impl',
+        ':project:task:view:api', ':project:task:view:impl',
+        ':project:task:set_points:api', ':project:task:set_points:impl'
 include ':profile-facade:api', ':profile-facade:impl'
 include ':background-registration:api', ':background-registration:impl'
 include ':search-project:api', ':search-project:impl'

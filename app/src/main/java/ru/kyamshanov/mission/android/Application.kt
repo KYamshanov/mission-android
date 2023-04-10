@@ -14,6 +14,9 @@ import ru.kyamshanov.mission.project.task.creation.impl.di.ProjectTaskCreationCo
 import ru.kyamshanov.mission.project_view.impl.di.ProjectComponentBuilder
 import ru.kyamshanov.mission.search_project.impl.di.SearchProjectFacadeComponentBuilder
 import ru.kyamshanov.mission.session_front.impl.di.SessionFrontComponentBuilder
+import ru.kyamshanov.mission.task.set_points.api.di.SetPointsComponent
+import ru.kyamshanov.mission.task.set_points.impl.di.SetPointsComponentBuilder
+import ru.kyamshanov.mission.task.view.impl.di.TaskViewComponentBuilder
 
 internal class Application : android.app.Application() {
 
@@ -36,5 +39,7 @@ internal class Application : android.app.Application() {
         Di.registration(BackgroundRegistrationComponentBuilder())
         Di.registration(SearchProjectFacadeComponentBuilder())
         Di.registration(ProjectTaskCreationComponentBuilder())
+        Di.registration(TaskViewComponentBuilder())
+        Di.registration(SetPointsComponentBuilder())
     }
 }

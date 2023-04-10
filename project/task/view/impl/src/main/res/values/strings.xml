@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tv_title">Этап</string>
+    <string name="tv_description">Описание</string>
+    <string name="tv_state">Состояние %s</string>
+    <string name="tv_start_at">Начало этапа</string>
+    <string name="tv_end_at">Начало этапа</string>
+    <string name="tv_set_points_title">Выставить баллы за этап</string>
+</resources>

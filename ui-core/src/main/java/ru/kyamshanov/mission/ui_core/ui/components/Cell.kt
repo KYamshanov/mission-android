@@ -19,21 +19,19 @@ import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 fun Cell(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(MissionTheme.shapes.medium)
-            .background(MissionTheme.colors.primary)
-            .border(
-                color = MissionTheme.colors.darkSecondary,
-                width = 2.dp,
-                shape = MissionTheme.shapes.medium
-            )
-            .padding(5.dp),
-        content = content,
-    )
-}
+) = Column(
+    modifier = modifier
+        .fillMaxWidth()
+        .clip(MissionTheme.shapes.medium)
+        .background(MissionTheme.colors.primary)
+        .border(
+            color = MissionTheme.colors.darkSecondary,
+            width = 2.dp,
+            shape = MissionTheme.shapes.medium
+        )
+        .padding(5.dp),
+    content = content,
+)
 
 @Preview
 @Composable

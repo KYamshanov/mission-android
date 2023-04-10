@@ -18,4 +18,13 @@ internal class ResourcesProviderImpl @Inject constructor(
     override fun getString(id: Int, vararg formatArgs: Any): String = weakContext.get()?.run {
         getString(id, *formatArgs)
     } ?: throw IllegalStateException("Application context is released")
+
+    override fun getQuantityString(id: Int, count: Int): String = weakContext.get()?.resources?.run {
+        getQuantityString(id, count)
+    } ?: throw IllegalStateException("Application context is released")
+
+    override fun getQuantityString(id: Int, count: Int, vararg formatArgs: Any): String =
+        weakContext.get()?.resources?.run {
+            getQuantityString(id, count, *formatArgs)
+        } ?: throw IllegalStateException("Application context is released")
 }

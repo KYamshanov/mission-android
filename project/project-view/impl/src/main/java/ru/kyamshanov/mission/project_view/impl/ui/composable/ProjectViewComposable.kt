@@ -1,5 +1,6 @@
 package ru.kyamshanov.mission.project_view.impl.ui.composable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -56,7 +57,7 @@ internal fun ProjectViewComposable(
         )
         Spacer(modifier = Modifier.height(3.dp))
         for (task in projectInfo.tasks) {
-            TaskCellComposable(task, taskStagePresentUseCase)
+            TaskCellComposable(task, taskStagePresentUseCase) { viewModel.openTask(task.id) }
         }
 
         Button(onClick = { viewModel.createTask() }) {
@@ -68,7 +69,8 @@ internal fun ProjectViewComposable(
 private fun TaskCellComposable(
     taskInfo: SlimTaskInfo,
     taskStagePresentUseCase: TaskStagePresentUseCase,
-) = Cell(modifier = Modifier.padding(5.dp)) {
+    clickListener: () -> Unit,
+) = Cell(modifier = Modifier.padding(5.dp).clickable(onClick = clickListener)) {
     Text(text = stringResource(R.string.pv_stage), style = MissionTheme.typography.inputHint)
     Text(text = taskInfo.title, style = MissionTheme.typography.inputText)
     Spacer(modifier = Modifier.height(5.dp))

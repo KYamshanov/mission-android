@@ -19,12 +19,15 @@ internal class TaskStagePresentUseCaseImpl @Inject constructor(
             stage.points?.let { points ->
                 resourcesProvider.getString(
                     R.string.pv_finished_with_points,
-                    resourcesProvider.getString(R.plurals.pv_point_quantity, points)
+                    resourcesProvider.getQuantityString(R.plurals.pv_point_quantity, points, points)
                 )
             } ?: resourcesProvider.getString(R.string.pv_finished)
         }
 
-        is TaskStage.InProgress -> resourcesProvider.getString(R.string.pv_in_progress_with_time, dateFormatter(stage.finishAt))
+        is TaskStage.InProgress -> resourcesProvider.getString(
+            R.string.pv_in_progress_with_time,
+            dateFormatter(stage.finishAt)
+        )
         is TaskStage.Wait -> resourcesProvider.getString(R.string.pv_wait, dateFormatter(stage.startAt))
     }
 }
