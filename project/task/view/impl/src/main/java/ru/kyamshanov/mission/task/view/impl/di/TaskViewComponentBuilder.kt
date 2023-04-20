@@ -11,5 +11,6 @@ class TaskViewComponentBuilder : ComponentBuilder<TaskViewComponent> {
             navigationComponent = requireNotNull(Di.getComponent()),
             networkComponent = requireNotNull(Di.getComponent()),
             setPointsComponent = requireNotNull(Di.getComponent()),
+            findingUserComponent = requireNotNull(Di.getComponent()),
         )
 }

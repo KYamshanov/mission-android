@@ -1,5 +1,6 @@
 package ru.kyamshanov.mission.session_front.impl.ui
 
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -42,13 +43,14 @@ internal class SessionFrontImpl @Inject constructor(
         }
 
     init {
-        CoroutineScope(Job()).launch {
+        val scope =  CoroutineScope(Job())
+        scope.launch {
             refreshSession()
                 .onSuccess {
                     startAutoRefreshing()
                 }
                 .onFailure { makeUnauthorizedSession(it) }
-            cancel()
+            scope.cancel()
         }
     }
 
@@ -86,7 +88,7 @@ internal class SessionFrontImpl @Inject constructor(
 
         sessionLifecycleScope?.launch {
             while (isActive) {
-                delay(3600_000L)
+                delay(AUTO_REFRESHING_DELAY_MS)
                 refreshSession()
                     .onFailure { destroySession() }
             }
@@ -140,5 +142,10 @@ internal class SessionFrontImpl @Inject constructor(
 
     private suspend fun fetchProfile() {
         getProfileUseCase.fetchProfile(refresh = true).getOrThrow()
+    }
+
+    private companion object {
+
+        const val AUTO_REFRESHING_DELAY_MS = 5*60*1000L
     }
 }
