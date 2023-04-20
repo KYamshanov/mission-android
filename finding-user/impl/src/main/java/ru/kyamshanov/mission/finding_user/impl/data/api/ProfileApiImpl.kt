@@ -16,7 +16,7 @@ internal class ProfileApiImpl @Inject constructor(
 ) : ProfileApi {
 
     override suspend fun findUsers(body: FindUsersRqDto): FindUsersRsDto = withContext(Dispatchers.IO) {
-        val response = requestFactory.post("/profile/manager/search/find") {
+        val response = requestFactory.post("/profile/manager/find") {
             contentType(ContentType.Application.Json)
             setBody(body)
         }

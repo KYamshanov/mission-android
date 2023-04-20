@@ -21,30 +21,30 @@ fun CellInput(
     onValueChange: (String) -> Unit,
     label: String,
     maxLines: Int = 1,
-) {
-    TextField(
-        modifier = modifier
-            .border(
-                color = MissionTheme.colors.border,
-                width = 2.dp,
-                shape = MissionTheme.shapes.medium
-            )
-            .fillMaxWidth(),
-        value = value,
-        onValueChange = onValueChange,
-        textStyle = MissionTheme.typography.large,
-        label = { Text(text = label, style = MissionTheme.typography.inputHint) },
-        shape = MissionTheme.shapes.medium,
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MissionTheme.colors.primary,
-            cursorColor = MissionTheme.colors.darkSecondary,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
-        ),
-        maxLines = maxLines
-    )
-}
+    editable: Boolean = true,
+) = TextField(
+    modifier = modifier
+        .border(
+            color = MissionTheme.colors.border,
+            width = 2.dp,
+            shape = MissionTheme.shapes.medium
+        )
+        .fillMaxWidth(),
+    value = value,
+    onValueChange = onValueChange,
+    textStyle = MissionTheme.typography.large,
+    label = { Text(text = label, style = MissionTheme.typography.inputHint) },
+    shape = MissionTheme.shapes.medium,
+    colors = TextFieldDefaults.textFieldColors(
+        backgroundColor = MissionTheme.colors.primary,
+        cursorColor = MissionTheme.colors.darkSecondary,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        disabledIndicatorColor = Color.Transparent,
+    ),
+    maxLines = maxLines,
+    enabled = editable
+)
 
 @Preview
 @Composable

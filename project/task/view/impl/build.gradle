@@ -15,4 +15,5 @@ dependencies {
     implementation project(":network-core:api")
     implementation project(":time")
     implementation project(":project:task:set_points:api")
+    implementation project(":finding-user:api")
 }

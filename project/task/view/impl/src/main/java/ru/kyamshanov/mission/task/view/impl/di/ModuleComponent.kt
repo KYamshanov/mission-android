@@ -2,6 +2,7 @@ package ru.kyamshanov.mission.task.view.impl.di
 
 import dagger.Component
 import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
+import ru.kyamshanov.mission.finding_user.api.di.FindingUserComponent
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
 import ru.kyamshanov.mission.network_core.api.di.NetworkComponent
 import ru.kyamshanov.mission.task.set_points.api.di.SetPointsComponent
@@ -13,6 +14,7 @@ import ru.kyamshanov.mission.time.di.TimeFormatterModule
         NavigationComponent::class,
         NetworkComponent::class,
         SetPointsComponent::class,
+        FindingUserComponent::class,
     ],
     modules = [
         BindsModule::class,
@@ -31,6 +33,7 @@ internal interface ModuleComponent : TaskViewComponent {
             navigationComponent: NavigationComponent,
             networkComponent: NetworkComponent,
             setPointsComponent: SetPointsComponent,
+            findingUserComponent : FindingUserComponent
         ): ModuleComponent
     }
 }

@@ -1,6 +1,7 @@
-package ru.kyamshanov.mission.task.view.impl.domain.model
+package ru.kyamshanov.mission.task.view.impl.ui.model
 
 import java.util.Date
+import ru.kyamshanov.mission.task.view.impl.domain.model.TaskInfo
 import ru.kyamshanov.mission.time.api.MissionDateFormatter
 
 internal data class TaskViewScreenState(
