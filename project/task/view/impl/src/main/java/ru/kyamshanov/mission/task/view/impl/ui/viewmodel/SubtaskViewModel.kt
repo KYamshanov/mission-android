@@ -30,4 +30,8 @@ internal class SubtaskViewModel(
                 .onFailure { }
         }
     }
+
+    fun setExecutionResult() {
+        subtaskInteractor
+    }
 }

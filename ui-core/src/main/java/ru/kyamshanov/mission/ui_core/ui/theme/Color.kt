@@ -57,7 +57,7 @@ internal val DarkColorPalette = MissionColors(
 
 internal val LightColorPalette = MissionColors(
     background = WhitePleasant,
-    secondary = Color.Blue,
+    secondary = BluePleasant,
     baseButtonText = White,
     input = White,
     darkSecondary = Black,

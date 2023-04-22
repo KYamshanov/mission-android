@@ -8,6 +8,7 @@ import ru.kyamshanov.mission.task.view.api.di.TaskViewComponent
 import ru.kyamshanov.mission.task.view.impl.di.ModuleComponent
 import ru.kyamshanov.mission.task.view.impl.di.ViewModelSupplier
 import ru.kyamshanov.mission.task.view.impl.ui.composable.components.TaskInfoLoading
+import ru.kyamshanov.mission.task.view.impl.ui.composable.components.TaskInfoSurface
 
 @Composable
 internal fun TaskViewComposable(
@@ -19,6 +20,5 @@ internal fun TaskViewComposable(
     val screenState = viewModel.screenState.collectAsState()
 
     if (screenState.value.loading) TaskInfoLoading()
-    else screenState.value.taskInfo?.let { TaskInfoSurface(info = it, viewModel = viewModel) }
-        ?: throw IllegalStateException("Screen state is not loading and has not taskInfo")
+    else TaskInfoSurface(screenState = screenState.value, viewModel = viewModel)
 }

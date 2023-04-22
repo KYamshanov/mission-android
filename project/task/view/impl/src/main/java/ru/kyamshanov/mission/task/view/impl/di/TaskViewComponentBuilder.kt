@@ -8,9 +8,10 @@ class TaskViewComponentBuilder : ComponentBuilder<TaskViewComponent> {
 
     override fun build(): TaskViewComponent =
         DaggerModuleComponent.factory().create(
-            navigationComponent = requireNotNull(Di.getComponent()),
-            networkComponent = requireNotNull(Di.getComponent()),
-            setPointsComponent = requireNotNull(Di.getComponent()),
-            findingUserComponent = requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
         )
 }

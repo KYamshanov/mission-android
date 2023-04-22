@@ -1,23 +1,26 @@
 package ru.kyamshanov.mission.task.view.impl.ui.model
 
-import java.util.Date
+import ru.kyamshanov.mission.task.view.impl.domain.model.SubtaskInfo
+import ru.kyamshanov.mission.task.view.impl.domain.model.TaskEditingScheme
 import ru.kyamshanov.mission.task.view.impl.domain.model.TaskInfo
-import ru.kyamshanov.mission.time.api.MissionDateFormatter
 
 internal data class TaskViewScreenState(
     val loading: Boolean,
-    val taskInfo: TaskViewInfo?,
+    val taskInfo: TaskInfo?,
+    val subtaskLoading: Boolean,
+    val subtasks: List<SubtaskInfo>?,
+    val setPointsButtonVisible: Boolean,
+    val taskEditingScheme: TaskEditingScheme?,
+    val saveChangedButtonVisible: Boolean,
 ) {
 
-    constructor() : this(loading = true, taskInfo = null)
-
-    data class TaskViewInfo(
-        val title: String,
-        val description: String,
-        val state: TaskInfo.State,
-        val startAt: Date,
-        val endAt: Date,
-        val dateFormatter: MissionDateFormatter,
-        val setPointsButtonVisible: Boolean,
+    constructor() : this(
+        loading = true,
+        taskInfo = null,
+        subtaskLoading = true,
+        subtasks = null,
+        setPointsButtonVisible = false,
+        taskEditingScheme = null,
+        saveChangedButtonVisible = false,
     )
 }

@@ -2,6 +2,7 @@ package ru.kyamshanov.mission.task.view.impl.data.interactor
 
 import javax.inject.Inject
 import ru.kyamshanov.mission.project.common.domain.model.SubtaskId
+import ru.kyamshanov.mission.project.common.domain.model.TaskId
 import ru.kyamshanov.mission.task.view.impl.data.api.ProjectApi
 import ru.kyamshanov.mission.task.view.impl.data.mapper.toDomain
 import ru.kyamshanov.mission.task.view.impl.domain.interactor.SubtaskInteractor
@@ -14,6 +15,10 @@ internal class SubtaskInteractorImpl @Inject constructor(
     private val projectApi: ProjectApi,
     @TimeFormatQualifier(TimeFormat.DD_MN_YY) private val dateFormatter: MissionDateFormatter,
 ) : SubtaskInteractor {
+
+    override suspend fun loadSubtasks(taskId: TaskId): Result<List<SubtaskInfo>> = runCatching {
+        projectApi.getSubtaskByTaskId(taskId.value).subTasks.map { it.toDomain(dateFormatter) }
+    }
 
     override suspend fun fetchSubtask(subtaskId: SubtaskId): Result<SubtaskInfo> = runCatching {
         projectApi.getSubtaskBySubtaskId(subtaskId.value).toDomain(dateFormatter)

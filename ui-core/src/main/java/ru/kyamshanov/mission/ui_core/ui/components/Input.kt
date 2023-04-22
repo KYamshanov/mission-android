@@ -22,22 +22,15 @@ fun Input(
     maxLines: Int = 1,
     rightIcon: (@Composable () -> Unit)? = null,
 ) {
-    TextField(
+    MissionTextField(
         modifier = modifier
             .fillMaxWidth(),
-        value = value,
+        text = value,
         onValueChange = onValueChange,
         textStyle = MissionTheme.typography.inputText,
         label = { Text(text = label, style = MissionTheme.typography.inputHint) },
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent,
-            cursorColor = MissionTheme.colors.darkSecondary,
-            focusedIndicatorColor = MissionTheme.colors.darkSecondary,
-            unfocusedIndicatorColor = MissionTheme.colors.darkSecondary,
-            disabledIndicatorColor = MissionTheme.colors.darkSecondary,
-        ),
         maxLines = maxLines,
-        trailingIcon = rightIcon
+        rightIcon = rightIcon
     )
 }
 

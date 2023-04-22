@@ -6,10 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import java.util.Calendar
@@ -24,6 +22,7 @@ fun DateField(
     value: Date?,
     onValueChange: (Date) -> Unit,
     label: String,
+    editable: Boolean = false,
     missionDateFormatter: MissionDateFormatter,
 ) {
 
@@ -45,29 +44,24 @@ fun DateField(
         initialCalendar.get(Calendar.DAY_OF_MONTH)
     )
 
-    androidx.compose.material.TextField(
+    MissionTextField(
         modifier = modifier
             .fillMaxWidth(),
-        value = value?.let { missionDateFormatter.invoke(it) }.orEmpty(),
+        text = value?.let { missionDateFormatter.invoke(it) }.orEmpty(),
         onValueChange = {},
-        enabled = false,
+        editable = false,
         textStyle = MissionTheme.typography.large,
         label = { Text(text = label, style = MissionTheme.typography.inputHint) },
-        shape = MissionTheme.shapes.medium,
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent,
-            cursorColor = MissionTheme.colors.darkSecondary,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
-        ),
         maxLines = 1,
-        trailingIcon = {
-            Image(
-                modifier = Modifier.clickable { datePickerDialog.show() },
-                painter = painterResource(id = R.drawable.calendar),
-                contentDescription = "Удалить",
-            )
-        }
+        rightIcon = if (editable) {
+            {
+                Image(
+                    modifier = Modifier.clickable { datePickerDialog.show() },
+                    painter = painterResource(id = R.drawable.calendar),
+                    contentDescription = "Удалить",
+                )
+            }
+        } else null,
+        underlined = false
     )
 }
