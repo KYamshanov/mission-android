@@ -51,6 +51,7 @@ dependencies {
 
     implementation "androidx.navigation:navigation-compose:$nav_version"
     implementation("androidx.compose.foundation:foundation:$compose_foundation")
+    implementation "androidx.core:core-splashscreen:1.0.1"
 
     implementation project(':ui-core')
     implementation project(':authentication:impl')

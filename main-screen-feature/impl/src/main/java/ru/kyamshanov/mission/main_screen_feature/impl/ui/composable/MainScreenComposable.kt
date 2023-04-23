@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -41,6 +42,7 @@ internal fun MainScreenComposable(
     }
 
     Scaffold(
+        modifier = Modifier.systemBarsPadding(),
         backgroundColor = MissionTheme.colors.background,
         bottomBar = {
             NavigationBarComposable(

@@ -11,6 +11,7 @@ internal data class SlimTaskDto(
     val startAt: Date,
     val endAt: Date,
     val points: Int?,
+    val maxPoints: Int,
 )
 
 internal fun SlimTaskDto.toDomain() = SlimTaskInfo(
@@ -24,5 +25,6 @@ internal fun SlimTaskDto.toDomain() = SlimTaskInfo(
     ),
     startAt = startAt,
     endAt = endAt,
-    points = points
+    points = points,
+    maxPoints = maxPoints
 )

@@ -13,6 +13,7 @@ import ru.kyamshanov.mission.task.view.impl.ui.composable.components.TaskInfoSur
 @Composable
 internal fun TaskViewComposable(
     taskId: String,
+    projectTitle: String,
     moduleComponent: ModuleComponent = requireNotNull(Di.getInternalComponent<TaskViewComponent, ModuleComponent>()),
     viewModelSupplier: ViewModelSupplier = moduleComponent.viewModelSupplier,
 ) {
@@ -20,5 +21,5 @@ internal fun TaskViewComposable(
     val screenState = viewModel.screenState.collectAsState()
 
     if (screenState.value.loading) TaskInfoLoading()
-    else TaskInfoSurface(screenState = screenState.value, viewModel = viewModel)
+    else TaskInfoSurface(screenState = screenState.value, viewModel = viewModel, projectTitle = projectTitle)
 }

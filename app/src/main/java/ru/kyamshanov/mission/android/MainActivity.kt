@@ -1,6 +1,8 @@
 package ru.kyamshanov.mission.android
 
 import android.os.Bundle
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +20,8 @@ import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
 import ru.kyamshanov.mission.navigation_core.common.DestinationScreen
 import ru.kyamshanov.mission.navigation_core.impl.di.NavigationComponentBuilder
+import ru.kyamshanov.mission.session_front.api.di.SessionFrontComponent
+import ru.kyamshanov.mission.session_front.api.session.UnidentifiedSession
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,8 +30,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
+            window.statusBarColor = Color.Companion.Transparent.toArgb()
             MissionTheme {
-                window.statusBarColor = Color.Companion.Transparent.toArgb()
                 Surface(modifier = Modifier.fillMaxSize(), color = MissionTheme.colors.background) {
                     val navController = rememberNavController()
                     val screensProvider = ComposableScreensProvider()
@@ -36,6 +40,20 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    val v = requireNotNull(Di.getComponent<SessionFrontComponent>()).sessionInfo.session
+                    println("Auth screenState $v")
+                    return if (v == UnidentifiedSession) false
+                    else {
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    }
+                }
+            }
+        )
     }
 }
 

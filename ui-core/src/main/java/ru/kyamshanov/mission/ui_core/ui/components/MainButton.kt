@@ -1,7 +1,9 @@
 package ru.kyamshanov.mission.ui_core.ui.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults.buttonColors
 import androidx.compose.material.Text
@@ -18,7 +20,7 @@ fun MainButton(
     onClick: () -> Unit,
 ) {
     Button(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding().imePadding(),
         onClick = onClick,
         content = { Text(text = label, style = MissionTheme.typography.mainButtonStyle) },
         colors = buttonColors(

@@ -33,7 +33,7 @@ internal fun SubtaskInfoSurface(
     modifier = Modifier
         .fillMaxSize(),
     topContent = {
-        TopBar(title = info.title)
+        TopBar(title = info.title, navigationListener = viewModel::onBack)
     },
     bottomContent = {
         /* if (info.setPointsButtonVisible) {

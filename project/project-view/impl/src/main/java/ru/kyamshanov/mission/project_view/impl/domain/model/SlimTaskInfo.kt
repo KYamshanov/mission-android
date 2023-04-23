@@ -10,4 +10,5 @@ internal data class SlimTaskInfo(
     val startAt: Date,
     val endAt: Date,
     val points: Int?,
+    val maxPoints: Int,
 )

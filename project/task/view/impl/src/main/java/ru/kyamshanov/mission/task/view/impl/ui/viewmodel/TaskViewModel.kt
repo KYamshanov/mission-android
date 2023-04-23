@@ -68,7 +68,6 @@ internal class TaskViewModel(
                         taskInfo = taskInfo,
                         setPointsButtonVisible = true,
                         taskEditingScheme = taskInteractor.editableScheme,
-                        saveChangedButtonVisible = taskInteractor.editableScheme.hasChanges
                     )
                 }
             }
@@ -95,7 +94,7 @@ internal class TaskViewModel(
     fun setTitle(title: String) {
         taskInteractor.setTitle(title)
             .onSuccess { taskInfo ->
-                _screenState.update { value -> value.copy(taskInfo = taskInfo, saveChangedButtonVisible = true) }
+                _screenState.update { value -> value.copy(taskInfo = taskInfo) }
             }
             .onFailure { Log.e(TAG, "exception", it) }
     }
@@ -103,7 +102,7 @@ internal class TaskViewModel(
     fun setDescription(description: String) {
         taskInteractor.setDescription(description)
             .onSuccess { taskInfo ->
-                _screenState.update { value -> value.copy(taskInfo = taskInfo, saveChangedButtonVisible = true) }
+                _screenState.update { value -> value.copy(taskInfo = taskInfo) }
             }
             .onFailure { Log.e(TAG, "exception", it) }
     }
@@ -111,7 +110,7 @@ internal class TaskViewModel(
     fun setStartAt(startAt: Date) {
         taskInteractor.setStartAt(startAt)
             .onSuccess { taskInfo ->
-                _screenState.update { value -> value.copy(taskInfo = taskInfo, saveChangedButtonVisible = true) }
+                _screenState.update { value -> value.copy(taskInfo = taskInfo) }
             }
             .onFailure { Log.e(TAG, "exception", it) }
     }
@@ -119,7 +118,7 @@ internal class TaskViewModel(
     fun setEndAt(endAt: Date) {
         taskInteractor.setEndAt(endAt)
             .onSuccess { taskInfo ->
-                _screenState.update { value -> value.copy(taskInfo = taskInfo, saveChangedButtonVisible = true) }
+                _screenState.update { value -> value.copy(taskInfo = taskInfo) }
             }
             .onFailure { Log.e(TAG, "exception", it) }
     }
@@ -127,7 +126,7 @@ internal class TaskViewModel(
     fun setMaxPoints(maxPoints: Int) {
         taskInteractor.setMaxPoints(maxPoints)
             .onSuccess { taskInfo ->
-                _screenState.update { value -> value.copy(taskInfo = taskInfo, saveChangedButtonVisible = true) }
+                _screenState.update { value -> value.copy(taskInfo = taskInfo) }
             }
             .onFailure { Log.e(TAG, "exception", it) }
     }
@@ -135,11 +134,15 @@ internal class TaskViewModel(
     fun saveChanges() {
         viewModelScope.launch {
             taskInteractor.saveChanges()
-                .onSuccess {
-
+                .onSuccess { taskEditingScheme->
+                    _screenState.update { value -> value.copy(taskEditingScheme = taskEditingScheme) }
                 }
                 .onFailure { Log.e(TAG, "exception", it) }
         }
+    }
+
+    fun onBack(){
+        navigator.exit()
     }
 
     companion object {

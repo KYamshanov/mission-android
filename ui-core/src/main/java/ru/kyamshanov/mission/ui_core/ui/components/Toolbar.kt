@@ -11,13 +11,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import ru.kyamshanov.mission.ui_core.R
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
@@ -26,8 +34,10 @@ import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 fun TopBar(
     modifier: Modifier = Modifier,
     title: String,
+    navigationListener: () -> Unit,
 ) = TopBar(
     modifier = modifier,
+    navigationListener = navigationListener,
     title = {
         Text(
             modifier = modifier.align(Alignment.Center),
@@ -42,8 +52,10 @@ fun TopBar(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
+    navigationListener: () -> Unit,
 ) = TopBar(
     modifier = modifier,
+    navigationListener = navigationListener,
     title = {
         Column(modifier = Modifier.align(Alignment.Center).fillMaxWidth()) {
             Text(
@@ -64,6 +76,7 @@ fun TopBar(
 fun TopBar(
     modifier: Modifier = Modifier,
     title: @Composable BoxScope.() -> Unit,
+    navigationListener: () -> Unit,
 ) {
     TopAppBar(
         modifier = modifier,
@@ -71,13 +84,22 @@ fun TopBar(
         contentColor = MissionTheme.colors.primary,
         contentPadding = WindowInsets.statusBars.asPaddingValues()
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                modifier = Modifier.align(Alignment.CenterStart).padding(10.dp).clickable { },
-                painter = painterResource(id = R.drawable.arrow_back),
-                contentDescription = "come back",
-                colorFilter = ColorFilter.tint(MissionTheme.colors.primary)
-            )
+        val localDensity = LocalDensity.current
+        val iconSizeState = remember { mutableStateOf(IntSize.Zero) }
+
+        Image(
+            modifier = Modifier.run {
+                padding(10.dp)
+                    .clip(CircleShape)
+                    .clickable(onClick = navigationListener)
+                    .onSizeChanged { iconSizeState.value = it }
+            },
+            painter = painterResource(id = R.drawable.arrow_back),
+            contentDescription = "come back",
+            colorFilter = ColorFilter.tint(MissionTheme.colors.primary)
+        )
+
+        Box(modifier = Modifier.fillMaxSize().padding(end = with(localDensity) { iconSizeState.value.width.toDp() })) {
             title.invoke(this)
         }
     }

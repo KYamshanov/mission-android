@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults.buttonColors
-import androidx.compose.material.ButtonElevation
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +17,7 @@ fun AlternativeButton(
     modifier: Modifier = Modifier,
     label: String,
     onClick: () -> Unit,
-) {
+) =
     Button(
         modifier = modifier,
         onClick = onClick,
@@ -32,7 +31,6 @@ fun AlternativeButton(
         elevation = null,
         shape = MissionTheme.shapes.large
     )
-}
 
 @Preview
 @Composable

@@ -21,5 +21,5 @@ internal interface TaskInteractor {
 
     fun setMaxPoints(maxPoints: Int): Result<TaskInfo>
 
-    suspend fun saveChanges(): Result<Unit>
+    suspend fun saveChanges(): Result<TaskEditingScheme>
 }

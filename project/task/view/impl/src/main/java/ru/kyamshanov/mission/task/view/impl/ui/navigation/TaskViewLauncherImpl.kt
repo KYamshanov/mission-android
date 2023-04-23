@@ -10,7 +10,7 @@ class TaskViewLauncherImpl @Inject constructor(
     private val navigator: Navigator,
 ) : TaskViewLauncher {
 
-    override fun launch(taskId: TaskId) {
-        navigator.navigateTo(TaskViewScreen(taskId.value))
+    override fun launch(projectTitle: String, taskId: TaskId) {
+        navigator.navigateTo(TaskViewScreen(projectTitle = projectTitle, taskId = taskId.value))
     }
 }

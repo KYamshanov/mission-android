@@ -28,61 +28,74 @@ import ru.kyamshanov.mission.ui_core.ui.components.ComplexCell
 import ru.kyamshanov.mission.ui_core.ui.components.DateField
 import ru.kyamshanov.mission.ui_core.ui.components.MainButton
 import ru.kyamshanov.mission.ui_core.ui.components.SecondaryButton
+import ru.kyamshanov.mission.ui_core.ui.components.Surface
 import ru.kyamshanov.mission.ui_core.ui.components.TextField
 import ru.kyamshanov.mission.ui_core.ui.components.TextFieldCompose
+import ru.kyamshanov.mission.ui_core.ui.components.TopBar
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
 @Composable
 internal fun TaskInfoSurface(
+    projectTitle: String,
     screenState: TaskViewScreenState,
     viewModel: TaskViewModel,
 ) {
     screenState.taskInfo?.let { taskInfo ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp)
-        ) {
-            TaskInfoCell(taskInfo, screenState, viewModel)
-            Box(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = "Задачи",
-                    style = MissionTheme.typography.title,
-                    modifier = Modifier.align(Alignment.Center)
+        Surface(
+            topContent = {
+                TopBar(
+                    title = projectTitle,
+                    navigationListener = viewModel::onBack,
+                    subtitle = taskInfo.title
                 )
-                if (screenState.saveChangedButtonVisible) {
-                    AlternativeButton(
-                        modifier = Modifier.align(Alignment.CenterEnd),
-                        label = "Сохранить",
-                        onClick = viewModel::saveChanges
-                    )
-                }
             }
-            if (screenState.subtaskLoading) Text(text = "Загрузка...")
-            else screenState.subtasks?.let { subtasks ->
-                subtasks.forEach { subtaskInfo ->
-                    Spacer(modifier = Modifier.height(5.dp))
-                    SubtaskInfoCell(
-                        modifier = Modifier.clickable { viewModel.openSubtask(subtaskInfo.subtaskId) },
-                        info = subtaskInfo
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(16.dp)
+            ) {
+                TaskInfoCell(taskInfo, screenState, viewModel)
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = "Задачи",
+                        style = MissionTheme.typography.title,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                    if (screenState.taskEditingScheme?.hasChanges == true) {
+                        AlternativeButton(
+                            modifier = Modifier.align(Alignment.CenterEnd),
+                            label = "Сохранить",
+                            onClick = viewModel::saveChanges
+                        )
+                    }
+                }
+                if (screenState.subtaskLoading) Text(text = "Загрузка...")
+                else screenState.subtasks?.let { subtasks ->
+                    subtasks.forEach { subtaskInfo ->
+                        Spacer(modifier = Modifier.height(5.dp))
+                        SubtaskInfoCell(
+                            modifier = Modifier.clickable { viewModel.openSubtask(subtaskInfo.subtaskId) },
+                            info = subtaskInfo
+                        )
+                    }
+                } ?: Text(text = "Задачи не созданы")
+                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.height(15.dp))
+                MainButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    label = "Добавить задачу",
+                    onClick = { viewModel.createSubtask() }
+                )
+                if (screenState.setPointsButtonVisible) {
+                    Spacer(modifier = Modifier.height(10.dp))
+                    SecondaryButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        label = stringResource(id = R.string.tv_set_points_title),
+                        onClick = viewModel::openSetPointScreen
                     )
                 }
-            } ?: Text(text = "Задачи не созданы")
-            Spacer(modifier = Modifier.weight(1f))
-            Spacer(modifier = Modifier.height(15.dp))
-            MainButton(
-                modifier = Modifier.fillMaxWidth(),
-                label = "Добавить задачу",
-                onClick = { viewModel.createSubtask() }
-            )
-            if (screenState.setPointsButtonVisible) {
-                Spacer(modifier = Modifier.height(10.dp))
-                SecondaryButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    label = stringResource(id = R.string.tv_set_points_title),
-                    onClick = viewModel::openSetPointScreen
-                )
             }
         }
     }
@@ -141,6 +154,7 @@ private fun TaskInfoCell(
         }
         item {
             TextFieldCompose(
+                modifier = Modifier.fillMaxWidth(),
                 text = info.maxPoints.toString(),
                 label = "Максимальное кол-во баллов",
                 editable = screenInfo.taskEditingScheme?.isEditableMaxPoints ?: false,

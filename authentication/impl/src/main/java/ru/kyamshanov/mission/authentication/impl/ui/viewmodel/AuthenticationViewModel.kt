@@ -5,9 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.BufferOverflow.DROP_OLDEST
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.authentication.impl.domain.AuthenticationUseCase
 import ru.kyamshanov.mission.authentication.impl.ui.model.AuthenticationState
@@ -16,13 +15,11 @@ internal class AuthenticationViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
 ) : ViewModel() {
 
-    private val _screenState =
-        MutableSharedFlow<AuthenticationState>(replay = 1, onBufferOverflow = DROP_OLDEST)
-
-    val screenState = _screenState.asSharedFlow()
+    private val _screenState = MutableStateFlow(AuthenticationState.LOADER)
+    val screenState = _screenState.asStateFlow()
 
     init {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.Default) {
             authenticationUseCase.obtainSession()
                 .onFailure { e ->
                     Log.e(LOG_TAG, "obtainSession error", e)

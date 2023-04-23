@@ -29,3 +29,11 @@ internal data class TaskEditingScheme(
     val hasChanges: Boolean
         get() = titleEdited or descriptionEdited or startAtEdited or endAtEdited or maxPointsEdited
 }
+
+internal fun TaskEditingScheme.reset(): TaskEditingScheme = copy(
+    titleEdited = false,
+    descriptionEdited = false,
+    startAtEdited = false,
+    endAtEdited = false,
+    maxPointsEdited = false,
+)

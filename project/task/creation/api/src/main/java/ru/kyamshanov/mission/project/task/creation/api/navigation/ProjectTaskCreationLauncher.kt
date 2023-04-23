@@ -4,5 +4,5 @@ import ru.kyamshanov.mission.project.common.domain.model.ProjectId
 
 interface ProjectTaskCreationLauncher {
 
-    fun launch(projectId: ProjectId)
+    fun launch(projectId: ProjectId, projectName: String)
 }

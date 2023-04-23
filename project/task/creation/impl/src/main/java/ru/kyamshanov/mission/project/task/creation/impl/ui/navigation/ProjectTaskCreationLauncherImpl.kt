@@ -10,7 +10,7 @@ class ProjectTaskCreationLauncherImpl @Inject constructor(
     private val navigator: Navigator,
 ) : ProjectTaskCreationLauncher {
 
-    override fun launch(projectId: ProjectId) {
-        navigator.navigateTo(ProjectTaskCreationScreen(projectId = projectId))
+    override fun launch(projectId: ProjectId, projectName: String) {
+        navigator.navigateTo(ProjectTaskCreationScreen(projectId = projectId, projectName = projectName))
     }
 }

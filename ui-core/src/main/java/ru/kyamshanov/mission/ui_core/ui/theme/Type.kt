@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.sp
 data class MissionTypography(
     val mainAppearance: TextStyle,
     val huge: TextStyle,
+    val hugeMedium: TextStyle,
     val large: TextStyle,
     val medium: TextStyle,
     val smallMedium: TextStyle,
@@ -42,10 +43,9 @@ data class MissionTypography(
     val inputHint = mainAppearance + smallMedium + black
     val inputText = mainAppearance + medium + black
 
-    val topBarTitle = mainAppearance + huge + white
+    val topBarTitle = mainAppearance + hugeMedium + white
     val topBarSecondaryTitle = mainAppearance + large + white
     val topBarSubtitle = mainAppearance + medium + white
-
 }
 
 @Composable
@@ -55,6 +55,7 @@ internal fun typographyComposable() = MissionTypography(
         fontWeight = FontWeight.Normal,
     ),
     huge = TextStyle(fontSize = 24.sp),
+    hugeMedium = TextStyle(fontSize = 20.sp),
     large = TextStyle(fontSize = 18.sp),
     medium = TextStyle(fontSize = 16.sp),
     smallMedium = TextStyle(fontSize = 14.sp),
@@ -85,6 +86,7 @@ internal val LocalExtendedTypography = staticCompositionLocalOf {
         green = TextStyle.Default,
         yellow = TextStyle.Default,
         blue = TextStyle.Default,
+        hugeMedium = TextStyle.Default
     )
 }
 

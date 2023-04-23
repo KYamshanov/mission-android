@@ -1,23 +1,15 @@
 package ru.kyamshanov.mission.project_view.impl.ui.model
 
-import ru.kyamshanov.mission.project_view.impl.domain.model.ProjectStage
-import ru.kyamshanov.mission.project_view.impl.domain.model.SlimTaskInfo
+import ru.kyamshanov.mission.project_view.impl.domain.model.ProjectEditingScheme
+import ru.kyamshanov.mission.project_view.impl.domain.model.ProjectInfo
 
-internal sealed interface ProjectScreenState {
+internal data class ProjectScreenState(
+    val loading: Boolean,
+    val projectInfo: ProjectInfo?,
+    val editingScheme: ProjectEditingScheme,
+    val totalPointsInfo: TotalPointsInfo,
+    val participantsCount: Int,
+) {
 
-    object Loading : ProjectScreenState
-
-    data class ProjectInfo(
-        val title: TextField,
-        val description: TextField,
-        val participantsCount: Int,
-        val tasks: List<SlimTaskInfo>,
-        val projectStage: ProjectStage,
-    ) : ProjectScreenState {
-
-        data class TextField(
-            val text: String,
-            val editable: Boolean,
-        )
-    }
+    constructor() : this(true, null, ProjectEditingScheme(isEditable = false), TotalPointsInfo(), 0)
 }

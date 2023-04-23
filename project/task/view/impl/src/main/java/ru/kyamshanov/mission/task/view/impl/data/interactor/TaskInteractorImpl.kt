@@ -11,6 +11,7 @@ import ru.kyamshanov.mission.task.view.impl.data.model.EditTaskRqDto
 import ru.kyamshanov.mission.task.view.impl.domain.interactor.TaskInteractor
 import ru.kyamshanov.mission.task.view.impl.domain.model.TaskEditingScheme
 import ru.kyamshanov.mission.task.view.impl.domain.model.TaskInfo
+import ru.kyamshanov.mission.task.view.impl.domain.model.reset
 import ru.kyamshanov.mission.time.api.MissionDateFormatter
 import ru.kyamshanov.mission.time.di.TimeFormat
 import ru.kyamshanov.mission.time.di.TimeFormatQualifier
@@ -23,9 +24,10 @@ internal class TaskInteractorImpl @Inject constructor(
 
     private var currentTask: TaskInfo? = null
 
-    override val editableScheme: TaskEditingScheme =
+    override var editableScheme: TaskEditingScheme =
         if (sessionInfo.hasRole(UserRole.MANAGER)) TaskEditingScheme(isEditable = true)
         else TaskEditingScheme(isEditable = false)
+        private set
 
     override fun setTitle(title: String): Result<TaskInfo> = runCatching {
         assert(editableScheme.isEditableTitle) { "Title editing is not available" }
@@ -77,7 +79,7 @@ internal class TaskInteractorImpl @Inject constructor(
             }
     }
 
-    override suspend fun saveChanges(): Result<Unit> = runCatching {
+    override suspend fun saveChanges(): Result<TaskEditingScheme> = runCatching {
         val task = requireNotNull(currentTask) { "Task was not fetched" }
         var edited = false
         val request = EditTaskRqDto(
@@ -91,6 +93,7 @@ internal class TaskInteractorImpl @Inject constructor(
         )
         assert(edited) { "Task information was not changed" }
         projectApi.editTask(request)
+        editableScheme.reset().also { editableScheme = it }
     }
 
     override suspend fun fetchTask(taskId: TaskId): Result<TaskInfo> = runCatching {

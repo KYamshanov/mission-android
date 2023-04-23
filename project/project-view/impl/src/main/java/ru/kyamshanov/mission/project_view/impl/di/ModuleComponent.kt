@@ -8,7 +8,6 @@ import ru.kyamshanov.mission.network_core.api.di.NetworkComponent
 import ru.kyamshanov.mission.project.task.creation.api.di.ProjectTaskCreationComponent
 import ru.kyamshanov.mission.project_view.api.di.ProjectComponent
 import ru.kyamshanov.mission.project_view.impl.domain.usecase.TaskStagePresentUseCase
-import ru.kyamshanov.mission.project_view.impl.ui.viewmodel.ViewModelProvider
 import ru.kyamshanov.mission.session_front.api.di.SessionFrontComponent
 import ru.kyamshanov.mission.time.di.TimeFormatterModule
 
@@ -29,7 +28,9 @@ import ru.kyamshanov.mission.time.di.TimeFormatterModule
 @ComponentItem
 internal interface ModuleComponent : ProjectComponent {
 
-    val viewModelProvider: ViewModelProvider
+    val projectViewModelFactory: ProjectViewModelFactory
+
+    val totalPointsViewModelFactory: TotalPointsViewModelFactory
 
     val taskStagePresentUseCase: TaskStagePresentUseCase
 

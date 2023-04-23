@@ -2,12 +2,11 @@ package ru.kyamshanov.mission.task.view.impl.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.kyamshanov.mission.navigation_core.api.Navigator
 import ru.kyamshanov.mission.project.common.domain.model.SubtaskId
 import ru.kyamshanov.mission.task.view.impl.domain.interactor.SubtaskInteractor
 import ru.kyamshanov.mission.task.view.impl.ui.model.SubtaskScreenState
@@ -15,6 +14,7 @@ import ru.kyamshanov.mission.task.view.impl.ui.model.SubtaskScreenState
 internal class SubtaskViewModel(
     private val subtask: String,
     private val subtaskInteractor: SubtaskInteractor,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val subtaskId = SubtaskId(subtask)
@@ -33,5 +33,9 @@ internal class SubtaskViewModel(
 
     fun setExecutionResult() {
         subtaskInteractor
+    }
+
+    fun onBack() {
+        navigator.exit()
     }
 }

@@ -57,5 +57,6 @@ internal class ViewModelSupplierImpl @Inject constructor(
         SubtaskViewModel(
             subtask = subtask,
             subtaskInteractor = subtaskInteractor,
+            navigator = navigator,
         )
 }

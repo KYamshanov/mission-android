@@ -5,14 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -20,7 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -36,6 +38,7 @@ fun EditTextField(
     rightIcon: (@Composable () -> Unit)? = null,
     underlined: Boolean = true,
     textStyle: TextStyle = MissionTheme.typography.inputText,
+    suffix: String? = null,
     onValueChange: (String) -> Unit,
 ) {
     MissionTextField(
@@ -47,6 +50,7 @@ fun EditTextField(
         rightIcon = rightIcon,
         underlined = underlined,
         textStyle = textStyle,
+        suffix = suffix?.let { AnnotatedString(it) },
         onValueChange = onValueChange
     )
 }
@@ -61,42 +65,60 @@ fun MissionTextField(
     rightIcon: (@Composable () -> Unit)? = null,
     underlined: Boolean = true,
     textStyle: TextStyle = MissionTheme.typography.inputText,
+    suffix: AnnotatedString? = null,
     onValueChange: (String) -> Unit,
-) = BasicTextField(
-    modifier = modifier
-        .fillMaxWidth(),
-    textStyle = textStyle,
-    value = text,
-    onValueChange = onValueChange,
-    maxLines = maxLines,
-    readOnly = editable.not(),
-    cursorBrush = SolidColor(MissionTheme.colors.darkSecondary),
-    decorationBox = { innerTextField ->
-        BoxWithConstraints {
-            val localDensity = LocalDensity.current
-            val iconSizeState = remember { mutableStateOf(IntSize.Zero) }
+) {
+    val localDensity = LocalDensity.current
 
-            Column(
-                modifier = Modifier.align(Alignment.TopStart)
-                    .width(this.maxWidth - with(localDensity) { iconSizeState.value.width.toDp() })
-            ) {
-                label?.invoke()
-                innerTextField()
+    BasicTextField(
+        modifier = modifier,
+        textStyle = textStyle,
+        value = text,
+        onValueChange = onValueChange,
+        maxLines = maxLines,
+        readOnly = editable.not(),
+        cursorBrush = SolidColor(MissionTheme.colors.darkSecondary),
+        visualTransformation = suffix?.let { s ->
+            VisualTransformation {
+                val textWithSuffixMapping = object : OffsetMapping {
+                    override fun originalToTransformed(offset: Int): Int {
+                        return offset
+                    }
+
+                    override fun transformedToOriginal(offset: Int): Int {
+                        if (text.isEmpty()) return 0
+                        if (offset >=  text.length) return text.length
+                        return offset
+                    }
+                }
+                TransformedText(it.plus(s),textWithSuffixMapping ) }
+        } ?: VisualTransformation.None,
+        decorationBox = { innerTextField ->
+            BoxWithConstraints {
+                val iconSizeState = remember { mutableStateOf(IntSize.Zero) }
+
+                Column(
+                    modifier = Modifier.align(Alignment.TopStart)
+                        .width(this.maxWidth - with(localDensity) { iconSizeState.value.width.toDp() })
+                ) {
+                    label?.invoke()
+                    innerTextField()
+                }
+                rightIcon?.let { icon ->
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .wrapContentSize()
+                            .onSizeChanged { iconSizeState.value = it },
+                        contentAlignment = Alignment.Center,
+                        content = { icon() },
+                    )
+                }
+                if (underlined) CellLine(modifier = Modifier.align(Alignment.BottomStart))
             }
-            rightIcon?.let { icon ->
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .wrapContentSize()
-                        .onSizeChanged { iconSizeState.value = it },
-                    contentAlignment = Alignment.Center,
-                    content = { icon() },
-                )
-            }
-            if (underlined) CellLine(modifier = Modifier.align(Alignment.BottomStart))
-        }
-    },
-)
+        },
+    )
+}
 
 @Preview
 @Composable

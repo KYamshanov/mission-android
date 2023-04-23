@@ -11,7 +11,6 @@ internal data class TaskViewScreenState(
     val subtasks: List<SubtaskInfo>?,
     val setPointsButtonVisible: Boolean,
     val taskEditingScheme: TaskEditingScheme?,
-    val saveChangedButtonVisible: Boolean,
 ) {
 
     constructor() : this(
@@ -21,6 +20,5 @@ internal data class TaskViewScreenState(
         subtasks = null,
         setPointsButtonVisible = false,
         taskEditingScheme = null,
-        saveChangedButtonVisible = false,
     )
 }
