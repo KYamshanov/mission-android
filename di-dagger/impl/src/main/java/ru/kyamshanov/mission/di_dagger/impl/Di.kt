@@ -27,6 +27,8 @@ object Di {
     fun <T : Any> registration(clazz: KClass<T>, builder: ComponentBuilder<T>) {
         this.builders[clazz] = builder
         componentsHolder.remove(clazz)
+
+        println("Registration component : ${clazz.simpleName}")
     }
 
     @Suppress("UNCHECKED_CAST")

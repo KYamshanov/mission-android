@@ -19,7 +19,6 @@ import androidx.navigation.compose.rememberNavController
 import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
 import ru.kyamshanov.mission.navigation_core.common.DestinationScreen
-import ru.kyamshanov.mission.navigation_core.impl.di.NavigationComponentBuilder
 import ru.kyamshanov.mission.session_front.api.di.SessionFrontComponent
 import ru.kyamshanov.mission.session_front.api.session.UnidentifiedSession
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
@@ -35,7 +34,8 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(), color = MissionTheme.colors.background) {
                     val navController = rememberNavController()
                     val screensProvider = ComposableScreensProvider()
-                    Di.registration(NavigationComponent::class, NavigationComponentBuilder(navController))
+                    Di.getInternalComponent<NavigationComponent, ru.kyamshanov.mission.navigation_core.impl.di.ModuleComponent>()
+                        .navigatorControllerHolder.navigator = navController
                     MissionNavigationHost(navController = navController, screensProvider = screensProvider)
                 }
             }
