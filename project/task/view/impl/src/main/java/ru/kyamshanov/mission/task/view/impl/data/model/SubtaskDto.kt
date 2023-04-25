@@ -13,6 +13,8 @@ internal data class SubtaskDto(
     val stage: SubTaskStageDto,
     val executionResult: String?,
     val id: String,
+    val availableEdit: Boolean,
+    val availableSetResult: Boolean,
 )
 
 enum class SubTaskStageDto {

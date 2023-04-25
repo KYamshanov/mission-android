@@ -3,6 +3,8 @@ package ru.kyamshanov.mission.task.view.impl.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import java.util.Date
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,21 +15,17 @@ import ru.kyamshanov.mission.navigation_core.api.Navigator
 import ru.kyamshanov.mission.project.common.domain.model.SubtaskId
 import ru.kyamshanov.mission.project.common.domain.model.TaskId
 import ru.kyamshanov.mission.task.set_points.api.navigation.SetPointsLauncher
-import ru.kyamshanov.mission.task.view.impl.domain.interactor.SubtaskInteractor
 import ru.kyamshanov.mission.task.view.impl.domain.interactor.TaskInteractor
 import ru.kyamshanov.mission.task.view.impl.domain.model.TaskInfo
 import ru.kyamshanov.mission.task.view.impl.ui.model.TaskViewScreenState
 import ru.kyamshanov.mission.task.view.impl.ui.screen.SubtaskCreationScreen
 import ru.kyamshanov.mission.task.view.impl.ui.screen.SubtaskViewScreen
-import ru.kyamshanov.mission.time.api.MissionDateFormatter
 
-internal class TaskViewModel(
-    private val taskId: String,
+internal class TaskViewModel @AssistedInject constructor(
+    @Assisted private val taskId: String,
     private val taskInteractor: TaskInteractor,
-    private val dateFormatter: MissionDateFormatter,
     private val setPointLauncher: dagger.Lazy<SetPointsLauncher>,
     private val navigator: Navigator,
-    private val subtaskInteractor: SubtaskInteractor,
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow(TaskViewScreenState())
@@ -41,6 +39,11 @@ internal class TaskViewModel(
         }
         viewModelScope.launch(Dispatchers.Default) {
             fetchSubtasks()
+        }
+        viewModelScope.launch(Dispatchers.Default) {
+            taskInteractor.editableSchemeStateFlow.collect { editableScheme ->
+                _screenState.update { it.copy(taskEditingScheme = editableScheme) }
+            }
         }
     }
 
@@ -67,7 +70,6 @@ internal class TaskViewModel(
                         loading = false,
                         taskInfo = taskInfo,
                         setPointsButtonVisible = true,
-                        taskEditingScheme = taskInteractor.editableScheme,
                     )
                 }
             }
@@ -77,7 +79,7 @@ internal class TaskViewModel(
     }
 
     private suspend fun fetchSubtasks() {
-        subtaskInteractor.loadSubtasks(TaskId(taskId))
+        taskInteractor.loadSubtasks(TaskId(taskId))
             .onSuccess { subtasks ->
                 _screenState.update { value ->
                     value.copy(
@@ -134,14 +136,14 @@ internal class TaskViewModel(
     fun saveChanges() {
         viewModelScope.launch {
             taskInteractor.saveChanges()
-                .onSuccess { taskEditingScheme->
+                .onSuccess { taskEditingScheme ->
                     _screenState.update { value -> value.copy(taskEditingScheme = taskEditingScheme) }
                 }
                 .onFailure { Log.e(TAG, "exception", it) }
         }
     }
 
-    fun onBack(){
+    fun onBack() {
         navigator.exit()
     }
 

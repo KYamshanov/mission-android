@@ -83,11 +83,13 @@ internal fun TaskInfoSurface(
                 } ?: Text(text = "Задачи не созданы")
                 Spacer(modifier = Modifier.weight(1f))
                 Spacer(modifier = Modifier.height(15.dp))
-                MainButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    label = "Добавить задачу",
-                    onClick = { viewModel.createSubtask() }
-                )
+                if (screenState.taskEditingScheme?.isEditableSubtasks == true) {
+                    MainButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        label = "Добавить задачу",
+                        onClick = { viewModel.createSubtask() }
+                    )
+                }
                 if (screenState.setPointsButtonVisible) {
                     Spacer(modifier = Modifier.height(10.dp))
                     SecondaryButton(

@@ -33,3 +33,9 @@ internal fun SubTaskStageDto.toDomain(): SubtaskInfo.State = when (this) {
     SubTaskStageDto.IN_WORK -> SubtaskInfo.State.IN_WORK
     SubTaskStageDto.FINISHED -> SubtaskInfo.State.FINISHED
 }
+
+internal fun SubtaskInfo.State.toDto(): SubTaskStageDto = when (this) {
+    SubtaskInfo.State.CREATED -> SubTaskStageDto.CREATED
+    SubtaskInfo.State.IN_WORK -> SubTaskStageDto.IN_WORK
+    SubtaskInfo.State.FINISHED -> SubTaskStageDto.FINISHED
+}

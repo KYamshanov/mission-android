@@ -6,11 +6,12 @@ internal data class TaskEditingScheme(
     val isEditableStartAt: Boolean,
     val isEditableEndAt: Boolean,
     val isEditableMaxPoints: Boolean,
-    var titleEdited: Boolean,
-    var descriptionEdited: Boolean,
-    var startAtEdited: Boolean,
-    var endAtEdited: Boolean,
-    var maxPointsEdited: Boolean,
+    val isEditableSubtasks: Boolean,
+    val titleEdited: Boolean,
+    val descriptionEdited: Boolean,
+    val startAtEdited: Boolean,
+    val endAtEdited: Boolean,
+    val maxPointsEdited: Boolean,
 ) {
 
     constructor(isEditable: Boolean) : this(
@@ -19,6 +20,7 @@ internal data class TaskEditingScheme(
         isEditableStartAt = isEditable,
         isEditableEndAt = isEditable,
         isEditableMaxPoints = isEditable,
+        isEditableSubtasks = false,
         titleEdited = false,
         descriptionEdited = false,
         startAtEdited = false,

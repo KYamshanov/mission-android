@@ -31,7 +31,6 @@ internal interface BindsModule {
     fun TaskInteractorImpl.bindTaskInteractor(): TaskInteractor
 
     @Binds
-    @ComponentItem
     fun SubtaskInteractorImpl.bindSubtaskInteractor(): SubtaskInteractor
 
     @Binds

@@ -14,7 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import ru.kyamshanov.mission.task.view.impl.domain.model.SubtaskEditingScheme
 import ru.kyamshanov.mission.task.view.impl.domain.model.SubtaskInfo
+import ru.kyamshanov.mission.task.view.impl.ui.model.SubtaskScreenState
 import ru.kyamshanov.mission.task.view.impl.ui.viewmodel.SubtaskViewModel
 import ru.kyamshanov.mission.ui_core.ui.components.Cell
 import ru.kyamshanov.mission.ui_core.ui.components.EditTextField
@@ -29,11 +31,12 @@ import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 internal fun SubtaskInfoSurface(
     info: SubtaskInfo,
     viewModel: SubtaskViewModel,
+    screenState: SubtaskScreenState,
 ) = Surface(
     modifier = Modifier
         .fillMaxSize(),
     topContent = {
-        TopBar(title = info.title, navigationListener = viewModel::onBack)
+        TopBar(title = info.title, navigationListener = viewModel::clickOnBack)
     },
     bottomContent = {
         /* if (info.setPointsButtonVisible) {
@@ -43,7 +46,7 @@ internal fun SubtaskInfoSurface(
          }*/
     },
     content = {
-        SubtaskInfoCell(modifier = Modifier.padding(16.dp), info)
+        SubtaskInfoCell(modifier = Modifier.padding(16.dp), info, viewModel, screenState.editingScheme)
     }
 )
 
@@ -51,32 +54,36 @@ internal fun SubtaskInfoSurface(
 private fun SubtaskInfoCell(
     modifier: Modifier = Modifier,
     info: SubtaskInfo,
+    viewModel: SubtaskViewModel,
+    editingScheme: SubtaskEditingScheme,
 ) = Column(modifier = modifier) {
 
     TextFieldCompose(
         label = "Задача",
         text = info.title,
-        onValueChange = {},
-        editable = true
+        onValueChange = viewModel::setTitle,
+        editable = editingScheme.isEditableTitle
     )
 
     TextFieldCompose(
         label = "Описание задачи",
         text = info.description,
-        onValueChange = {},
-        editable = true
+        onValueChange = viewModel::setDescription,
+        editable = editingScheme.isEditableDescription
     )
 
     TextField(
         label = "Ответственный",
         text = info.responsible.name,
-        rightIcon = {
-            Image(
-                modifier = Modifier.clickable { },
-                painter = painterResource(id = ru.kyamshanov.mission.ui_core.R.drawable.ic_search),
-                contentDescription = "Поиск",
-            )
-        },
+        rightIcon = if (editingScheme.isEditableResponsible) {
+            {
+                Image(
+                    modifier = Modifier.clickable { viewModel.clickOnSearchResponsible() },
+                    painter = painterResource(id = ru.kyamshanov.mission.ui_core.R.drawable.ic_search),
+                    contentDescription = "Поиск",
+                )
+            }
+        } else null,
         underlined = true
     )
     Spacer(modifier = Modifier.height(10.dp))

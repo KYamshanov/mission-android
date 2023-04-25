@@ -28,6 +28,10 @@ internal interface ModuleComponent : TaskViewComponent {
 
     val viewModelSupplier: ViewModelSupplier
 
+    val taskViewModelFactory: TaskViewModelFactory
+
+    val subtaskViewModelFactory: SubtaskViewModelFactory
+
     @Component.Factory
     interface Factory {
 

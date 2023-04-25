@@ -13,6 +13,7 @@ import kotlinx.coroutines.delay
 import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.finding_user.api.di.FindingUserComponent
 import ru.kyamshanov.mission.finding_user.impl.di.ModuleComponent
+import ru.kyamshanov.mission.finding_user.impl.domain.model.InternalSearchStrategy
 import ru.kyamshanov.mission.finding_user.impl.domain.model.UserInfo
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.ObtainUserUseCase
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.ObtainUserUseCase.SearchInfo
@@ -20,6 +21,7 @@ import ru.kyamshanov.mission.finding_user.impl.domain.usecase.SelectUserUseCase
 
 @Composable
 internal fun FindingUserComposable(
+    searchStrategy: InternalSearchStrategy,
     moduleComponent: ModuleComponent = requireNotNull(Di.getInternalComponent<FindingUserComponent, ModuleComponent>()),
     obtainUserUseCase: ObtainUserUseCase = moduleComponent.obtainUserUseCase,
     selectUserUseCase: SelectUserUseCase = moduleComponent.selectUserUseCase,
