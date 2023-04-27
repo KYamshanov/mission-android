@@ -6,14 +6,10 @@ import ru.kyamshanov.mission.navigation_core.common.ParameterizedComposableScree
 import ru.kyamshanov.mission.project.common.domain.model.TaskId
 import ru.kyamshanov.mission.task.set_points.impl.ui.composable.SetPointsComposable
 
-private const val DESTINATION_KEY = "TaskViewScreen"
 private const val TASK_ID_KEY = "taskId"
 private const val MAX_POINTS_KEY = "maxPoints"
 
-class SetPointsScreen(
-    private val taskId: String? = null,
-    private val maxPoints: Int? = null,
-) : DestinationScreen, ParameterizedComposableScreen {
+class SetPointsScreen() : DestinationScreen, ParameterizedComposableScreen {
 
     override val parameterKeys = listOf(TASK_ID_KEY, MAX_POINTS_KEY)
 
@@ -32,6 +28,14 @@ class SetPointsScreen(
             )
         }
 
-    override val destination: String
-        get() = DESTINATION_KEY
+    private var taskId: String? = null
+    private var maxPoints: Int? = null
+
+    constructor(
+        taskId: String,
+        maxPoints: Int,
+    ) : this() {
+        this.taskId = taskId
+        this.maxPoints = maxPoints
+    }
 }

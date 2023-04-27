@@ -32,8 +32,4 @@ internal interface BindsModule {
 
     @Binds
     fun SubtaskInteractorImpl.bindSubtaskInteractor(): SubtaskInteractor
-
-    @Binds
-    @ComponentItem
-    fun ViewModelSupplierImpl.bindViewModelSupplier(): ViewModelSupplier
 }

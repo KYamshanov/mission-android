@@ -69,10 +69,13 @@ internal class ProjectViewModel @AssistedInject constructor(
     }
 
     fun openTask(taskId: String) {
-        taskViewLauncher.get().launch(
-            projectTitle = screenStateFlow.value.projectInfo?.title.orEmpty(),
-            taskId = TaskId(taskId)
-        )
+        screenStateFlow.value.projectInfo?.let { projectInfo ->
+            taskViewLauncher.get().launch(
+                projectTitle = projectInfo.title,
+                taskId = TaskId(taskId),
+                projectId = ProjectId(projectInfo.id)
+            )
+        }
     }
 
     fun onBack() {
@@ -92,9 +95,6 @@ internal class ProjectViewModel @AssistedInject constructor(
     fun saveChanges() {
         viewModelScope.launch {
             projectInteractor.saveChanges()
-                .onSuccess { editingScheme ->
-
-                }
                 .onFailure {
                     Log.e(LOG_TAG, "Save project error", it)
                 }

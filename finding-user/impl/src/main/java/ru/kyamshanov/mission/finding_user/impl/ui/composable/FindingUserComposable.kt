@@ -23,7 +23,7 @@ import ru.kyamshanov.mission.finding_user.impl.domain.usecase.SelectUserUseCase
 internal fun FindingUserComposable(
     searchStrategy: InternalSearchStrategy,
     moduleComponent: ModuleComponent = requireNotNull(Di.getInternalComponent<FindingUserComponent, ModuleComponent>()),
-    obtainUserUseCase: ObtainUserUseCase = moduleComponent.obtainUserUseCase,
+    obtainUserUseCase: ObtainUserUseCase = moduleComponent.obtainUserUseCaseFactory.create(searchStrategy),
     selectUserUseCase: SelectUserUseCase = moduleComponent.selectUserUseCase,
 ) {
 

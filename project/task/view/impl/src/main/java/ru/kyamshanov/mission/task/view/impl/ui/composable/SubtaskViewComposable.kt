@@ -25,7 +25,8 @@ internal fun SubtaskViewComposable(
     else screenState.value.subtaskInfo?.let {
         SubtaskInfoSurface(
             info = it,
-            viewModel = viewModel
+            viewModel = viewModel,
+            screenState = screenState.value
         )
     } ?: Log.d(TAG, "Screen state is not loading and has not taskInfo")
 }

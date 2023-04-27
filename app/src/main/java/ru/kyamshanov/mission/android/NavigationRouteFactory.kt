@@ -22,7 +22,7 @@ class NavigationRouteFactory {
             }
             is ParameterizedComposableScreen -> composable(routeDestination) { backStackEntry ->
                 val parameters = screen.parameterKeys.associateWith { parameterKey ->
-                    requireNotNull(backStackEntry.arguments?.getString(parameterKey))
+                    requireNotNull(backStackEntry.arguments?.getString(parameterKey)) { "Parameter $parameterKey was required for screen ${screen::class.simpleName}" }
                 }
                 screen.composableSupplier.invoke(parameters)
             }

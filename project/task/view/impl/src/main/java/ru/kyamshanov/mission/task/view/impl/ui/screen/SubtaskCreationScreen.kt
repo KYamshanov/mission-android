@@ -1,29 +1,43 @@
 package ru.kyamshanov.mission.task.view.impl.ui.screen
 
 import androidx.compose.runtime.Composable
+import ru.kyamshanov.mission.navigation_core.common.BoundaryDataComposableScreen
 import ru.kyamshanov.mission.navigation_core.common.DestinationScreen
-import ru.kyamshanov.mission.navigation_core.common.ParameterizedComposableScreen
+import ru.kyamshanov.mission.navigation_core.common.SerializableNavigationBoundaryData
+import ru.kyamshanov.mission.task.view.impl.domain.model.ProjectInfo
 import ru.kyamshanov.mission.task.view.impl.ui.composable.SubtaskCreationComposable
 
 private const val DESTINATION_KEY = "SubtaskCreationScreen"
-private const val TASK_ID_KEY = "taskId"
 
-class SubtaskCreationScreen(
-    private val taskId: String? = null,
-) : DestinationScreen, ParameterizedComposableScreen {
-
-    override val parameterKeys = listOf(TASK_ID_KEY)
-
-    override val parametersSupplier: () -> Map<String, String?> = {
-        mapOf(TASK_ID_KEY to taskId)
-    }
-
-    override val composableSupplier: @Composable (parameters: Map<String, String?>) -> Unit = { parameters ->
-        SubtaskCreationComposable(
-            taskId = requireNotNull(parameters[TASK_ID_KEY]) { "TaskId for TaskViewComposable cannot be null" }
-        )
-    }
+class SubtaskCreationScreen() : DestinationScreen, BoundaryDataComposableScreen {
 
     override val destination: String
         get() = DESTINATION_KEY
+
+    private var data: BoundaryData? = null
+
+    internal constructor(
+        taskId: String,
+        projectInfo: ProjectInfo,
+    ) : this() {
+        data = BoundaryData(
+            taskId = taskId,
+            projectInfoBoundary = projectInfo,
+        )
+    }
+
+    override val boundaryData: SerializableNavigationBoundaryData
+        get() = requireNotNull(data)
+    override val composableSupplier: @Composable (SerializableNavigationBoundaryData) -> Unit = { data ->
+        val boundaryData = data as BoundaryData
+        SubtaskCreationComposable(
+            taskId = boundaryData.taskId,
+            projectInfo = boundaryData.projectInfoBoundary
+        )
+    }
+
+    private data class BoundaryData(
+        val taskId: String,
+        val projectInfoBoundary: ProjectInfo,
+    ) : SerializableNavigationBoundaryData
 }

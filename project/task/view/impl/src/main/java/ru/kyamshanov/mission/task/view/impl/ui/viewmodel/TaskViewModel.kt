@@ -16,6 +16,7 @@ import ru.kyamshanov.mission.project.common.domain.model.SubtaskId
 import ru.kyamshanov.mission.project.common.domain.model.TaskId
 import ru.kyamshanov.mission.task.set_points.api.navigation.SetPointsLauncher
 import ru.kyamshanov.mission.task.view.impl.domain.interactor.TaskInteractor
+import ru.kyamshanov.mission.task.view.impl.domain.model.ProjectInfo
 import ru.kyamshanov.mission.task.view.impl.domain.model.TaskInfo
 import ru.kyamshanov.mission.task.view.impl.ui.model.TaskViewScreenState
 import ru.kyamshanov.mission.task.view.impl.ui.screen.SubtaskCreationScreen
@@ -23,6 +24,7 @@ import ru.kyamshanov.mission.task.view.impl.ui.screen.SubtaskViewScreen
 
 internal class TaskViewModel @AssistedInject constructor(
     @Assisted private val taskId: String,
+    @Assisted private val projectInfo: ProjectInfo,
     private val taskInteractor: TaskInteractor,
     private val setPointLauncher: dagger.Lazy<SetPointsLauncher>,
     private val navigator: Navigator,
@@ -54,7 +56,7 @@ internal class TaskViewModel @AssistedInject constructor(
     }
 
     fun createSubtask() {
-        navigator.navigateTo(SubtaskCreationScreen(taskId = taskId))
+        navigator.navigateTo(SubtaskCreationScreen(taskId = taskId, projectInfo = projectInfo))
     }
 
     fun openSubtask(subtaskId: SubtaskId) {
@@ -136,9 +138,6 @@ internal class TaskViewModel @AssistedInject constructor(
     fun saveChanges() {
         viewModelScope.launch {
             taskInteractor.saveChanges()
-                .onSuccess { taskEditingScheme ->
-                    _screenState.update { value -> value.copy(taskEditingScheme = taskEditingScheme) }
-                }
                 .onFailure { Log.e(TAG, "exception", it) }
         }
     }

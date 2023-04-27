@@ -26,7 +26,7 @@ import ru.kyamshanov.mission.time.di.TimeFormatterModule
 @ComponentItem
 internal interface ModuleComponent : TaskViewComponent {
 
-    val viewModelSupplier: ViewModelSupplier
+    val subtaskCreationViewModelFactory: SubtaskCreationViewModelFactory
 
     val taskViewModelFactory: TaskViewModelFactory
 
