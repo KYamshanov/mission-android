@@ -61,8 +61,10 @@ internal class BackgroundRegistrationViewModel(
 
     private fun prepareRegistrationModel() = _screenState.value.fields.let { fields ->
         RegistrationModel(
-            name = fields[RegistrationField.NAME]?.value as? String,
-            age = fields[RegistrationField.AGE]?.value as? Int
+            firstname = fields[RegistrationField.FIRSTNAME]?.value as? String,
+            lastname = fields[RegistrationField.LASTNMAE]?.value as? String,
+            patronymic = fields[RegistrationField.PATRONYMIC]?.value as? String,
+            group = fields[RegistrationField.GROUP]?.value as? String
         )
     }
 }

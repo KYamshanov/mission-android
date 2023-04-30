@@ -31,9 +31,11 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$viewmodel_compose_version"
     implementation "androidx.compose.ui:ui:$compose_ui_version"
+    implementation("androidx.compose.foundation:foundation:$compose_foundation")
 
     implementation project(":ui-core")
     implementation project(":base-core:api")
+    implementation project(":core-common")
 
     testImplementation "junit:junit:$junit_version"
 }

@@ -13,11 +13,9 @@ internal data class FindUsersRsDto(
 
     data class FoundUserInfo(
         val id: String,
-        val name: String?,
-        val age: Int?,
+        val firstname: String?,
+        val lastname: String?,
+        val patronymic: String?,
+        val group: String?
     )
-}
-
-internal fun FindUsersRsDto.toDomain(): List<UserInfo> = users.map { userInfo ->
-    UserInfo(id = userInfo.id, name = userInfo.name, age = userInfo.age)
 }

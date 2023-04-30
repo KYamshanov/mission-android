@@ -10,8 +10,6 @@ import ru.kyamshanov.mission.profile_facade.impl.data.repository.ProfileStorable
 import ru.kyamshanov.mission.profile_facade.impl.domain.interactor.VerifyingProfileInteractorImpl
 import ru.kyamshanov.mission.profile_facade.impl.domain.repository.ProfileStorableRepository
 import ru.kyamshanov.mission.profile_facade.impl.domain.usecase.GetProfileUseCaseImpl
-import ru.kyamshanov.mission.profile_facade.impl.domain.usecase.VerifyProfileCompletedUseCase
-import ru.kyamshanov.mission.profile_facade.impl.domain.usecase.VerifyProfileCompletedUseCaseImpl
 
 @dagger.Module
 internal interface BindsModule {
@@ -27,10 +25,6 @@ internal interface BindsModule {
     @Binds
     @ComponentItem
     fun GetProfileUseCaseImpl.bindGetProfileUseCase(): GetProfileUseCase
-
-    @Binds
-    @ComponentItem
-    fun VerifyProfileCompletedUseCaseImpl.binVerifyProfileCompletedUseCase(): VerifyProfileCompletedUseCase
 
     @Binds
     @ComponentItem

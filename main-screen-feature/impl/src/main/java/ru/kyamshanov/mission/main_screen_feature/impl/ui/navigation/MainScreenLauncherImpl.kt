@@ -10,7 +10,6 @@ class MainScreenLauncherImpl @Inject constructor(
 ) : MainScreenLauncher {
 
     override fun launch() {
-        println("Open MainScreen")
         navigator.replaceTo(MainScreen())
     }
 }

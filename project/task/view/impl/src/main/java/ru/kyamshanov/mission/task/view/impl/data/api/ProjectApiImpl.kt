@@ -11,6 +11,8 @@ import ru.kyamshanov.mission.network_core.api.RequestFactory
 import ru.kyamshanov.mission.network_core.api.utils.retrieveBody
 import ru.kyamshanov.mission.task.view.impl.data.model.CreateSubTaskRqDto
 import ru.kyamshanov.mission.task.view.impl.data.model.CreateSubTaskRsDto
+import ru.kyamshanov.mission.task.view.impl.data.model.EditSubtaskRqDto
+import ru.kyamshanov.mission.task.view.impl.data.model.EditTaskRqDto
 import ru.kyamshanov.mission.task.view.impl.data.model.GetSubTaskRsDto
 import ru.kyamshanov.mission.task.view.impl.data.model.GetTaskRsDto
 import ru.kyamshanov.mission.task.view.impl.data.model.SetExecutionResultRqDto
@@ -52,6 +54,20 @@ internal class ProjectApiImpl @Inject constructor(
         requestFactory.get("/project/private/subtask") {
             contentType(ContentType.Application.Json)
             parameter("id", subtaskId)
+        }.retrieveBody()
+    }
+
+    override suspend fun editTask(body: EditTaskRqDto): Unit = withContext(Dispatchers.IO) {
+        requestFactory.post("/project/manager/task/edit") {
+            contentType(ContentType.Application.Json)
+            setBody(body)
+        }.retrieveBody()
+    }
+
+    override suspend fun editSubtask(body: EditSubtaskRqDto): Unit = withContext(Dispatchers.IO) {
+        requestFactory.post("/project/private/subtask/edit") {
+            contentType(ContentType.Application.Json)
+            setBody(body)
         }.retrieveBody()
     }
 }

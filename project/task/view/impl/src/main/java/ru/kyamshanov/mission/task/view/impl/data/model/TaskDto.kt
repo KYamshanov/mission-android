@@ -11,5 +11,6 @@ internal data class GetTaskRsDto(
     val startAt: Date,
     val endAt: Date,
     val maxPoints: Int,
-    val points: Int
+    val points: Int,
+    val availableAddSubtask: Boolean,
 )

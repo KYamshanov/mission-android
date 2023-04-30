@@ -27,7 +27,7 @@ fun MissionTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
     CompositionLocalProvider(
         LocalExtendedColors provides colors,
         LocalExtendedShape provides Shapes,
-        LocalTextSelectionColors provides MissionTextSelectionColors
+        LocalTextSelectionColors provides MissionTextSelectionColors,
     ) {
         ProvideTypography(content)
     }

@@ -8,7 +8,8 @@ class FindingUserComponentBuilder : ComponentBuilder<FindingUserComponent> {
 
     override fun build(): FindingUserComponent =
         DaggerModuleComponent.factory().create(
-            navigationComponent = requireNotNull(Di.getComponent()),
-            networkComponent = requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
         )
 }

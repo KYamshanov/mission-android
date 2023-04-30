@@ -1,76 +1,140 @@
 package ru.kyamshanov.mission.task.view.impl.ui.composable.components
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import ru.kyamshanov.mission.task.view.impl.R
+import ru.kyamshanov.mission.task.view.impl.domain.model.SubtaskEditingScheme
 import ru.kyamshanov.mission.task.view.impl.domain.model.SubtaskInfo
-import ru.kyamshanov.mission.task.view.impl.ui.model.TaskViewScreenState
+import ru.kyamshanov.mission.task.view.impl.ui.model.SubtaskScreenState
 import ru.kyamshanov.mission.task.view.impl.ui.viewmodel.SubtaskViewModel
 import ru.kyamshanov.mission.ui_core.ui.components.Cell
-import ru.kyamshanov.mission.ui_core.ui.components.DateField
+import ru.kyamshanov.mission.ui_core.ui.components.EditTextField
+import ru.kyamshanov.mission.ui_core.ui.components.MainButton
+import ru.kyamshanov.mission.ui_core.ui.components.Surface
+import ru.kyamshanov.mission.ui_core.ui.components.TextField
 import ru.kyamshanov.mission.ui_core.ui.components.TextFieldCompose
+import ru.kyamshanov.mission.ui_core.ui.components.TopBar
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
 @Composable
 internal fun SubtaskInfoSurface(
     info: SubtaskInfo,
     viewModel: SubtaskViewModel,
-) = Scaffold(
+    screenState: SubtaskScreenState,
+) = Surface(
     modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp),
-    backgroundColor = MissionTheme.colors.background,
-    bottomBar = {
-       /* if (info.setPointsButtonVisible) {
-            SecondaryButton(label = stringResource(id = R.string.tv_set_points_title)) {
-                viewModel.openSetPointScreen()
-            }
-        }*/
+        .fillMaxSize(),
+    topContent = {
+        TopBar(title = info.title, navigationListener = viewModel::clickOnBack)
+    },
+    bottomContent = {
+        /* if (info.setPointsButtonVisible) {
+             SecondaryButton(label = stringResource(id = R.string.tv_set_points_title)) {
+                 viewModel.openSetPointScreen()
+             }
+         }*/
     },
     content = {
-        SubtaskInfoCell(info)
+        SubtaskInfoCell(modifier = Modifier.padding(16.dp), info, viewModel, screenState.editingScheme)
     }
 )
 
 @Composable
 private fun SubtaskInfoCell(
+    modifier: Modifier = Modifier,
     info: SubtaskInfo,
-) = Column {
+    viewModel: SubtaskViewModel,
+    editingScheme: SubtaskEditingScheme,
+) = Column(modifier = modifier) {
 
     TextFieldCompose(
+        label = "Задача",
         text = info.title,
-        label = stringResource(id = R.string.tv_title),
-        editable = false,
-        onValueChange = {}
+        onValueChange = viewModel::setTitle,
+        editable = editingScheme.isEditableTitle
     )
 
     TextFieldCompose(
+        label = "Описание задачи",
         text = info.description,
-        label = stringResource(id = R.string.tv_description),
-        editable = false,
-        onValueChange = {}
+        onValueChange = viewModel::setDescription,
+        editable = editingScheme.isEditableDescription
+    )
+
+    TextField(
+        label = "Ответственный",
+        text = info.responsible.name,
+        rightIcon = if (editingScheme.isEditableResponsible) {
+            {
+                Image(
+                    modifier = Modifier.clickable { viewModel.clickOnSearchResponsible() },
+                    painter = painterResource(id = ru.kyamshanov.mission.ui_core.R.drawable.ic_search),
+                    contentDescription = "Поиск",
+                )
+            }
+        } else null,
+        underlined = true
+    )
+    Spacer(modifier = Modifier.height(10.dp))
+    Cell(autoPaddings = false) {
+        TextField(
+            rightIcon = {
+                Image(
+                    modifier = Modifier.clickable { },
+                    painter = painterResource(id = ru.kyamshanov.mission.ui_core.R.drawable.square_edit_outline),
+                    contentDescription = "Удалить",
+                )
+            },
+            content = {
+                Row(verticalAlignment = Alignment.Bottom) {
+                    Text(text = "Состояние:", style = MissionTheme.typography.title)
+                    SubtaskStateText(info.stage)
+                }
+            }
+        )
+    }
+
+    Text(
+        modifier = Modifier.align(Alignment.CenterHorizontally),
+        text = "Описание результатов",
+        style = MissionTheme.typography.title
+    )
+
+    Text(
+        modifier = Modifier.align(Alignment.Start),
+        text = "Результатов ещё нет",
+        style = MissionTheme.typography.titleSecondary
     )
 
     Cell {
-       // Text(text = stringResource(id = R.string.tv_state, info.))
-        DateField(
-            value = info.startAt,
+        EditTextField(
+            label = "Описание результатов",
+            text = info.executionResult ?: "Добавьте описание хода выполнения проекта",
             onValueChange = {},
-            label = stringResource(id = R.string.tv_start_at),
-            missionDateFormatter = info.dateFormatter,
-        )
-        DateField(
-            value = info.endAt,
-            onValueChange = {},
-            label = stringResource(id = R.string.tv_end_at),
-            missionDateFormatter = info.dateFormatter,
+            rightIcon = {
+                Image(
+                    modifier = Modifier.clickable { },
+                    painter = painterResource(id = ru.kyamshanov.mission.ui_core.R.drawable.close),
+                    contentDescription = "Очистить",
+                )
+            },
+            underlined = false,
         )
     }
+
+    Spacer(modifier = Modifier.weight(1f))
+
+    MainButton(modifier = Modifier.align(Alignment.CenterHorizontally).padding(20.dp), label = "Сохранить") {}
+
 }

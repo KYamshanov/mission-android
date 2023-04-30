@@ -16,4 +16,5 @@ dependencies {
     implementation project(":time")
     implementation project(":project:task:set_points:api")
     implementation project(":finding-user:api")
+    implementation project(":session-front:api")
 }

@@ -7,6 +7,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.kyamshanov.mission.navigation_core.api.Navigator
 import ru.kyamshanov.mission.profile.impl.ui.model.ProfileScreenState
 import ru.kyamshanov.mission.profile_facade.api.domain.usecase.GetProfileUseCase
 import ru.kyamshanov.mission.session_front.api.SessionFront
@@ -17,6 +18,7 @@ internal class ProfileViewModel @Inject constructor(
     private val sessionInfo: SessionInfo,
     private val sessionFront: SessionFront,
     private val getProfileUseCase: GetProfileUseCase,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow(ProfileScreenState())
@@ -32,8 +34,11 @@ internal class ProfileViewModel @Inject constructor(
                 val screenState = ProfileScreenState(
                     info = ProfileScreenState.Info(
                         roles = userInfo.roles,
-                        age = profile.age.toString(),
-                        name = profile.name.toString()
+                        login = userInfo.login,
+                        firstname = profile.firstname,
+                        lastname = profile.lastname,
+                        patronymic = profile.patronymic,
+                        group = profile.group,
                     )
                 )
                 _screenState.emit(screenState)
@@ -51,6 +56,10 @@ internal class ProfileViewModel @Inject constructor(
         _screenState.apply {
             value = value.copy(somethingWentWrong = false)
         }
+    }
+
+    fun clickOnBack() {
+        navigator.exit()
     }
 
     private fun showSomethingWentWrong(cause: Throwable) {

@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,6 +36,8 @@ import ru.kyamshanov.mission.ui_core.R.drawable
 import ru.kyamshanov.mission.ui_core.ui.components.CellInput
 import ru.kyamshanov.mission.ui_core.ui.components.MainButton
 import ru.kyamshanov.mission.ui_core.ui.components.SecondaryButton
+import ru.kyamshanov.mission.ui_core.ui.components.Surface
+import ru.kyamshanov.mission.ui_core.ui.components.TopBar
 import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
 @Composable
@@ -60,11 +61,13 @@ internal fun CreatingProjectComposable(
 
     if (screenState.value.hasCreatingError) SomethingWentWrongDialog { creatingProjectViewModel.hideCreatingError() }
 
-    Scaffold(
+    Surface(
         modifier = Modifier
             .fillMaxSize(),
-        backgroundColor = MissionTheme.colors.background,
-        bottomBar = {
+        topContent = {
+            TopBar(title = "Создание проекта", navigationListener = creatingProjectViewModel::clickOnBack)
+        },
+        bottomContent = {
 
             MainButton(
                 modifier = Modifier
@@ -141,7 +144,7 @@ internal fun RemovableParticipant(participant: SelectedUserInfo, onRemove: () ->
             colorFilter = ColorFilter.tint(MissionTheme.colors.wrong),
         )
         Spacer(modifier = Modifier.width(20.dp))
-        Text(text = "${participant.name} ${participant.age}", style = MissionTheme.typography.titleSecondary)
+        Text(text = participant.name, style = MissionTheme.typography.titleSecondary)
 
     }
 }

@@ -6,4 +6,6 @@ import ru.kyamshanov.mission.finding_user.impl.domain.model.UserInfo
 internal interface UserRepository {
 
     fun findByName(name: String): Flow<UserInfo>
+
+    fun findInProjectTeamByName(projectId: String, name: String): Flow<UserInfo>
 }

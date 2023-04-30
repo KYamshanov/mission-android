@@ -8,10 +8,11 @@ class ProjectComponentBuilder : ComponentBuilder<ProjectComponent> {
 
     override fun build(): ProjectComponent =
         DaggerModuleComponent.factory().create(
-            navigationComponent = requireNotNull(Di.getComponent()),
-            networkComponent = requireNotNull(Di.getComponent()),
-            sessionFrontComponent = requireNotNull(Di.getComponent()),
-            projectTaskCreationComponent = requireNotNull(Di.getComponent()),
-            baseCoreComponent = requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
+            requireNotNull(Di.getComponent()),
         )
 }

@@ -18,8 +18,11 @@ internal data class ProfileScreenState(
     )
 
     data class Info(
+        val login: String,
+        val firstname: String?,
+        val lastname: String?,
+        val patronymic: String?,
+        val group: String?,
         val roles: List<UserRole>,
-        val age: String,
-        val name: String,
     )
 }

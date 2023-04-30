@@ -2,6 +2,8 @@ package ru.kyamshanov.mission.task.view.impl.data.api
 
 import ru.kyamshanov.mission.task.view.impl.data.model.CreateSubTaskRqDto
 import ru.kyamshanov.mission.task.view.impl.data.model.CreateSubTaskRsDto
+import ru.kyamshanov.mission.task.view.impl.data.model.EditSubtaskRqDto
+import ru.kyamshanov.mission.task.view.impl.data.model.EditTaskRqDto
 import ru.kyamshanov.mission.task.view.impl.data.model.GetSubTaskRsDto
 import ru.kyamshanov.mission.task.view.impl.data.model.GetTaskRsDto
 import ru.kyamshanov.mission.task.view.impl.data.model.SetExecutionResultRqDto
@@ -18,4 +20,7 @@ internal interface ProjectApi {
     suspend fun createSubtask(body: CreateSubTaskRqDto): CreateSubTaskRsDto
 
     suspend fun getSubtaskBySubtaskId(subtaskId: String): SubtaskDto
+
+    suspend fun editTask(body: EditTaskRqDto)
+    suspend fun editSubtask(body: EditSubtaskRqDto)
 }

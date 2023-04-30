@@ -15,8 +15,10 @@ internal class CompleteRegistrationUseCaseImpl @Inject constructor(
     override suspend fun perform(registrationModel: RegistrationModel): Result<Unit> = runCatching {
         profileApi.backRegister(
             body = BackRegisterRqDto(
-                name = registrationModel.name,
-                age = registrationModel.age
+                firstname = registrationModel.firstname,
+                lastname = registrationModel.lastname,
+                patronymic = registrationModel.patronymic,
+                group = registrationModel.group,
             )
         )
         getProfileUseCase.fetchProfile(refresh = true)

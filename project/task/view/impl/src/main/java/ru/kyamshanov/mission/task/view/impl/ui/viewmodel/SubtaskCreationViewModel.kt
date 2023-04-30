@@ -3,11 +3,14 @@ package ru.kyamshanov.mission.task.view.impl.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import java.util.Date
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.kyamshanov.mission.finding_user.api.model.SearchStrategy
 import ru.kyamshanov.mission.finding_user.api.model.SelectedUserInfo
 import ru.kyamshanov.mission.finding_user.api.navigation.FindingUserLauncher
 import ru.kyamshanov.mission.finding_user.api.navigation.SELECTED_USER_EXTRA_KEY
@@ -15,11 +18,13 @@ import ru.kyamshanov.mission.navigation_core.api.ResultProvider
 import ru.kyamshanov.mission.project.common.domain.model.TaskId
 import ru.kyamshanov.mission.project.common.domain.model.UserId
 import ru.kyamshanov.mission.task.view.impl.domain.interactor.SubtaskCreationInteractor
+import ru.kyamshanov.mission.task.view.impl.domain.model.ProjectInfo
 import ru.kyamshanov.mission.task.view.impl.domain.model.ResponsibleInfo
 import ru.kyamshanov.mission.task.view.impl.ui.model.SubtaskCreationScreenState
 
-internal class SubtaskCreationViewModel(
-    private val task: String,
+internal class SubtaskCreationViewModel @AssistedInject constructor(
+    @Assisted private val task: String,
+    @Assisted private val projectInfo: ProjectInfo,
     private val subtaskCreationInteractor: SubtaskCreationInteractor,
     private val findingUserLauncher: FindingUserLauncher,
     private val resultProvider: ResultProvider,
@@ -56,7 +61,7 @@ internal class SubtaskCreationViewModel(
     }
 
     fun findResponsible() {
-        findingUserLauncher.launch()
+        findingUserLauncher.launch(SearchStrategy.AllByProject(projectId = projectInfo.projectId))
     }
 
     fun obtainResponsible() {

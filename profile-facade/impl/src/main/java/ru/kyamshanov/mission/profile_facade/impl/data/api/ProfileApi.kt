@@ -1,8 +1,8 @@
 package ru.kyamshanov.mission.profile_facade.impl.data.api
 
-import ru.kyamshanov.mission.profile_facade.impl.data.model.FetchUserDtoRs
+import ru.kyamshanov.mission.profile_facade.impl.data.model.FetchUserInfoRsDto
 
 internal interface ProfileApi {
 
-    suspend fun fetch(): FetchUserDtoRs
+    suspend fun fetch(): FetchUserInfoRsDto
 }

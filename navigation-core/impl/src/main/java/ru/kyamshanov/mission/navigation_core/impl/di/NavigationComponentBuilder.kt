@@ -4,10 +4,8 @@ import androidx.navigation.NavController
 import ru.kyamshanov.mission.dagger.ComponentBuilder
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
 
-class NavigationComponentBuilder(
-    private val navController: NavController
-) : ComponentBuilder<NavigationComponent> {
+class NavigationComponentBuilder : ComponentBuilder<NavigationComponent> {
 
     override fun build(): NavigationComponent =
-        DaggerModuleComponent.factory().create(navController)
+        DaggerModuleComponent.factory().create()
 }
