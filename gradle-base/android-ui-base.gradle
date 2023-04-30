@@ -35,6 +35,7 @@ dependencies {
 
     implementation project(":ui-core")
     implementation project(":base-core:api")
+    implementation project(":core-common")
 
     testImplementation "junit:junit:$junit_version"
 }

@@ -66,7 +66,7 @@ internal fun ProjectViewComposable(
             SecondaryButton(
                 modifier = Modifier.align(Alignment.TopStart),
                 label = stringResource(id = R.string.pv_participants, screenState.participantsCount),
-                onClick = {}
+                onClick = viewModel::clickOnParticipants
             )
             if (screenState.editingScheme.hasChanges) {
                 AlternativeButton(

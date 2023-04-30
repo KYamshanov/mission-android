@@ -10,9 +10,11 @@ import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.creating_project.impl.domain.interactor.ProjectInteractor
 import ru.kyamshanov.mission.creating_project.impl.domain.models.CreatingProjectInfo
 import ru.kyamshanov.mission.creating_project.impl.ui.models.ScreenState
+import ru.kyamshanov.mission.navigation_core.api.Navigator
 
 internal class CreatingProjectViewModel @Inject constructor(
     private val projectInteractor: ProjectInteractor,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow(ScreenState(hasCreatingError = false))
@@ -29,6 +31,10 @@ internal class CreatingProjectViewModel @Inject constructor(
 
     fun hideCreatingError() {
         _screenState.value = _screenState.value.copy(hasCreatingError = false)
+    }
+
+    fun clickOnBack() {
+        navigator.exit()
     }
 
     private companion object {

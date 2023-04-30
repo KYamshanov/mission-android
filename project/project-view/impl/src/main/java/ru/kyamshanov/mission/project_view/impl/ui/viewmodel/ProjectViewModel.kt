@@ -17,7 +17,9 @@ import ru.kyamshanov.mission.project.task.creation.api.navigation.ProjectTaskCre
 import ru.kyamshanov.mission.project_view.impl.domain.interactor.ProjectInteractor
 import ru.kyamshanov.mission.project_view.impl.ui.model.ProjectScreenState
 import ru.kyamshanov.mission.project_view.impl.ui.model.TotalPointsInfo
+import ru.kyamshanov.mission.project_view.impl.ui.model.toSlim
 import ru.kyamshanov.mission.project_view.impl.ui.model.toStagePointInfo
+import ru.kyamshanov.mission.project_view.impl.ui.screen.ParticipantsListScreen
 import ru.kyamshanov.mission.project_view.impl.ui.screen.TotalPointsViewScreen
 import ru.kyamshanov.mission.task.view.api.navigation.TaskViewLauncher
 
@@ -103,6 +105,12 @@ internal class ProjectViewModel @AssistedInject constructor(
 
     fun clickOnPoints() {
         navigator.navigateTo(TotalPointsViewScreen(screenStateFlow.value.totalPointsInfo))
+    }
+
+    fun clickOnParticipants() {
+        screenStateFlow.value.projectInfo?.let { projectInfo ->
+            navigator.navigateTo(ParticipantsListScreen(projectInfo.toSlim()))
+        }
     }
 
     private companion object {

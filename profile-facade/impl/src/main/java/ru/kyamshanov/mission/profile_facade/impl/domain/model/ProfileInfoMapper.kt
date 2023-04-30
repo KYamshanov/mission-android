@@ -4,6 +4,8 @@ import ru.kyamshanov.mission.profile_facade.api.domain.model.ProfileInfo
 
 internal fun ProfileInfoMap.toProfileInfo() = ProfileInfo(
     userId = userId,
-    age = (info[PROFILE_AGE_KEY] as? Number)?.toInt(),
-    name = info[PROFILE_NAME_KEY] as? String
+    firstname = info[PROFILE_FIRSTNAME] as? String,
+    lastname = info[PROFILE_LASTNAME] as? String,
+    patronymic = info[PROFILE_PATRONYMIC] as? String,
+    group = info[PROFILE_GROUP] as? String,
 )

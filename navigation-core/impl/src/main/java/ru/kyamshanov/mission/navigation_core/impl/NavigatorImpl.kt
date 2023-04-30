@@ -3,6 +3,7 @@ package ru.kyamshanov.mission.navigation_core.impl
 import javax.inject.Inject
 import ru.kyamshanov.mission.navigation_core.api.NavigationBoundaryData
 import ru.kyamshanov.mission.navigation_core.api.Navigator
+import ru.kyamshanov.mission.navigation_core.api.ResultProvider
 import ru.kyamshanov.mission.navigation_core.api.Screen
 import ru.kyamshanov.mission.navigation_core.common.BOUNDARY_DATA_HOLDER_KEY
 import ru.kyamshanov.mission.navigation_core.common.BoundaryDataComposableScreen
@@ -12,6 +13,7 @@ import ru.kyamshanov.mission.navigation_core.impl.di.NavigatorControllerHolder
 
 internal class NavigatorImpl @Inject constructor(
     private val controllerHolder: NavigatorControllerHolder,
+    private val resultProvider: ResultProvider,
 ) : Navigator {
 
     override fun navigateTo(screen: Screen) {
@@ -52,6 +54,7 @@ internal class NavigatorImpl @Inject constructor(
         val controller = requireNotNull(controllerHolder.navigator) { "Navigator controller cannot be null" }
         controller.popBackStack()
         controller.currentBackStackEntry?.savedStateHandle?.set(key, data)
+        resultProvider.notify(key)
     }
 
     private fun Screen.getDestination() = when (this) {

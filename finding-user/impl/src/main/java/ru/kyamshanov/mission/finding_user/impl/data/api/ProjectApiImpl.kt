@@ -21,4 +21,10 @@ internal class ProjectApiImpl @Inject constructor(
         }
         response.retrieveBody()
     }
+
+    override suspend fun getManagedTeam(projectId: String): GetTeamRsDto = withContext(Dispatchers.IO) {
+        requestFactory.get("/project/manager/team?project=${projectId}") {
+            contentType(ContentType.Application.Json)
+        }.retrieveBody()
+    }
 }

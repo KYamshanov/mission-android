@@ -24,7 +24,19 @@ internal class ObtainUserUseCaseImpl @AssistedInject constructor(
 ) : ObtainUserUseCase {
 
     override suspend fun get(searchInfo: SearchInfo): Result<List<UserInfo>> = runCatching {
-        userRepository.findByName(searchInfo.name).toCollection(mutableListOf())
+        when (searchStrategy) {
+            InternalSearchStrategy.All -> {
+                userRepository.findByName(name = searchInfo.name).toCollection(mutableListOf())
+            }
+
+            is InternalSearchStrategy.AllByProject -> {
+                userRepository.findInProjectTeamByName(
+                    projectId = searchStrategy.projectId,
+                    name = searchInfo.name
+                ).toCollection(mutableListOf())
+            }
+        }
+
     }
 
     @AssistedFactory

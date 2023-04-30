@@ -26,6 +26,7 @@ data class MissionTypography(
     val green: TextStyle,
     val yellow: TextStyle,
     val blue: TextStyle,
+    val gold : TextStyle,
 ) {
 
     val mainButtonStyle = mainAppearance + huge + white
@@ -68,6 +69,7 @@ internal fun typographyComposable() = MissionTypography(
     green = TextStyle(color = MissionTheme.colors.success),
     yellow = TextStyle(color = YellowPleasant),
     blue = TextStyle(color = MissionTheme.colors.secondary),
+    gold = TextStyle(color = MissionTheme.colors.gold),
 )
 
 internal val LocalExtendedTypography = staticCompositionLocalOf {
@@ -86,7 +88,8 @@ internal val LocalExtendedTypography = staticCompositionLocalOf {
         green = TextStyle.Default,
         yellow = TextStyle.Default,
         blue = TextStyle.Default,
-        hugeMedium = TextStyle.Default
+        hugeMedium = TextStyle.Default,
+        gold = TextStyle.Default
     )
 }
 

@@ -5,6 +5,5 @@ import ru.kyamshanov.mission.navigation_core.common.SerializableNavigationBounda
 
 internal data class UserInfo(
     override val id: String,
-    override val name: String?,
-    override val age: Int?,
+    override val name: String,
 ) : SelectedUserInfo, SerializableNavigationBoundaryData

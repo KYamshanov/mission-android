@@ -8,6 +8,7 @@ import ru.kyamshanov.mission.main_screen_feature.impl.ui.screen.MainScreen
 import ru.kyamshanov.mission.navigation_core.api.Screen
 import ru.kyamshanov.mission.profile.impl.ui.screen.ProfileScreen
 import ru.kyamshanov.mission.project.task.creation.impl.ui.screen.ProjectTaskCreationScreen
+import ru.kyamshanov.mission.project_view.impl.ui.screen.ParticipantsListScreen
 import ru.kyamshanov.mission.project_view.impl.ui.screen.ProjectScreen
 import ru.kyamshanov.mission.project_view.impl.ui.screen.TotalPointsViewScreen
 import ru.kyamshanov.mission.task.set_points.impl.ui.screen.SetPointsScreen
@@ -30,6 +31,7 @@ internal class ComposableScreensProvider : ScreensProvider {
         SetPointsScreen(),
         SubtaskCreationScreen(),
         SubtaskViewScreen(),
-        TotalPointsViewScreen()
+        TotalPointsViewScreen(),
+        ParticipantsListScreen(),
     )
 }

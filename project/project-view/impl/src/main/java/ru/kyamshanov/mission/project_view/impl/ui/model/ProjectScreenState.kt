@@ -8,8 +8,9 @@ internal data class ProjectScreenState(
     val projectInfo: ProjectInfo?,
     val editingScheme: ProjectEditingScheme,
     val totalPointsInfo: TotalPointsInfo,
-    val participantsCount: Int,
 ) {
 
-    constructor() : this(true, null, ProjectEditingScheme(isEditable = false), TotalPointsInfo(), 0)
+    val participantsCount = projectInfo?.participants?.size ?: 0
+
+    constructor() : this(true, null, ProjectEditingScheme(isEditable = false), TotalPointsInfo())
 }

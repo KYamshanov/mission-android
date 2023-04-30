@@ -1,14 +1,17 @@
 package ru.kyamshanov.mission.finding_user.impl.ui.composable
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.finding_user.api.di.FindingUserComponent
@@ -18,6 +21,10 @@ import ru.kyamshanov.mission.finding_user.impl.domain.model.UserInfo
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.ObtainUserUseCase
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.ObtainUserUseCase.SearchInfo
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.SelectUserUseCase
+import ru.kyamshanov.mission.ui_core.ui.components.Search
+import ru.kyamshanov.mission.ui_core.ui.components.Surface
+import ru.kyamshanov.mission.ui_core.ui.components.TopBar
+import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 
 @Composable
 internal fun FindingUserComposable(
@@ -27,37 +34,35 @@ internal fun FindingUserComposable(
     selectUserUseCase: SelectUserUseCase = moduleComponent.selectUserUseCase,
 ) {
 
-    val firstNameState = rememberSaveable { mutableStateOf("") }
-    val secondNameState = rememberSaveable { mutableStateOf("") }
+    val searchStringState = rememberSaveable { mutableStateOf("") }
 
     val userListState = rememberSaveable { mutableStateOf(emptyList<UserInfo>()) }
 
-    LaunchedEffect(key1 = firstNameState.value, key2 = secondNameState.value) {
+    LaunchedEffect(key1 = searchStringState.value) {
         delay(1000)
         obtainUserUseCase.get(
             searchInfo = SearchInfo(
-                name = firstNameState.value,
+                name = searchStringState.value,
             )
         ).onSuccess { userListState.value = it }
     }
 
-    Column {
-        TextField(
-            value = firstNameState.value,
-            onValueChange = { text -> firstNameState.value = text },
-            label = { Text(text = "Имя") }
-        )
-        TextField(
-            value = secondNameState.value,
-            onValueChange = { text -> secondNameState.value = text },
-            label = { Text(text = "Фамилия") }
-        )
+    Surface(
+        modifier = Modifier.padding(16.dp),
+        topContent = {
+            TopBar(title = "Поиск", navigationListener = { moduleComponent.navigator.exit() })
+        }
+    ) {
+        Search(value = searchStringState.value, onValueChange = { text -> searchStringState.value = text })
+
         LazyColumn {
             userListState.value.forEach { userInfo ->
                 item {
-                    Button(onClick = { selectUserUseCase.select(userInfo) }) {
-                        Text(text = "${userInfo.name} ${userInfo.age} ${userInfo.id}")
-                    }
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = userInfo.name,
+                        style = MissionTheme.typography.titleSecondary,
+                        modifier = Modifier.clickable { selectUserUseCase.select(userInfo) })
                 }
             }
         }

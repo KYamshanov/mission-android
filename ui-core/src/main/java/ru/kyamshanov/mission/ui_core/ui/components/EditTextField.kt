@@ -75,6 +75,7 @@ fun MissionTextField(
         textStyle = textStyle,
         value = text,
         onValueChange = onValueChange,
+        singleLine = maxLines == 1,
         maxLines = maxLines,
         readOnly = editable.not(),
         cursorBrush = SolidColor(MissionTheme.colors.darkSecondary),
@@ -87,11 +88,12 @@ fun MissionTextField(
 
                     override fun transformedToOriginal(offset: Int): Int {
                         if (text.isEmpty()) return 0
-                        if (offset >=  text.length) return text.length
+                        if (offset >= text.length) return text.length
                         return offset
                     }
                 }
-                TransformedText(it.plus(s),textWithSuffixMapping ) }
+                TransformedText(it.plus(s), textWithSuffixMapping)
+            }
         } ?: VisualTransformation.None,
         decorationBox = { innerTextField ->
             BoxWithConstraints {
