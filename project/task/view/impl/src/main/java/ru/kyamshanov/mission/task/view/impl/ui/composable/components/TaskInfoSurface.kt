@@ -5,13 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,69 +33,61 @@ import ru.kyamshanov.mission.ui_core.ui.theme.MissionTheme
 @Composable
 internal fun TaskInfoSurface(
     projectTitle: String,
+    taskInfo: TaskInfo,
     screenState: TaskViewScreenState,
     viewModel: TaskViewModel,
+) = Surface(
+    topContent = {
+        TopBar(
+            title = projectTitle,
+            navigationListener = viewModel::onBack,
+            subtitle = "Этап - ${taskInfo.title}"
+        )
+    },
+    bottomContent = {
+        if (screenState.taskEditingScheme?.isEditableSubtasks == true) {
+            MainButton(
+                modifier = Modifier.fillMaxWidth(),
+                label = "Добавить задачу",
+                onClick = { viewModel.createSubtask() }
+            )
+        }
+        if (screenState.taskEditingScheme?.isPointsEditable == true) {
+            Spacer(modifier = Modifier.height(10.dp))
+            SecondaryButton(
+                modifier = Modifier.fillMaxWidth(),
+                label = stringResource(id = R.string.tv_set_points_title),
+                onClick = viewModel::openSetPointScreen
+            )
+        }
+    }
 ) {
-    screenState.taskInfo?.let { taskInfo ->
-        Surface(
-            topContent = {
-                TopBar(
-                    title = projectTitle,
-                    navigationListener = viewModel::onBack,
-                    subtitle = taskInfo.title
+    Column {
+        TaskInfoCell(taskInfo, screenState, viewModel)
+        Box(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = "Задачи",
+                style = MissionTheme.typography.title,
+                modifier = Modifier.align(Alignment.Center)
+            )
+            if (screenState.taskEditingScheme?.hasChanges == true) {
+                AlternativeButton(
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                    label = "Сохранить",
+                    onClick = viewModel::saveChanges
                 )
             }
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(16.dp)
-            ) {
-                TaskInfoCell(taskInfo, screenState, viewModel)
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = "Задачи",
-                        style = MissionTheme.typography.title,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                    if (screenState.taskEditingScheme?.hasChanges == true) {
-                        AlternativeButton(
-                            modifier = Modifier.align(Alignment.CenterEnd),
-                            label = "Сохранить",
-                            onClick = viewModel::saveChanges
-                        )
-                    }
-                }
-                if (screenState.subtaskLoading) Text(text = "Загрузка...")
-                else screenState.subtasks?.let { subtasks ->
-                    subtasks.forEach { subtaskInfo ->
-                        Spacer(modifier = Modifier.height(5.dp))
-                        SubtaskInfoCell(
-                            modifier = Modifier.clickable { viewModel.openSubtask(subtaskInfo.subtaskId) },
-                            info = subtaskInfo
-                        )
-                    }
-                } ?: Text(text = "Задачи не созданы")
-                Spacer(modifier = Modifier.weight(1f))
-                Spacer(modifier = Modifier.height(15.dp))
-                if (screenState.taskEditingScheme?.isEditableSubtasks == true) {
-                    MainButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        label = "Добавить задачу",
-                        onClick = { viewModel.createSubtask() }
-                    )
-                }
-                if (screenState.setPointsButtonVisible) {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    SecondaryButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        label = stringResource(id = R.string.tv_set_points_title),
-                        onClick = viewModel::openSetPointScreen
-                    )
-                }
-            }
         }
+        if (screenState.subtaskLoading) Text(text = "Загрузка...")
+        else screenState.subtasks?.takeIf { it.isNotEmpty() }?.let { subtasks ->
+            subtasks.forEach { subtaskInfo ->
+                Spacer(modifier = Modifier.height(5.dp))
+                SubtaskInfoCell(
+                    modifier = Modifier.clickable { viewModel.openSubtask(subtaskInfo.subtaskId) },
+                    info = subtaskInfo
+                )
+            }
+        } ?: Text(text = "Задачи не созданы")
     }
 }
 
@@ -189,7 +177,7 @@ private fun SubtaskInfoCell(
 
         TextField(
             label = "Состояние задачи",
-            content = { SubtaskStateText(info.stage) },
+            content = { SubtaskStateText(subtaskState = info.stage) },
             underlined = true
         )
     }

@@ -57,8 +57,7 @@ internal fun ParticipantsListComposable(
             }
         }
     ) {
-
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column {
             val teamInfo = screenState.teamInfo
             teamInfo.mentor.also { participant ->
                 MentorCell(

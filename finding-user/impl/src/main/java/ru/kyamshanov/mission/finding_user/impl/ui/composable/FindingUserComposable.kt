@@ -8,8 +8,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
@@ -21,6 +23,7 @@ import ru.kyamshanov.mission.finding_user.impl.domain.model.UserInfo
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.ObtainUserUseCase
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.ObtainUserUseCase.SearchInfo
 import ru.kyamshanov.mission.finding_user.impl.domain.usecase.SelectUserUseCase
+import ru.kyamshanov.mission.ui_core.ui.components.Loader
 import ru.kyamshanov.mission.ui_core.ui.components.Search
 import ru.kyamshanov.mission.ui_core.ui.components.Surface
 import ru.kyamshanov.mission.ui_core.ui.components.TopBar
@@ -35,20 +38,24 @@ internal fun FindingUserComposable(
 ) {
 
     val searchStringState = rememberSaveable { mutableStateOf("") }
-
     val userListState = rememberSaveable { mutableStateOf(emptyList<UserInfo>()) }
+    var loadingState by rememberSaveable { mutableStateOf(true) }
 
     LaunchedEffect(key1 = searchStringState.value) {
-        delay(1000)
+        delay(600)
+        loadingState = true
         obtainUserUseCase.get(
             searchInfo = SearchInfo(
                 name = searchStringState.value,
             )
         ).onSuccess { userListState.value = it }
+        loadingState = false
     }
 
+    if (loadingState) Loader { moduleComponent.navigator.exit() }
+
     Surface(
-        modifier = Modifier.padding(16.dp),
+        verticalScroll = false,
         topContent = {
             TopBar(title = "Поиск", navigationListener = { moduleComponent.navigator.exit() })
         }

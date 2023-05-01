@@ -5,6 +5,7 @@ import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
 import ru.kyamshanov.mission.network_core.api.di.NetworkComponent
 import ru.kyamshanov.mission.task.set_points.api.di.SetPointsComponent
+import ru.kyamshanov.mission.task.set_points.impl.ui.viewmodel.SetPointsViewModel
 
 @Component(
     dependencies = [
@@ -18,7 +19,7 @@ import ru.kyamshanov.mission.task.set_points.api.di.SetPointsComponent
 @ComponentItem
 internal interface ModuleComponent : SetPointsComponent {
 
-    val viewModelSupplier: ViewModelSupplier
+    val setPointsViewModelFactory: SetPointsViewModelFactory
 
     @Component.Factory
     interface Factory {

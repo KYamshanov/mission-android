@@ -45,7 +45,6 @@ class MainActivity : ComponentActivity() {
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
                     val v = requireNotNull(Di.getComponent<SessionFrontComponent>()).sessionInfo.session
-                    println("Auth screenState $v")
                     return if (v == UnidentifiedSession) false
                     else {
                         content.viewTreeObserver.removeOnPreDrawListener(this)

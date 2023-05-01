@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,13 +36,9 @@ internal fun ProjectViewComposable(
     viewModel: ProjectViewModel,
     taskStagePresentUseCase: TaskStagePresentUseCase,
 ) = Surface(
-    modifier = Modifier.verticalScroll(rememberScrollState()),
     topContent = { TopBar(title = "Проектная деятельность", navigationListener = viewModel::onBack) },
 ) {
-    Column(
-        modifier = Modifier
-            .padding(16.dp)
-    ) {
+    Column {
         TextFieldCompose(
             label = stringResource(id = R.string.pv_project_name_title),
             text = projectInfo.title,
@@ -103,7 +97,7 @@ private fun TaskCellComposable(
     taskInfo: SlimTaskInfo,
     taskStagePresentUseCase: TaskStagePresentUseCase,
     clickListener: () -> Unit,
-) = Cell(modifier = Modifier.padding(5.dp).clickable(onClick = clickListener)) {
+) = Cell(modifier = Modifier.padding(5.dp).fillMaxWidth().clickable(onClick = clickListener)) {
     Text(text = stringResource(R.string.pv_stage), style = MissionTheme.typography.inputHint)
     Text(text = taskInfo.title, style = MissionTheme.typography.inputText)
     Spacer(modifier = Modifier.height(5.dp))

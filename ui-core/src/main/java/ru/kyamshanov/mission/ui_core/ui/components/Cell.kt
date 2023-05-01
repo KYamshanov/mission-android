@@ -53,7 +53,6 @@ fun Cell(
     content: @Composable ColumnScope.() -> Unit,
 ) = Column(
     modifier = modifier
-        .fillMaxWidth()
         .clip(MissionTheme.shapes.medium)
         .background(MissionTheme.colors.primary)
         .border(

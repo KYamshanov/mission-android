@@ -10,7 +10,12 @@ internal class SetPointsLauncherImpl @Inject constructor(
     private val navigator: Navigator,
 ) : SetPointsLauncher {
 
-    override fun launch(taskId: TaskId, maxPoints: Int) {
-        navigator.navigateTo(SetPointsScreen(taskId.value, maxPoints))
+    override fun launch(
+        projectName: String,
+        taskName: String,
+        taskId: TaskId,
+        maxPoints: Int,
+    ) {
+        navigator.navigateTo(SetPointsScreen(projectName, taskName, taskId, maxPoints))
     }
 }

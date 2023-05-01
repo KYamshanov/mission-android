@@ -3,6 +3,7 @@ package ru.kyamshanov.mission.profile.impl.di
 import dagger.Component
 import ru.kyamshanov.mission.di_dagger.impl.ComponentItem
 import ru.kyamshanov.mission.navigation_core.api.di.NavigationComponent
+import ru.kyamshanov.mission.network_core.api.di.NetworkComponent
 import ru.kyamshanov.mission.profile.api.di.ProfileComponent
 import ru.kyamshanov.mission.profile.impl.ui.viewmodel.ProfileViewModel
 import ru.kyamshanov.mission.profile_facade.api.di.ProfileFacadeComponent
@@ -12,7 +13,8 @@ import ru.kyamshanov.mission.session_front.api.di.SessionFrontComponent
     dependencies = [
         NavigationComponent::class,
         SessionFrontComponent::class,
-        ProfileFacadeComponent::class
+        ProfileFacadeComponent::class,
+        NetworkComponent::class
     ],
     modules = [
         BindsModule::class
@@ -30,6 +32,7 @@ internal interface ModuleComponent : ProfileComponent {
             navigationComponent: NavigationComponent,
             sessionFrontComponent: SessionFrontComponent,
             profileFacadeComponent: ProfileFacadeComponent,
+            networkComponent: NetworkComponent,
         ): ModuleComponent
     }
 }
