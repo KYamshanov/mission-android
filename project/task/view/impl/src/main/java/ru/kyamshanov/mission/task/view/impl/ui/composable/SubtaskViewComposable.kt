@@ -8,8 +8,8 @@ import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.task.view.api.di.TaskViewComponent
 import ru.kyamshanov.mission.task.view.impl.di.ModuleComponent
 import ru.kyamshanov.mission.task.view.impl.ui.composable.components.SubtaskInfoSurface
-import ru.kyamshanov.mission.task.view.impl.ui.composable.components.TaskInfoLoading
 import ru.kyamshanov.mission.task.view.impl.ui.viewmodel.SubtaskViewModel
+import ru.kyamshanov.mission.ui_core.ui.components.Loader
 
 private const val TAG = "SubtaskViewComposable"
 
@@ -21,7 +21,7 @@ internal fun SubtaskViewComposable(
 ) {
     val screenState = viewModel.screenStateFlow.collectAsState()
 
-    if (screenState.value.loading) TaskInfoLoading()
+    if (screenState.value.loading) Loader { viewModel.clickOnBack() }
     else screenState.value.subtaskInfo?.let {
         SubtaskInfoSurface(
             info = it,

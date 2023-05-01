@@ -51,7 +51,13 @@ internal class TaskViewModel @AssistedInject constructor(
 
     fun openSetPointScreen() {
         taskInfo?.let { info ->
-            setPointLauncher.get().launch(TaskId(taskId), info.maxPoints)
+            setPointLauncher.get()
+                .launch(
+                    taskId = TaskId(taskId),
+                    maxPoints = info.maxPoints,
+                    projectName = projectInfo.projectName,
+                    taskName = info.title,
+                )
         }
     }
 
@@ -71,7 +77,6 @@ internal class TaskViewModel @AssistedInject constructor(
                     screenState.copy(
                         loading = false,
                         taskInfo = taskInfo,
-                        setPointsButtonVisible = true,
                     )
                 }
             }

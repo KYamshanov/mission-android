@@ -4,9 +4,9 @@ import dagger.assisted.AssistedFactory
 import ru.kyamshanov.mission.task.set_points.impl.ui.viewmodel.SetPointsViewModel
 
 @AssistedFactory
-internal interface ViewModelSupplier {
+internal interface SetPointsViewModelFactory {
 
-    fun getSetPointsViewModel(
+    fun create(
         taskId: String,
         maxPoints: Int,
     ): SetPointsViewModel

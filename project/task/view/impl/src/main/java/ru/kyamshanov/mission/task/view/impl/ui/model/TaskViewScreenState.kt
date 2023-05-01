@@ -9,7 +9,6 @@ internal data class TaskViewScreenState(
     val taskInfo: TaskInfo?,
     val subtaskLoading: Boolean,
     val subtasks: List<SubtaskInfo>?,
-    val setPointsButtonVisible: Boolean,
     val taskEditingScheme: TaskEditingScheme?,
 ) {
 
@@ -18,7 +17,6 @@ internal data class TaskViewScreenState(
         taskInfo = null,
         subtaskLoading = true,
         subtasks = null,
-        setPointsButtonVisible = false,
         taskEditingScheme = null,
     )
 }

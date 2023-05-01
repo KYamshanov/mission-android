@@ -11,6 +11,7 @@ import ru.kyamshanov.mission.session_front.api.model.UserRole
 import ru.kyamshanov.mission.task.view.impl.data.api.ProjectApi
 import ru.kyamshanov.mission.task.view.impl.data.mapper.toDomain
 import ru.kyamshanov.mission.task.view.impl.data.model.EditTaskRqDto
+import ru.kyamshanov.mission.task.view.impl.data.model.TaskStageDto
 import ru.kyamshanov.mission.task.view.impl.domain.interactor.TaskInteractor
 import ru.kyamshanov.mission.task.view.impl.domain.model.SubtaskInfo
 import ru.kyamshanov.mission.task.view.impl.domain.model.TaskEditingScheme
@@ -22,7 +23,7 @@ import ru.kyamshanov.mission.time.di.TimeFormatQualifier
 
 internal class TaskInteractorImpl @Inject constructor(
     private val projectApi: ProjectApi,
-    sessionInfo: SessionInfo,
+    private val sessionInfo: SessionInfo,
     @TimeFormatQualifier(TimeFormat.DD_MN_YY) private val dateFormatter: MissionDateFormatter,
 ) : TaskInteractor {
 
@@ -39,7 +40,12 @@ internal class TaskInteractorImpl @Inject constructor(
     override suspend fun fetchTask(taskId: TaskId): Result<TaskInfo> = runCatching {
         projectApi.getTask(taskId.value)
             .let { dto ->
-                _editableSchemeStateFlow.update { it.copy(isEditableSubtasks = dto.availableAddSubtask) }
+                _editableSchemeStateFlow.update {
+                    it.copy(
+                        isEditableSubtasks = dto.availableAddSubtask,
+                        isPointsEditable = dto.taskStage == TaskStageDto.FINISHED && sessionInfo.hasRole(UserRole.MANAGER)
+                    )
+                }
                 dto.toDomain(dateFormatter)
             }.also { currentTask = it }
     }

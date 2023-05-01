@@ -57,7 +57,7 @@ internal fun ProjectTaskCreationComposable(
 
         val taskState = screenState.value.taskCreationInfo
 
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column {
             CellInput(
                 value = taskState.title,
                 onValueChange = taskCreationViewModel::setTitle,

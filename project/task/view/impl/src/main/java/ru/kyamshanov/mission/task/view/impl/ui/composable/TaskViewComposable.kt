@@ -7,9 +7,10 @@ import ru.kyamshanov.mission.di_dagger.impl.Di
 import ru.kyamshanov.mission.task.view.api.di.TaskViewComponent
 import ru.kyamshanov.mission.task.view.impl.di.ModuleComponent
 import ru.kyamshanov.mission.task.view.impl.domain.model.ProjectInfo
-import ru.kyamshanov.mission.task.view.impl.ui.composable.components.TaskInfoLoading
 import ru.kyamshanov.mission.task.view.impl.ui.composable.components.TaskInfoSurface
 import ru.kyamshanov.mission.task.view.impl.ui.viewmodel.TaskViewModel
+import ru.kyamshanov.mission.ui_core.ui.components.Loader
+import ru.kyamshanov.mission.ui_core.ui.components.SomethingWentWrongDialog
 
 @Composable
 internal fun TaskViewComposable(
@@ -26,6 +27,13 @@ internal fun TaskViewComposable(
 
     val screenState = viewModel.screenState.collectAsState()
 
-    if (screenState.value.loading) TaskInfoLoading()
-    else TaskInfoSurface(screenState = screenState.value, viewModel = viewModel, projectTitle = projectInfo.projectName)
+    if (screenState.value.loading) Loader { viewModel.onBack() }
+    else screenState.value.taskInfo?.let { taskInfo ->
+        TaskInfoSurface(
+            screenState = screenState.value,
+            viewModel = viewModel,
+            projectTitle = projectInfo.projectName,
+            taskInfo = taskInfo
+        )
+    } ?: SomethingWentWrongDialog(onDismissRequest = { viewModel.onBack() })
 }

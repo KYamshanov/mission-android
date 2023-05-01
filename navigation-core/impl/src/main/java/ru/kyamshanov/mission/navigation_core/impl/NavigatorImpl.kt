@@ -1,5 +1,6 @@
 package ru.kyamshanov.mission.navigation_core.impl
 
+import androidx.navigation.NavController
 import javax.inject.Inject
 import ru.kyamshanov.mission.navigation_core.api.NavigationBoundaryData
 import ru.kyamshanov.mission.navigation_core.api.Navigator
@@ -15,6 +16,9 @@ internal class NavigatorImpl @Inject constructor(
     private val controllerHolder: NavigatorControllerHolder,
     private val resultProvider: ResultProvider,
 ) : Navigator {
+
+    private val controller: NavController
+        get() = requireNotNull(controllerHolder.navigator) { "Navigator controller cannot be null" }
 
     override fun navigateTo(screen: Screen) {
         val controller = requireNotNull(controllerHolder.navigator) { "Navigator controller cannot be null" }

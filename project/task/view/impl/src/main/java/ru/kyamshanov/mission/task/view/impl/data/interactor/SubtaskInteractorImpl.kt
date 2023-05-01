@@ -40,7 +40,7 @@ internal class SubtaskInteractorImpl @Inject constructor(
             .also { dto ->
                 _editingSchemeStateFlow.update {
                     SubtaskEditingScheme(isEditable = dto.availableEdit)
-                        .copy(isEditableExecutionResult = dto.availableSetResult)
+                        .copy(isExecutionResultEditable = dto.availableSetResult)
                 }
             }
             .let { MutableStateFlow(it.toDomain(dateFormatter)) }
@@ -78,7 +78,7 @@ internal class SubtaskInteractorImpl @Inject constructor(
     }
 
     override fun setState(state: SubtaskInfo.State): Result<Unit> = runCatching {
-        assert(_editingSchemeStateFlow.value.isEditableState) { "Title editing is not available" }
+        assert(_editingSchemeStateFlow.value.isStateEditable) { "Title editing is not available" }
         requireNotNull(currentSubtaskInfo) { "Subtask was not loaded" }
             .copy(stage = state)
             .also { task ->
@@ -88,7 +88,7 @@ internal class SubtaskInteractorImpl @Inject constructor(
     }
 
     override fun setExecutionResult(result: String): Result<Unit> = runCatching {
-        assert(_editingSchemeStateFlow.value.isEditableExecutionResult) { "ExecutionResult editing is not available" }
+        assert(_editingSchemeStateFlow.value.isExecutionResultEditable) { "ExecutionResult editing is not available" }
         requireNotNull(currentSubtaskInfo) { "Subtask was not loaded" }
             .copy(executionResult = result)
             .also { task ->

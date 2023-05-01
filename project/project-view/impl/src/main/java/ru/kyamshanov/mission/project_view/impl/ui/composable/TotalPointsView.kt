@@ -57,7 +57,7 @@ internal fun TotalPointsView(
             }
         }
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column {
             screenState.totalPointsInfo.stagePoints.forEach { taskInfo ->
 
                 Spacer(modifier = Modifier.height(10.dp))

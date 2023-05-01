@@ -1,6 +1,7 @@
 package ru.kyamshanov.mission.ui_core.ui.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults.buttonColors
@@ -17,11 +18,27 @@ fun AlternativeButton(
     modifier: Modifier = Modifier,
     label: String,
     onClick: () -> Unit,
+) = AlternativeButton(
+    modifier = modifier,
+    content = {
+        Text(
+            text = label,
+            style = MissionTheme.typography.alternativeButtonStyle
+        )
+    },
+    onClick = onClick,
+)
+
+@Composable
+fun AlternativeButton(
+    modifier: Modifier = Modifier,
+    content: @Composable (RowScope.() -> Unit),
+    onClick: () -> Unit,
 ) =
     Button(
         modifier = modifier,
         onClick = onClick,
-        content = { Text(text = label, style = MissionTheme.typography.alternativeButtonStyle) },
+        content = content,
         colors = buttonColors(
             backgroundColor = Color.Transparent,
             contentColor = Color.Transparent,

@@ -30,6 +30,15 @@ fun SomethingWentWrongDialog(
 fun SomethingWentWrongDialog(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit,
+) = SomethingWentWrongDialog(
+    onDismissRequest = onDismissRequest,
+    onConfirm = onDismissRequest
+)
+
+@Composable
+fun SomethingWentWrongDialog(
+    modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit,
     onConfirm: () -> Unit,
 ) {
     AlertDialog(

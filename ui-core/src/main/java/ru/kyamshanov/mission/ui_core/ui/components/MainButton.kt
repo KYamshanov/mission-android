@@ -20,7 +20,7 @@ fun MainButton(
     onClick: () -> Unit,
 ) {
     Button(
-        modifier = modifier.systemBarsPadding().imePadding(),
+        modifier = modifier,
         onClick = onClick,
         content = { Text(text = label, style = MissionTheme.typography.mainButtonStyle) },
         colors = buttonColors(

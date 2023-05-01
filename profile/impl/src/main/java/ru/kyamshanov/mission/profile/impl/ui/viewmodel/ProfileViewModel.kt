@@ -6,8 +6,10 @@ import androidx.lifecycle.viewModelScope
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.navigation_core.api.Navigator
+import ru.kyamshanov.mission.profile.impl.domain.usecase.GetProjectsUseCase
 import ru.kyamshanov.mission.profile.impl.ui.model.ProfileScreenState
 import ru.kyamshanov.mission.profile_facade.api.domain.usecase.GetProfileUseCase
 import ru.kyamshanov.mission.session_front.api.SessionFront
@@ -19,6 +21,7 @@ internal class ProfileViewModel @Inject constructor(
     private val sessionFront: SessionFront,
     private val getProfileUseCase: GetProfileUseCase,
     private val navigator: Navigator,
+    private val getProjectsUseCase: GetProjectsUseCase,
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow(ProfileScreenState())
@@ -31,18 +34,25 @@ internal class ProfileViewModel @Inject constructor(
                 val userInfo = (sessionInfo.session as? LoggedSession)?.userInfo
                     ?: throw IllegalStateException("User is not logged")
                 val profile = getProfileUseCase.getProfile().getOrThrow()
-                val screenState = ProfileScreenState(
-                    info = ProfileScreenState.Info(
-                        roles = userInfo.roles,
-                        login = userInfo.login,
-                        firstname = profile.firstname,
-                        lastname = profile.lastname,
-                        patronymic = profile.patronymic,
-                        group = profile.group,
-                    )
+                val info = ProfileScreenState.Info(
+                    roles = userInfo.roles,
+                    login = userInfo.login,
+                    firstname = profile.firstname,
+                    lastname = profile.lastname,
+                    patronymic = profile.patronymic,
+                    group = profile.group,
                 )
-                _screenState.emit(screenState)
+                _screenState.update {
+                    it.copy(info = info)
+                }
             }.onFailure(::showSomethingWentWrong)
+        }
+
+        viewModelScope.launch {
+            getProjectsUseCase.invoke()
+                .onSuccess { attachedProjects ->
+                    _screenState.update { it.copy(projects = attachedProjects) }
+                }
         }
     }
 

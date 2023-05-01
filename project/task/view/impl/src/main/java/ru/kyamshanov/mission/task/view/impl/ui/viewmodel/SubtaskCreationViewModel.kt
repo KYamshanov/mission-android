@@ -11,23 +11,22 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.kyamshanov.mission.finding_user.api.model.SearchStrategy
-import ru.kyamshanov.mission.finding_user.api.model.SelectedUserInfo
 import ru.kyamshanov.mission.finding_user.api.navigation.FindingUserLauncher
-import ru.kyamshanov.mission.finding_user.api.navigation.SELECTED_USER_EXTRA_KEY
-import ru.kyamshanov.mission.navigation_core.api.ResultProvider
+import ru.kyamshanov.mission.navigation_core.api.Navigator
 import ru.kyamshanov.mission.project.common.domain.model.TaskId
 import ru.kyamshanov.mission.project.common.domain.model.UserId
 import ru.kyamshanov.mission.task.view.impl.domain.interactor.SubtaskCreationInteractor
 import ru.kyamshanov.mission.task.view.impl.domain.model.ProjectInfo
 import ru.kyamshanov.mission.task.view.impl.domain.model.ResponsibleInfo
 import ru.kyamshanov.mission.task.view.impl.ui.model.SubtaskCreationScreenState
+import ru.kyamshanov.mission.task.view.impl.ui.screen.SubtaskViewScreen
 
 internal class SubtaskCreationViewModel @AssistedInject constructor(
     @Assisted private val task: String,
     @Assisted private val projectInfo: ProjectInfo,
     private val subtaskCreationInteractor: SubtaskCreationInteractor,
     private val findingUserLauncher: FindingUserLauncher,
-    private val resultProvider: ResultProvider,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val taskId = TaskId(task)
@@ -61,12 +60,11 @@ internal class SubtaskCreationViewModel @AssistedInject constructor(
     }
 
     fun findResponsible() {
-        findingUserLauncher.launch(SearchStrategy.AllByProject(projectId = projectInfo.projectId))
-    }
-
-    fun obtainResponsible() {
-        resultProvider.get<SelectedUserInfo?>(SELECTED_USER_EXTRA_KEY, null)?.let { selectedUser ->
-            setResponsible(ResponsibleInfo(selectedUser.name.orEmpty(), UserId(selectedUser.id)))
+        viewModelScope.launch {
+            findingUserLauncher.suspendLaunch(SearchStrategy.AllByProject(projectId = projectInfo.projectId))
+                ?.also { selectedUser ->
+                    setResponsible(ResponsibleInfo(selectedUser.name, UserId(selectedUser.id)))
+                }
         }
     }
 
@@ -78,13 +76,17 @@ internal class SubtaskCreationViewModel @AssistedInject constructor(
     fun onCreate() {
         viewModelScope.launch {
             subtaskCreationInteractor.createSubtask()
-                .onSuccess {
-
+                .onSuccess { subtaskId ->
+                    navigator.replaceTo(SubtaskViewScreen(subtaskId.value))
                 }
                 .onFailure {
                     Log.e(TAG, "creation error", it)
                 }
         }
+    }
+
+    fun clickOnBack() {
+        navigator.exit()
     }
 
     private companion object {

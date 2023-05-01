@@ -1,41 +1,44 @@
 package ru.kyamshanov.mission.task.set_points.impl.ui.screen
 
 import androidx.compose.runtime.Composable
+import ru.kyamshanov.mission.navigation_core.api.NavigationBoundaryData
+import ru.kyamshanov.mission.navigation_core.common.BoundaryDataComposableScreen
 import ru.kyamshanov.mission.navigation_core.common.DestinationScreen
-import ru.kyamshanov.mission.navigation_core.common.ParameterizedComposableScreen
+import ru.kyamshanov.mission.navigation_core.common.SerializableNavigationBoundaryData
 import ru.kyamshanov.mission.project.common.domain.model.TaskId
 import ru.kyamshanov.mission.task.set_points.impl.ui.composable.SetPointsComposable
 
-private const val TASK_ID_KEY = "taskId"
-private const val MAX_POINTS_KEY = "maxPoints"
+class SetPointsScreen() : DestinationScreen, BoundaryDataComposableScreen {
 
-class SetPointsScreen() : DestinationScreen, ParameterizedComposableScreen {
-
-    override val parameterKeys = listOf(TASK_ID_KEY, MAX_POINTS_KEY)
-
-    override val parametersSupplier: () -> Map<String, String?> = {
-        mapOf(
-            TASK_ID_KEY to taskId,
-            MAX_POINTS_KEY to maxPoints.toString()
-        )
-    }
-
-    override val composableSupplier: @Composable (parameters: Map<String, String?>) -> Unit =
-        { parameters ->
+    override val composableSupplier: @Composable (NavigationBoundaryData) -> Unit =
+        { data ->
+            val boundaryData = data as BoundaryData
             SetPointsComposable(
-                TaskId(requireNotNull(parameters[TASK_ID_KEY])),
-                requireNotNull(parameters[MAX_POINTS_KEY]).toInt()
+                taskId = TaskId(boundaryData.taskId),
+                projectName = boundaryData.projectName,
+                taskName = boundaryData.taskName,
+                maxPoints = boundaryData.maxPoints
             )
         }
 
-    private var taskId: String? = null
-    private var maxPoints: Int? = null
+    private var _boundaryData: BoundaryData? = null
+    override val boundaryData: SerializableNavigationBoundaryData
+        get() = requireNotNull(_boundaryData)
 
     constructor(
-        taskId: String,
+        projectName: String,
+        taskName: String,
+        taskId: TaskId,
         maxPoints: Int,
     ) : this() {
-        this.taskId = taskId
-        this.maxPoints = maxPoints
+        _boundaryData =
+            BoundaryData(projectName = projectName, taskName = taskName, taskId = taskId.value, maxPoints = maxPoints)
     }
+
+    private data class BoundaryData(
+        val projectName: String,
+        val taskName: String,
+        val taskId: String,
+        val maxPoints: Int,
+    ) : SerializableNavigationBoundaryData
 }
