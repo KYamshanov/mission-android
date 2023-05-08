@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -20,6 +21,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
@@ -39,6 +41,7 @@ fun EditTextField(
     underlined: Boolean = true,
     textStyle: TextStyle = MissionTheme.typography.inputText,
     suffix: String? = null,
+    isMasked: Boolean = false,
     onValueChange: (String) -> Unit,
 ) {
     MissionTextField(
@@ -51,7 +54,8 @@ fun EditTextField(
         underlined = underlined,
         textStyle = textStyle,
         suffix = suffix?.let { AnnotatedString(it) },
-        onValueChange = onValueChange
+        onValueChange = onValueChange,
+        isMasked = isMasked,
     )
 }
 
@@ -66,6 +70,7 @@ fun MissionTextField(
     underlined: Boolean = true,
     textStyle: TextStyle = MissionTheme.typography.inputText,
     suffix: AnnotatedString? = null,
+    isMasked: Boolean = false,
     onValueChange: (String) -> Unit,
 ) {
     val localDensity = LocalDensity.current
@@ -79,8 +84,10 @@ fun MissionTextField(
         maxLines = maxLines,
         readOnly = editable.not(),
         cursorBrush = SolidColor(MissionTheme.colors.darkSecondary),
-        visualTransformation = suffix?.let { s ->
-            VisualTransformation {
+        keyboardOptions = if (isMasked) KeyboardOptions(keyboardType = KeyboardType.Password, autoCorrect = false) else KeyboardOptions.Default,
+        visualTransformation = if (suffix != null || isMasked) {
+            val s = suffix ?: AnnotatedString("")
+            VisualTransformation { annotatedString ->
                 val textWithSuffixMapping = object : OffsetMapping {
                     override fun originalToTransformed(offset: Int): Int {
                         return offset
@@ -92,9 +99,12 @@ fun MissionTextField(
                         return offset
                     }
                 }
-                TransformedText(it.plus(s), textWithSuffixMapping)
+                TransformedText(
+                    if (isMasked) AnnotatedString("*".repeat(annotatedString.length)) else annotatedString.plus(s),
+                    textWithSuffixMapping
+                )
             }
-        } ?: VisualTransformation.None,
+        } else VisualTransformation.None,
         decorationBox = { innerTextField ->
             BoxWithConstraints {
                 val iconSizeState = remember { mutableStateOf(IntSize.Zero) }

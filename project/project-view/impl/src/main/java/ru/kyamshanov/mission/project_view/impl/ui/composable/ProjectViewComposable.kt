@@ -51,6 +51,7 @@ internal fun ProjectViewComposable(
             text = projectInfo.description,
             onValueChange = viewModel::setDescription,
             editable = screenState.editingScheme.isEditableDescription,
+            maxLines = 50
         )
 
         Spacer(modifier = Modifier.height(3.dp))
@@ -120,7 +121,7 @@ private fun ProjectStageText(
         style = MissionTheme.typography.red + MissionTheme.typography.medium
     )
     is ProjectStage.InProject -> Text(
-        text = "${stringResource(id = R.string.pv_stage)} ${stringResource(id = R.string.pv_in_progress)}",
+        text = "${stringResource(id = R.string.pv_stage)} в работе (${projectStage.taskInfo.title})",
         style = MissionTheme.typography.green + MissionTheme.typography.medium
     )
     ProjectStage.Wait -> Text(

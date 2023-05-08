@@ -18,6 +18,7 @@ fun CellInput(
     label: String,
     maxLines: Int = 1,
     editable: Boolean = true,
+    isMasked: Boolean = false,
 ) = Cell {
     MissionTextField(
         modifier = modifier
@@ -28,7 +29,8 @@ fun CellInput(
         label = { Text(text = label, style = MissionTheme.typography.inputHint) },
         maxLines = maxLines,
         editable = editable,
-        underlined = false
+        underlined = false,
+        isMasked = isMasked,
     )
 }
 

@@ -33,19 +33,20 @@ internal fun AuthenticationComponent(
             Modifier.fillMaxWidth(),
             value = loginState.value,
             onValueChange = { text -> loginState.value = text },
-            label = "Логин"
+            label = "Логин",
         )
         Spacer(modifier = Modifier.height(16.dp))
         CellInput(
             Modifier.fillMaxWidth(),
             value = passwordState.value,
             onValueChange = { text -> passwordState.value = text },
-            label = "Пароль"
+            label = "Пароль",
+            isMasked = true,
         )
         Spacer(modifier = Modifier.height(55.dp))
         MainButton(
             modifier = Modifier.fillMaxWidth().padding(10.dp),
-            onClick = { onLogin(loginState.value, passwordState.value) },
+            onClick = { onLogin(loginState.value.trim(), passwordState.value.trim()) },
             label = "Войти"
         )
     }

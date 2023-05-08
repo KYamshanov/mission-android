@@ -67,7 +67,8 @@ internal fun ProjectTaskCreationComposable(
             CellInput(
                 value = taskState.description,
                 onValueChange = taskCreationViewModel::setDescription,
-                label = stringResource(id = R.string.task_stage_description_title)
+                label = stringResource(id = R.string.task_stage_description_title),
+                maxLines = 50,
             )
             Spacer(modifier = Modifier.height(10.dp))
             CellDate(

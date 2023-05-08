@@ -109,7 +109,8 @@ private fun TaskInfoCell(
         text = info.description,
         label = stringResource(id = R.string.tv_description),
         editable = screenInfo.taskEditingScheme?.isEditableDescription ?: false,
-        onValueChange = viewModel::setDescription
+        onValueChange = viewModel::setDescription,
+        maxLines = 50
     )
     Spacer(modifier = Modifier.height(10.dp))
     ComplexCell {
