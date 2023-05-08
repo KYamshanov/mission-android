@@ -1,13 +1,14 @@
 package ru.kyamshanov.mission.session_front.impl.ui
 
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.kyamshanov.mission.authentication.di.AuthenticationComponent
 import ru.kyamshanov.mission.base_core.api.MissionPreferences
 import ru.kyamshanov.mission.di_dagger.impl.Di
@@ -43,7 +44,7 @@ internal class SessionFrontImpl @Inject constructor(
         }
 
     init {
-        val scope =  CoroutineScope(Job())
+        val scope = CoroutineScope(Job())
         scope.launch {
             refreshSession()
                 .onSuccess {
@@ -66,17 +67,23 @@ internal class SessionFrontImpl @Inject constructor(
     }
 
     override suspend fun destroySession() {
+        breakSession()
+
+        missionPreferences.remove(PREFERENCES_ACCESS_KEY)
+        missionPreferences.remove(PREFERENCES_REFRESH_KEY)
+        missionPreferences.remove(PREFERENCES_SESSION_LOGIN_KEY)
+    }
+
+    private suspend fun breakSession() {
         sessionLifecycleScope = null
         makeUnauthorizedSession(IllegalStateException("The session is destroyed"))
 
         missionPreferences.getValue(PREFERENCES_REFRESH_KEY)
             ?.let { jwtLoginInteractor.blockRefresh(it) }
 
-        missionPreferences.remove(PREFERENCES_ACCESS_KEY)
-        missionPreferences.remove(PREFERENCES_REFRESH_KEY)
-        missionPreferences.remove(PREFERENCES_SESSION_LOGIN_KEY)
-
-        Di.getComponent<AuthenticationComponent>()?.launcher?.launch()
+        withContext(Dispatchers.Main) {
+            Di.getComponent<AuthenticationComponent>()?.launcher?.launch()
+        }
     }
 
     private fun makeUnauthorizedSession(reason: Throwable) {
@@ -90,7 +97,7 @@ internal class SessionFrontImpl @Inject constructor(
             while (isActive) {
                 delay(AUTO_REFRESHING_DELAY_MS)
                 refreshSession()
-                    .onFailure { destroySession() }
+                    .onFailure { breakSession() }
             }
         }
     }
@@ -146,6 +153,6 @@ internal class SessionFrontImpl @Inject constructor(
 
     private companion object {
 
-        const val AUTO_REFRESHING_DELAY_MS = 5*60*1000L
+        const val AUTO_REFRESHING_DELAY_MS = 5 * 60 * 1000L
     }
 }
