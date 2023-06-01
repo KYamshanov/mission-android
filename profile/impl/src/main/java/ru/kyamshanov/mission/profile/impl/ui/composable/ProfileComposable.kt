@@ -1,6 +1,7 @@
 package ru.kyamshanov.mission.profile.impl.ui.composable
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,8 +20,12 @@ internal fun ProfileComposable(
 
     val screenState by viewModel.screenState.collectAsState()
 
+    SideEffect {
+        println("TEST ${screenState.projects.size}")
+    }
+
     screenState.info
-        ?.let { ProfileView(screenState = it, viewModel = viewModel) }
+        ?.let { ProfileView(screenState = it, viewModel = viewModel, projects = screenState.projects) }
         ?: ProfileLoaderView()
 
     if (screenState.somethingWentWrong) {

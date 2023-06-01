@@ -12,7 +12,7 @@ internal fun ProjectInfoDto.getStage(): ProjectStage = when (this.stage) {
     ProjectStageDto.WAIT -> ProjectStage.Wait
 
     ProjectStageDto.IN_PROGRESS -> {
-        currentTask?.toDomain()?.let { ProjectStage.InProject(it) } ?: throw IllegalStateException("Project has not stage")
+        ProjectStage.InProject(currentTask?.toDomain())
     }
 
     ProjectStageDto.FINISHED -> ProjectStage.Finished

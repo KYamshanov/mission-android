@@ -120,10 +120,12 @@ private fun ProjectStageText(
         text = "${stringResource(id = R.string.pv_stage)} ${stringResource(id = R.string.pv_finished)}",
         style = MissionTheme.typography.red + MissionTheme.typography.medium
     )
+
     is ProjectStage.InProject -> Text(
-        text = "${stringResource(id = R.string.pv_stage)} в работе (${projectStage.taskInfo.title})",
+        text = "${stringResource(id = R.string.pv_stage)} в работе (${projectStage.taskInfo?.title ?: "перерыв"})",
         style = MissionTheme.typography.green + MissionTheme.typography.medium
     )
+
     ProjectStage.Wait -> Text(
         text = "${stringResource(id = R.string.pv_stage)} ${stringResource(id = R.string.pv_wait)}",
         style = MissionTheme.typography.green + MissionTheme.typography.medium
